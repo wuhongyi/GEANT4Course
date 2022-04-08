@@ -14008,6 +14008,239 @@ a.anchor-link {
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6">&#31243;&#24207;&#26694;&#26550;<a class="anchor-link" href="#%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>程序目录</strong></p>
+<ul>
+<li>include/</li>
+<li>src/</li>
+<li>main.cc</li>
+<li>CMakeLists.txt</li>
+<li>vis.mac</li>
+<li>init_vis.mac</li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E6%96%87%E4%BB%B6-CMakeLists.txt">&#25991;&#20214; CMakeLists.txt<a class="anchor-link" href="#%E6%96%87%E4%BB%B6-CMakeLists.txt">&#182;</a></h2><p><em>CMakeLists.txt</em> 原则上不需要改动，如果需要将主目录下的文件复制到编译的文件夹，则参考以下代码进行修改。</p>
+<div class="highlight"><pre><span></span><span class="c"># 以下代码将 init.mac、init_vis.mac、vis.mac、wu.in、wu.out 这5个文件复制到</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">COPY_SCRIPTS</span>
+   <span class="s">init.mac</span>
+   <span class="s">init_vis.mac</span>
+   <span class="s">vis.mac</span>
+   <span class="s">wu.in</span>
+   <span class="s">wu.out</span>
+  <span class="p">)</span>
+
+<span class="nb">foreach</span><span class="p">(</span><span class="s">_script</span> <span class="o">${</span><span class="nv">COPY_SCRIPTS</span><span class="o">}</span><span class="p">)</span>
+  <span class="nb">configure_file</span><span class="p">(</span>
+    <span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/</span><span class="o">${</span><span class="nv">_script</span><span class="o">}</span>
+    <span class="o">${</span><span class="nv">PROJECT_BINARY_DIR</span><span class="o">}</span><span class="s">/</span><span class="o">${</span><span class="nv">_script</span><span class="o">}</span>
+    <span class="s">COPYONLY</span>
+    <span class="p">)</span>
+<span class="nb">endforeach</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E6%96%87%E4%BB%B6-main.cc">&#25991;&#20214; main.cc<a class="anchor-link" href="#%E6%96%87%E4%BB%B6-main.cc">&#182;</a></h2><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 随机数设置 如果需要的话</span>
+<span class="w">  </span><span class="c1">// G4Random::setTheEngine(new CLHEP::RanecuEngine);</span>
+<span class="w">  </span><span class="c1">// G4int seconds =  time(NULL);</span>
+<span class="w">  </span><span class="c1">// G4Random::setTheSeed(seconds);</span>
+
+
+<span class="w">  </span><span class="c1">// Construct the default run manager</span>
+<span class="w">  </span><span class="n">G4MTRunManager</span><span class="o">*</span><span class="w"> </span><span class="n">mtrunManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">mtrunManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MTRunManager</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">SetNumberOfThreads</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// mtrunManager-&gt;SetUserInitialization(new wuWorkerInitialization);</span>
+
+
+<span class="w">  </span><span class="c1">// Set mandatory initialization classes ，410版本的框架是这样的，ActionInitialization来管理。</span>
+<span class="w">  </span><span class="c1">//</span>
+<span class="w">  </span><span class="c1">// Detector construction</span>
+<span class="w">  </span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuDetectorConstruction</span><span class="p">());</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="c1">// Physics list</span>
+<span class="w">  </span><span class="c1">// G4VModularPhysicsList* physicsList = new wuPhysicsList();</span>
+<span class="w">  </span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">FTFP_BERT_HP</span><span class="p">());</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// User action initialization</span>
+<span class="w">  </span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuActionInitialization</span><span class="p">());</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="c1">// Initialize G4 kernel</span>
+<span class="w">  </span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span><span class="w"></span>
+
+
+
+<span class="w">  </span><span class="n">G4VisManager</span><span class="o">*</span><span class="w"> </span><span class="n">visManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4UImanager</span><span class="o">*</span><span class="w"> </span><span class="n">UImanager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4UImanager</span><span class="o">::</span><span class="n">GetUIpointer</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">G4String</span><span class="w"> </span><span class="n">commandopt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">commandopt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;vis.mac&quot;</span><span class="p">)</span><span class="c1">// 开启图形界面模式</span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">visManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4VisExecutive</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">visManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">G4UIExecutive</span><span class="o">*</span><span class="w"> </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4UIExecutive</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">UImanager</span><span class="o">-&gt;</span><span class="n">ApplyCommand</span><span class="p">(</span><span class="s">&quot;/control/execute vis.mac&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">ui</span><span class="o">-&gt;</span><span class="n">SessionStart</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">delete</span><span class="w"> </span><span class="n">ui</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">commandopt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;-l&quot;</span><span class="p">)</span><span class="c1">// 开启命令行模式</span>
+<span class="w">    </span><span class="p">{</span><span class="w">  </span>
+<span class="w">      </span><span class="n">G4UIsession</span><span class="o">*</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4UIterminal</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">G4UItcsh</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">session</span><span class="o">-&gt;</span><span class="n">SessionStart</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">delete</span><span class="w"> </span><span class="n">session</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="c1">// 无图形界面执行脚本模式</span>
+<span class="w">      </span><span class="n">G4String</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/control/execute &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">G4String</span><span class="w"> </span><span class="n">fileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">UImanager</span><span class="o">-&gt;</span><span class="n">ApplyCommand</span><span class="p">(</span><span class="n">command</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fileName</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="c1">// Job termination</span>
+<span class="w">  </span><span class="c1">// Free the store: user actions, physics_list and detector_description are</span>
+<span class="w">  </span><span class="c1">// owned and deleted by the run manager, so they should not be deleted </span>
+<span class="w">  </span><span class="c1">// in the main() program !</span>
+
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">visManager</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="n">visManager</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">delete</span><span class="w"> </span><span class="n">mtrunManager</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Physics-list">Physics list<a class="anchor-link" href="#Physics-list">&#182;</a></h3><p><strong>Physics list</strong> 对于入门级别来说，选择以下哪个区别不大</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;wuPhysicsList.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FTF_BIC.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysic G4HadronPhysicsFTF_BIC G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FTFP_BERT_ATL.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysic G4HadronPhysicsFTFP_BERT_ATL G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut </span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FTFP_BERT.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysic G4HadronPhysicsFTFP_BERT G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut        </span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FTFP_BERT_HP.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysicsHP G4HadronPhysicsFTFP_BERT_HP G4StoppingPhysics G4IonPhysics            </span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FTFP_BERT_TRV.hh&quot;</span><span class="c1">// G4EmStandardPhysicsGS G4EmExtraPhysics G4DecayPhysics G4HadronHElasticPhysics G4HadronPhysicsFTFP_BERT_TRV G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FTFP_INCLXX.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysics G4HadronPhysicsINCLXX G4StoppingPhysics G4IonINCLXXPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FTFP_INCLXX_HP.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysicsHP G4HadronPhysicsINCLXX G4StoppingPhysics G4IonINCLXXPhysics</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4GenericPhysicsList.hh&quot;</span><span class="c1">                    </span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;LBE.hh&quot;</span><span class="c1">// 这个比较复杂 -_-</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;NuBeam.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysics G4HadronPhysicsNuBeam G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QBBC.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysicsXS G4StoppingPhysics G4IonPhysics G4HadronInelasticQBBC G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGS_BIC.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysics G4HadronPhysicsQGS_BIC G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGSP_BERT.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysics G4HadronPhysicsQGSP_BERT G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGSP_BERT_HP.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysicsHP G4HadronPhysicsQGSP_BERT_HP G4StoppingPhysics G4IonPhysics</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGSP_BIC_AllHP.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysicsPHP G4HadronPhysicsQGSP_BIC_AllHP G4StoppingPhysics G4IonPhysicsPHP</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGSP_BIC.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysics G4HadronPhysicsQGSP_BIC G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGSP_BIC_HP.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysicsHP G4HadronPhysicsQGSP_BIC_HP G4StoppingPhysics G4IonPhysics</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGSP_FTFP_BERT.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysics G4HadronPhysicsQGSP_FTFP_BERT G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGSP_INCLXX.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysics G4HadronPhysicsINCLXX G4StoppingPhysics G4IonINCLXXPhysics G4NeutronTrackingCut</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QGSP_INCLXX_HP.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysicsHP G4HadronPhysicsINCLXX G4StoppingPhysics G4IonINCLXXPhysics</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Shielding.hh&quot;</span><span class="c1">// 这个比较复杂,分好几种情况 -_-</span><span class="cp"></span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E6%96%87%E4%BB%B6-wuActionInitialization.cc">&#25991;&#20214; wuActionInitialization.cc<a class="anchor-link" href="#%E6%96%87%E4%BB%B6-wuActionInitialization.cc">&#182;</a></h2><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuActionInitialization::Build</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">//源的设置</span>
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuPrimaryGeneratorActionAll</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="cp">#if G4VERSION_NUMBER &gt;= 1030</span>
+
+<span class="w">  </span><span class="n">G4MultiRunAction</span><span class="o">*</span><span class="w"> </span><span class="n">actsRun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MultiRunAction</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4MultiEventAction</span><span class="o">*</span><span class="w"> </span><span class="n">actsEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MultiEventAction</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4MultiTrackingAction</span><span class="o">*</span><span class="w"> </span><span class="n">actsTrack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MultiTrackingAction</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4MultiSteppingAction</span><span class="o">*</span><span class="w"> </span><span class="n">actsStep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MultiSteppingAction</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">//...0123456789876543210...0123456789876543210...</span>
+
+<span class="w">  </span><span class="n">actsRun</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserRunActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuRunActionAll</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">actsEvent</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserEventActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuEventActionAll</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">actsTrack</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserTrackingActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuTrackingActionAll</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">actsStep</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserSteppingActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuSteppingActionAll</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuStackingActionAll</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="c1">//...0123456789876543210...0123456789876543210...</span>
+
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">actsRun</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">actsTrack</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">actsEvent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">actsStep</span><span class="p">);</span><span class="w"></span>
+
+<span class="cp">#else</span>
+<span class="w">  </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;It need G4VERSION_NUMBER &gt;= 1030&quot;</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+<span class="cp">#endif </span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">MAIN</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[NbConvertApp] Converting notebook MAIN.ipynb to html
+
+[NbConvertApp] Writing 557312 bytes to MAIN.html
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
 </body>
 
 

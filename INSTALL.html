@@ -14015,7 +14015,13 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E8%A6%81%E6%B1%82">&#31995;&#32479;&#36719;&#20214;&#35201;&#27714;<a class="anchor-link" href="#%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E8%A6%81%E6%B1%82">&#182;</a></h2><ul>
+<h2 id="%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E8%A6%81%E6%B1%82">&#31995;&#32479;&#36719;&#20214;&#35201;&#27714;<a class="anchor-link" href="#%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E8%A6%81%E6%B1%82">&#182;</a></h2><p>软件下载地址</p>
+<ul>
+<li><a href="https://geant4.web.cern.ch/support/download_archive">https://geant4.web.cern.ch/support/download_archive</a></li>
+<li><a href="https://geant4.web.cern.ch/support/download">https://geant4.web.cern.ch/support/download</a></li>
+</ul>
+<p>依赖库</p>
+<ul>
 <li>Linux: GNU Compiler Collection 4.8.4 or higher.</li>
 <li>CMake 3.3 or higher.</li>
 <li>Xerces-C++ headers and library &gt;=3</li>
@@ -14033,17 +14039,18 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><strong>通常的安装步骤</strong></p>
-<div class="highlight"><pre><span></span>tar -zxvf geant4.10.04.p01.tar.gz
-  mkdir buildgeant41004p01
-  <span class="nb">cd</span> buildgeant41004p01
-  cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>pathinstall -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DGEANT4_FORCE_QT4<span class="o">=</span>ON -DGEANT4_USE_SYSTEM_CLHEP<span class="o">=</span>OFF -DGEANT4_USE_SYSTEM_ZLIB<span class="o">=</span>OFF -DGEANT4_USE_SYSTEM_EXPAT<span class="o">=</span>OFF -DGEANT4_USE_OPENGL_X11<span class="o">=</span>ON -DGEANT4_USE_RAYTRACER_X11<span class="o">=</span>ON -DGEANT4_USE_QT<span class="o">=</span>ON -DGEANT4_BUILD_MULTITHREADED<span class="o">=</span>ON -DGEANT4_USE_GDML<span class="o">=</span>ON -DGEANT4_USE_XM<span class="o">=</span>ON -DGEANT4_BUILD_TLS_MODEL<span class="o">=</span>global-dynamic -DGEANT4_USE_FREETYPE<span class="o">=</span>ON  ../geant4.10.04.p01
+<p><em>我们测试到 4.10.7，4.11 版本未测试</em></p>
+<div class="highlight"><pre><span></span>tar -zxvf geant4.10.04.p03.tar.gz
+  mkdir buildgeant41004p03
+  <span class="nb">cd</span> buildgeant41004p03
+  cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>pathinstall -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DGEANT4_FORCE_QT4<span class="o">=</span>ON -DGEANT4_USE_SYSTEM_CLHEP<span class="o">=</span>OFF -DGEANT4_USE_SYSTEM_ZLIB<span class="o">=</span>OFF -DGEANT4_USE_SYSTEM_EXPAT<span class="o">=</span>OFF -DGEANT4_USE_OPENGL_X11<span class="o">=</span>ON -DGEANT4_USE_RAYTRACER_X11<span class="o">=</span>ON -DGEANT4_USE_QT<span class="o">=</span>ON -DGEANT4_BUILD_MULTITHREADED<span class="o">=</span>ON -DGEANT4_USE_GDML<span class="o">=</span>ON -DGEANT4_USE_XM<span class="o">=</span>ON -DGEANT4_BUILD_TLS_MODEL<span class="o">=</span>global-dynamic -DGEANT4_USE_FREETYPE<span class="o">=</span>ON  ../geant4.10.04.p03
   <span class="c1">## 其中 pathinstall 修改为安装路径</span>
   make -jN     
   <span class="c1">## N 改为线程数。例如 make -j4</span>
   make install
 </pre></div>
 <ul>
-<li>将数据解压缩至 pathinstall/share/Geant4-10.4.1/data</li>
+<li>将数据解压缩至 pathinstall/share/Geant4-10.4.3/data</li>
 <li>在.bashrc中添加  source  pathinstall/bin/geant4.sh</li>
 </ul>
 <p><strong>一些自动安装脚本</strong></p>
@@ -14079,18 +14086,21 @@ make
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E8%BF%90%E8%A1%8C%E8%AF%BE%E7%A8%8B%E6%8F%90%E4%BE%9B%E7%9A%84%E7%A4%BA%E4%BE%8B%E5%8C%85">&#36816;&#34892;&#35838;&#31243;&#25552;&#20379;&#30340;&#31034;&#20363;&#21253;<a class="anchor-link" href="#%E8%BF%90%E8%A1%8C%E8%AF%BE%E7%A8%8B%E6%8F%90%E4%BE%9B%E7%9A%84%E7%A4%BA%E4%BE%8B%E5%8C%85">&#182;</a></h2><p>示例代码包 <em>geant4_step</em></p>
+<h2 id="%E8%BF%90%E8%A1%8C%E8%AF%BE%E7%A8%8B%E6%8F%90%E4%BE%9B%E7%9A%84%E7%A4%BA%E4%BE%8B%E5%8C%85">&#36816;&#34892;&#35838;&#31243;&#25552;&#20379;&#30340;&#31034;&#20363;&#21253;<a class="anchor-link" href="#%E8%BF%90%E8%A1%8C%E8%AF%BE%E7%A8%8B%E6%8F%90%E4%BE%9B%E7%9A%84%E7%A4%BA%E4%BE%8B%E5%8C%85">&#182;</a></h2><p>示例代码包 <em>geant4_step</em> <a href="">下载</a> 2022年4月8日更新</p>
 <p>按照以下步骤编译</p>
-<div class="highlight"><pre><span></span><span class="n">cd</span><span class="w"> </span><span class="n">geant4_step</span><span class="w"></span>
-<span class="n">mkdir</span><span class="w"> </span><span class="n">build</span><span class="w"></span>
-<span class="n">cd</span><span class="w"> </span><span class="n">build</span><span class="w"></span>
-<span class="n">cmake</span><span class="w"> </span><span class="p">..</span><span class="w"></span>
-<span class="n">make</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> geant4_step
+mkdir build
+<span class="nb">cd</span> build
+cmake ..
+make
 </pre></div>
 <p><strong>图形界面运行方式</strong></p>
 <div class="highlight"><pre><span></span>./wu vis.mac
 </pre></div>
+<p><img src="img/install5.png" alt="image5"></p>
+<p><img src="img/install6.png" alt="image6"></p>
 <p>在弹出的图形界面输入框（Session）中输入 <em>/run/beamOn 100</em> ，然后按回车，将会看到运行 100 个事件之后的结果。</p>
+<p><img src="img/install7.png" alt="image7"></p>
 <p><strong>非图形界面运行方式</strong></p>
 <div class="highlight"><pre><span></span>./wu -l
 
@@ -14137,7 +14147,7 @@ make
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook INSTALL.ipynb to html
 
-[NbConvertApp] Writing 564520 bytes to INSTALL.html
+[NbConvertApp] Writing 565115 bytes to INSTALL.html
 
 </pre>
 </div>

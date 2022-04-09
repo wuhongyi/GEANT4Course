@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>homework</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>dataana</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,46 +14010,153 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E4%BD%9C%E4%B8%9A">&#20316;&#19994;<a class="anchor-link" href="#%E4%BD%9C%E4%B8%9A">&#182;</a></h1>
+<h1 id="%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96">&#25968;&#25454;&#25552;&#21462;<a class="anchor-link" href="#%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="1.0-%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">1.0 &#31435;&#20307;&#35282;&#27169;&#25311;<a class="anchor-link" href="#1.0-%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
-<li>设置探测器<ul>
-<li>粒子源位于原点 （0，0，0）</li>
-<li>环形探测器 2 个（型号S13），灵敏面积内径 $\Phi = 25mm$，外径 $\Phi = 121mm$，厚度 300um</li>
-<li>矩形探测器 3 个（型号BB30），灵敏面积长96mm，宽 64mm，厚度 300um</li>
-<li>2个环形探测器距离原点均为 5.0 cm,三个矩形探测器距离原点均为 6.5 cm</li>
-<li>摆放位置如下图所示</li>
+<h2 id="%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">&#25968;&#25454;&#32467;&#26500;<a class="anchor-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">&#182;</a></h2><p>模拟程序运行结束之后，会生成文件 outputdata_tXX.root, 文件中有 40 个 branch，</p>
+<p><img src="img/dataana1.png" alt="ana1"></p>
+<ul>
+<li>EventID 模拟事件标号</li>
+<li>ParentID 当前粒子的父粒子编号（0表示粒子源发射的粒子）</li>
+<li>TrackID 在一个事件中的粒子编号（从 1 开始）</li>
+<li>CurrentStepNumber 当前step 在track中的编号（从1开始）</li>
+<li>PName 粒子名称</li>
+<li>TrackWeight 权重</li>
+<li>CreatorProcess 相互作用的名字</li>
+<li>EDep 当前step的能损</li>
+<li>TrackLength  </li>
+<li>StepLength   </li>
+<li>TrackStatus 状态</li>
+<li>Mass        粒子的质量</li>
+<li>Charge      粒子的电荷态</li>
+<li>MagneticMoment </li>
+<li>VolNamePre  所在逻辑体的名称</li>
+<li>VolNamePost  </li>
+<li>GlobalTimePre   全局时间，事件开始为时间起点</li>
+<li>GlobalTimePost</li>
+<li>LocalTimePre </li>
+<li>LocalTimePost </li>
+<li>ProperTimePre </li>
+<li>ProperTimePost </li>
+<li>StepStatusPre </li>
+<li>StepStatusPost</li>
+<li>EkPre     动能</li>
+<li>EkPost      </li>
+<li>xPre      位置x</li>
+<li>yPre      位置y</li>
+<li>zPre      位置z</li>
+<li>xPost </li>
+<li>yPost   </li>
+<li>zPost</li>
+<li>xMomentumDirectionPre 动量方向x分量</li>
+<li>yMomentumDirectionPre </li>
+<li>zMomentumDirectionPre </li>
+<li>Velocitypre   速度</li>
+<li>xMomentumDirectionPost </li>
+<li>yMomentumDirectionPost </li>
+<li>zMomentumDirectionPost</li>
+<li>Velocitypost</li>
 </ul>
-</li>
-<li>将材料设置为真空</li>
-<li>选择一个粒子，4$\pi$ 均匀发射</li>
-<li>模拟给出 5 个探测器的立体角和总立体角</li>
-</ul>
-<p><img src="img/hw1.png" alt="hw1"></p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="2.0-$%5Cbeta$-%E6%8E%A2%E6%B5%8B%E6%95%88%E7%8E%87%E6%A8%A1%E6%8B%9F">2.0 $\beta$ &#25506;&#27979;&#25928;&#29575;&#27169;&#25311;<a class="anchor-link" href="#2.0-$%5Cbeta$-%E6%8E%A2%E6%B5%8B%E6%95%88%E7%8E%87%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
-<li>硅探测器<ul>
-<li>型号 W1，灵敏面积 50x50 mm, 厚度 300 um </li>
+<div class="highlight"><pre><span></span><span class="n">t</span><span class="o">-&gt;</span><span class="n">Scan</span><span class="p">(</span><span class="s">&quot;EventID:ParentID:TrackID:CurrentStepNumber:PName:EDep:VolNamePre:VolNamePost&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p><img src="img/dataana2.png" alt="ana2"></p>
+<p><img src="img/dataana3.png" alt="ana3"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="n">t</span><span class="o">-&gt;</span><span class="n">MakeClass</span><span class="p">(</span><span class="s">&quot;dataana&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p><strong>生成 <em>dataana.h</em> 和 <em>dataana.C</em> 两个文件。将 <em>dataana.h</em> 中 char 型数组的长度修改成一个较大的数值。（因为默认的长度是用来生成该代码的文件数据中的最大长度，但是其它文件可能有比它还大的）。如下修改为 128，也可以改成更大，如 1024 等</strong></p>
+<p><img src="img/dataana4.png" alt="ana4"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%BB%9F%E8%AE%A1%E7%A9%BF%E8%BF%87-DSSD-%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%95%B0">&#32479;&#35745;&#31359;&#36807; DSSD &#30340;&#20107;&#20214;&#25968;<a class="anchor-link" href="#%E7%BB%9F%E8%AE%A1%E7%A9%BF%E8%BF%87-DSSD-%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%95%B0">&#182;</a></h2><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">dataana::Loop</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fChain</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">nentries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fChain</span><span class="o">-&gt;</span><span class="n">GetEntriesFast</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">nbytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Long64_t</span><span class="w"> </span><span class="n">jentry</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">jentry</span><span class="o">&lt;</span><span class="n">nentries</span><span class="p">;</span><span class="n">jentry</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">ientry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadTree</span><span class="p">(</span><span class="n">jentry</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ientry</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fChain</span><span class="o">-&gt;</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">jentry</span><span class="p">);</span><span class="w">   </span><span class="n">nbytes</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">nb</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// if (Cut(ientry) &lt; 0) continue;</span>
+
+<span class="w">       </span><span class="c1">// 如果名字第一个字符为 D</span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">VolNamePre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;D&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">count</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">count</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>穿过 DSSD 的事件数除以模拟的总事件数，估计立体角。</p>
+<ul>
+<li>材料设置为真空</li>
+<li>粒子不与物质发生相互作用</li>
+<li>4$\pi$ 均匀发射</li>
 </ul>
-</li>
-<li>假设 $\beta$("e-") 在探测器某侧表面均匀分布</li>
-<li>$\beta$ 发射方向为朝向探测器一侧 2$\pi$ 均匀分布</li>
-<li>模拟给出“能量-效率”曲线（横坐标为$\beta$能量，纵坐标为探测效率）<ul>
-<li>模拟给出 100，150, 200，300，500，700，1000, 1500, 2000 keV $\beta$的探测效率<ul>
-<li>例如，对于 200 keV 能点，模拟 1000000 个事件，数据处理得到全能峰事件为 240351 个，则 该能量下的探测效率为 24.0%</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="img/hw2.png" alt="hw2"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%BB%9F%E8%AE%A1%E5%9C%A8-Clover-%E4%B8%8A%E7%9A%84%E8%83%BD%E9%87%8F%E6%B2%89%E7%A7%AF">&#32479;&#35745;&#22312; Clover &#19978;&#30340;&#33021;&#37327;&#27785;&#31215;<a class="anchor-link" href="#%E7%BB%9F%E8%AE%A1%E5%9C%A8-Clover-%E4%B8%8A%E7%9A%84%E8%83%BD%E9%87%8F%E6%B2%89%E7%A7%AF">&#182;</a></h2><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">dataana::Loop</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">TH1I</span><span class="w"> </span><span class="o">*</span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH1I</span><span class="p">(</span><span class="s">&quot;h&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">2500</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.5</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">ene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fChain</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">nentries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fChain</span><span class="o">-&gt;</span><span class="n">GetEntriesFast</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">nbytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Long64_t</span><span class="w"> </span><span class="n">jentry</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">jentry</span><span class="o">&lt;</span><span class="n">nentries</span><span class="p">;</span><span class="n">jentry</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">ientry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadTree</span><span class="p">(</span><span class="n">jentry</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ientry</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fChain</span><span class="o">-&gt;</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">jentry</span><span class="p">);</span><span class="w">   </span><span class="n">nbytes</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">nb</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// if (Cut(ientry) &lt; 0) continue;</span>
+
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">VolNamePre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;C&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">PName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;e&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">EventID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ID</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">ID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="p">(</span><span class="n">ene</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">h</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">ene</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EventID</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">ene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">ene</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">EDep</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">TCanvas</span><span class="w"> </span><span class="o">*</span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TCanvas</span><span class="p">(</span><span class="s">&quot;c1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">h</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p><img src="img/dataana5.png" alt="ana5"></p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14069,142 +14176,130 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#21442;&#32771;&#20195;&#30721;<a class="anchor-link" href="#%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#182;</a></h2><h3 id="%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#31435;&#20307;&#35282;&#27169;&#25311;<a class="anchor-link" href="#%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#182;</a></h3><div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.hh</span>
-<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physS13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+<h2 id="%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7">&#19968;&#20123;&#25216;&#24039;<a class="anchor-link" href="#%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7">&#182;</a></h2><p><strong>for 循环快速构建探测器阵列</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.hh</span>
+<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicCrystal</span><span class="p">[</span><span class="mi">10000</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physCrystal</span><span class="p">[</span><span class="mi">10000</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicPMT</span><span class="p">[</span><span class="mi">10000</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physPMT</span><span class="p">[</span><span class="mi">10000</span><span class="p">];</span><span class="w"></span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.cc</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">tempname</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span><span class="w"></span>
 
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">96</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="o">*</span><span class="n">um</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13R1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">12.5</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13R2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60.5</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="o">*</span><span class="n">um</span><span class="p">;</span><span class="w"></span>
-
-
-<span class="w">  </span><span class="n">G4Box</span><span class="o">*</span><span class="w"> </span><span class="n">solidBB30</span><span class="w"> </span><span class="o">=</span><span class="w">    </span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;BB30&quot;</span><span class="p">,</span><span class="w">                    </span><span class="c1">//its name</span>
-<span class="w">          </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30X</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30Y</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30Z</span><span class="p">);</span><span class="w"> </span><span class="c1">//its size</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_0&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_1&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_2&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_0</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_1</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_2</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_2</span><span class="o">-&gt;</span><span class="n">rotateX</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_0&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_1</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">-6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_1&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_2</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_2&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-
-
-<span class="w">  </span><span class="n">G4Tubs</span><span class="o">*</span><span class="w"> </span><span class="n">solidS13</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Tubs</span><span class="p">(</span><span class="s">&quot;S13&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">           </span><span class="n">S13R1</span><span class="p">,</span><span class="c1">//内半径</span>
-<span class="w">           </span><span class="n">S13R2</span><span class="p">,</span><span class="c1">//外半径</span>
-<span class="w">           </span><span class="mf">0.5</span><span class="o">*</span><span class="n">S13Z</span><span class="p">,</span><span class="c1">//Z轴方向的半长度</span>
+<span class="w">  </span><span class="n">G4Tubs</span><span class="o">*</span><span class="w"> </span><span class="n">solidCrystal</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Tubs</span><span class="p">(</span><span class="s">&quot;Crystal&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">           </span><span class="mi">0</span><span class="p">,</span><span class="c1">//内半径</span>
+<span class="w">           </span><span class="n">crystalR</span><span class="p">,</span><span class="c1">//外半径</span>
+<span class="w">           </span><span class="mf">0.5</span><span class="o">*</span><span class="n">crystalZ</span><span class="p">,</span><span class="c1">//Z轴方向的半长度</span>
 <span class="w">           </span><span class="mi">0</span><span class="o">*</span><span class="n">degree</span><span class="p">,</span><span class="c1">//圆周起始位置弧度值</span>
 <span class="w">           </span><span class="mi">360</span><span class="o">*</span><span class="n">degree</span><span class="p">);</span><span class="c1">//该实体的圆心角弧度值</span>
 
-<span class="w">  </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidS13</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;S13_0&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
 
-<span class="w">  </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidS13</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;S13_1&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">sprintf</span><span class="p">(</span><span class="n">tempname</span><span class="p">,</span><span class="s">&quot;Crystal%04d&quot;</span><span class="p">,</span><span class="n">num</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">  </span><span class="n">physS13</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">      </span><span class="n">logicCrystal</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidCrystal</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
+<span class="w">                </span><span class="n">crystal_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
+<span class="w">                </span><span class="n">tempname</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
+<span class="w">      </span><span class="n">physCrystal</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
 <span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">-5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;S13_0&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
+<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">((</span><span class="mf">31.86-7.08</span><span class="o">*</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cm</span><span class="p">,(</span><span class="mf">31.86-7.08</span><span class="o">*</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">20.0</span><span class="o">*</span><span class="n">cm</span><span class="o">+</span><span class="mf">0.5</span><span class="o">*</span><span class="n">crystalZ</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
+<span class="w">              </span><span class="n">logicCrystal</span><span class="p">[</span><span class="n">num</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
+<span class="w">              </span><span class="n">tempname</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
 <span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
 <span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
 <span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
 <span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
 
-<span class="w">  </span><span class="n">physS13</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;S13_1&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+<p><img src="img/dataana6.png" alt="ana6"></p>
+<div class="highlight"><pre><span></span><span class="cp">#define N_CRYSTALS 10000</span>
+<span class="n">std</span><span class="o">::</span><span class="n">stringstream</span><span class="w"> </span><span class="n">s2i</span><span class="p">;</span><span class="c1">//sstream cstring</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">energy</span><span class="p">[</span><span class="n">N_CRYSTALS</span><span class="p">];</span><span class="w"></span>
+<span class="kt">short</span><span class="w"> </span><span class="n">crystal</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">tmpi</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="c1">// 循环内</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">id</span><span class="o">!=</span><span class="n">EventID</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">id</span><span class="o">!=</span><span class="mi">-1</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//fill</span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_CRYSTALS</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="p">(</span><span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="n">crystal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// count = photon[i];</span>
+<span class="w">          </span><span class="n">de</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">          </span><span class="n">treewrite</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span><span class="c1">//loop</span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EventID</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_CRYSTALS</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// photon[i] = 0;</span>
+<span class="w">      </span><span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="c1">// 获得探测</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">test</span><span class="p">(</span><span class="n">VolNamePre</span><span class="o">+</span><span class="mi">7</span><span class="p">);</span><span class="c1">//PMT+3</span>
+<span class="w">  </span><span class="c1">// std::cout&lt;&lt;test&lt;&lt;std::endl;</span>
+<span class="w">  </span><span class="n">s2i</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="c1">//重复使用前一定要清空</span>
+<span class="w">  </span><span class="n">s2i</span><span class="o">&lt;&lt;</span><span class="n">test</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">s2i</span><span class="o">&gt;&gt;</span><span class="n">tmpi</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// photon[tmpi]++;</span>
+<span class="w">  </span><span class="n">energy</span><span class="p">[</span><span class="n">tmpi</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">EDep</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 
 </div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>征集示例需求</strong></p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">homework</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">dataana</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[NbConvertApp] Converting notebook dataana.ipynb to html
+
+[NbConvertApp] Writing 575810 bytes to dataana.html
+
+</pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div>

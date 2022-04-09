@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>homework</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>FRAME</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,46 +14010,96 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E4%BD%9C%E4%B8%9A">&#20316;&#19994;<a class="anchor-link" href="#%E4%BD%9C%E4%B8%9A">&#182;</a></h1>
+<h1 id="%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6">&#31243;&#24207;&#26694;&#26550;<a class="anchor-link" href="#%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="1.0-%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">1.0 &#31435;&#20307;&#35282;&#27169;&#25311;<a class="anchor-link" href="#1.0-%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
-<li>设置探测器<ul>
-<li>粒子源位于原点 （0，0，0）</li>
-<li>环形探测器 2 个（型号S13），灵敏面积内径 $\Phi = 25mm$，外径 $\Phi = 121mm$，厚度 300um</li>
-<li>矩形探测器 3 个（型号BB30），灵敏面积长96mm，宽 64mm，厚度 300um</li>
-<li>2个环形探测器距离原点均为 5.0 cm,三个矩形探测器距离原点均为 6.5 cm</li>
-<li>摆放位置如下图所示</li>
+<ul>
+<li>本教程目的在于教授 G4 的基本运行原理，以及如何快速应用到</li>
+<li>刻意放弃一些类（功能）的使用，例如 SensitiveDetector, Hit, hist 等等</li>
+<li>模拟与数据处理分离<ul>
+<li>为何模拟与数据处理必须分离？</li>
+<li>G4程序只负责模拟部分（一次运行）</li>
+<li>基于 MakeClass 等框架的数据分析（可重复处理）</li>
+<li>创建几何体的过程中，多用可视化界面检查</li>
 </ul>
 </li>
-<li>将材料设置为真空</li>
-<li>选择一个粒子，4$\pi$ 均匀发射</li>
-<li>模拟给出 5 个探测器的立体角和总立体角</li>
 </ul>
-<p><img src="img/hw1.png" alt="hw1"></p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="2.0-$%5Cbeta$-%E6%8E%A2%E6%B5%8B%E6%95%88%E7%8E%87%E6%A8%A1%E6%8B%9F">2.0 $\beta$ &#25506;&#27979;&#25928;&#29575;&#27169;&#25311;<a class="anchor-link" href="#2.0-$%5Cbeta$-%E6%8E%A2%E6%B5%8B%E6%95%88%E7%8E%87%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
-<li>硅探测器<ul>
-<li>型号 W1，灵敏面积 50x50 mm, 厚度 300 um </li>
+<h2 id="%E8%BF%90%E8%A1%8C%E9%9C%80%E8%A6%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B1%BB">&#36816;&#34892;&#38656;&#35201;&#30340;&#22522;&#26412;&#31867;<a class="anchor-link" href="#%E8%BF%90%E8%A1%8C%E9%9C%80%E8%A6%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B1%BB">&#182;</a></h2><ul>
+<li>DetectorConstruction: 继承自G4VUserDetectorConstruction</li>
+<li>PhysicsList: 继承自G4VModularPhysicsList</li>
+<li>ActionInitialization: 继承自G4VUserActionInitialization<ul>
+<li>PrimaryGeneratorAction: 继承自G4VUserPrimaryGeneratorAction</li>
+<li>RunAction:继承自G4UserRunAction</li>
+<li>EventAction:继承自G4UserEventAction</li>
+<li>TrackingAction:继承自G4UserTrackingAction</li>
+<li>SteppingAction:继承自G4UserSteppingAction</li>
+<li>StackingAction:继承自G4UserStackingAction</li>
 </ul>
 </li>
-<li>假设 $\beta$("e-") 在探测器某侧表面均匀分布</li>
-<li>$\beta$ 发射方向为朝向探测器一侧 2$\pi$ 均匀分布</li>
-<li>模拟给出“能量-效率”曲线（横坐标为$\beta$能量，纵坐标为探测效率）<ul>
-<li>模拟给出 100，150, 200，300，500，700，1000, 1500, 2000 keV $\beta$的探测效率<ul>
-<li>例如，对于 200 keV 能点，模拟 1000000 个事件，数据处理得到全能峰事件为 240351 个，则 该能量下的探测效率为 24.0%</li>
 </ul>
-</li>
+<p>其中，<strong>DetectorConstruction</strong>，<strong>PhysicsList</strong>，<strong>ActionInitialization</strong>，<strong>PrimaryGeneratorAction</strong> 四个类不可缺少，其余几个类根据情况选择使用。</p>
+<p>使用者必须熟练掌握探测器的几何设置 <strong>DetectorConstruction</strong> 和粒子源的设置 <strong>PrimaryGeneratorAction</strong> 两个类。</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E5%8D%95%E4%BD%8D%E7%B3%BB%E7%BB%9F">&#21333;&#20301;&#31995;&#32479;<a class="anchor-link" href="#%E5%8D%95%E4%BD%8D%E7%B3%BB%E7%BB%9F">&#182;</a></h2><p>G4可以进行单位换算，实质上是一些全局变量（G4SystemOfUnits.hh）</p>
+<ul>
+<li>长度：um, mm, cm, m, km</li>
+<li>能量：eV, keV, MeV</li>
+<li>质量：mg, g, kg</li>
+<li>摩尔质量: mole,</li>
+<li>体积：mm3, cm3, m3, km3</li>
+<li>时间：ns, s</li>
+<li>电荷量：eplus</li>
 </ul>
-</li>
-</ul>
-<p><img src="img/hw2.png" alt="hw2"></p>
+<p>其中，默认单位为：mm, MeV, g, mole, ns, eplus，即如果没有写单位，则为默认单位。</p>
+<p>例如:</p>
+<div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5.0</span><span class="o">*</span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.0</span><span class="o">*</span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.0</span><span class="o">*</span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+</pre></div>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14069,142 +14119,112 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#21442;&#32771;&#20195;&#30721;<a class="anchor-link" href="#%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#182;</a></h2><h3 id="%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#31435;&#20307;&#35282;&#27169;&#25311;<a class="anchor-link" href="#%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#182;</a></h3><div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.hh</span>
-<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physS13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.cc</span>
-
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">96</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="o">*</span><span class="n">um</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13R1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">12.5</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13R2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60.5</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="o">*</span><span class="n">um</span><span class="p">;</span><span class="w"></span>
-
-
-<span class="w">  </span><span class="n">G4Box</span><span class="o">*</span><span class="w"> </span><span class="n">solidBB30</span><span class="w"> </span><span class="o">=</span><span class="w">    </span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;BB30&quot;</span><span class="p">,</span><span class="w">                    </span><span class="c1">//its name</span>
-<span class="w">          </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30X</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30Y</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30Z</span><span class="p">);</span><span class="w"> </span><span class="c1">//its size</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_0&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_1&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_2&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_0</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_1</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_2</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_2</span><span class="o">-&gt;</span><span class="n">rotateX</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_0&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_1</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">-6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_1&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_2</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_2&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-
-
-<span class="w">  </span><span class="n">G4Tubs</span><span class="o">*</span><span class="w"> </span><span class="n">solidS13</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Tubs</span><span class="p">(</span><span class="s">&quot;S13&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">           </span><span class="n">S13R1</span><span class="p">,</span><span class="c1">//内半径</span>
-<span class="w">           </span><span class="n">S13R2</span><span class="p">,</span><span class="c1">//外半径</span>
-<span class="w">           </span><span class="mf">0.5</span><span class="o">*</span><span class="n">S13Z</span><span class="p">,</span><span class="c1">//Z轴方向的半长度</span>
-<span class="w">           </span><span class="mi">0</span><span class="o">*</span><span class="n">degree</span><span class="p">,</span><span class="c1">//圆周起始位置弧度值</span>
-<span class="w">           </span><span class="mi">360</span><span class="o">*</span><span class="n">degree</span><span class="p">);</span><span class="c1">//该实体的圆心角弧度值</span>
-
-<span class="w">  </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidS13</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;S13_0&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidS13</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;S13_1&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">physS13</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">-5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;S13_0&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physS13</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;S13_1&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-</pre></div>
+<ul>
+<li>G4MTRunManager::Initialize()调用后，初始化G4内核</li>
+<li>G4MTRunManager::BeamOn()调用后，开始一次 G4Run</li>
+</ul>
+<p><img src="img/RunEventTrackStep.png" alt="111"></p>
+<ul>
+<li>一次BeamOn调用就是一次G4Run; 一次G4Run过程中，探测器设置和物理过程不可修改。</li>
+<li>BeamOn(1000) : 一次G4Run中，发射1000个事件（G4Event）</li>
+<li>一个粒子的产生到该粒子停止追踪，径迹信息由同一个G4Track记录</li>
+<li>在一个步长中，粒子信息该变量由G4Step记录</li>
+</ul>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>征集示例需求</strong></p>
+<ul>
+<li>G4Step包括两个“点”：PreStepPoint，PostStepPoint（对应class均为G4StepPoint）。</li>
+<li>PreStepPoint容纳物理过程发生前该粒子的状态（动能，电荷量等），</li>
+<li>PostStepPoint容纳物理过程发生后该粒子的状态。</li>
+<li>G4Step中保存的是这两“点”的粒子属性改变量（deltaE等）</li>
+</ul>
+<p><img src="img/steppoint.png" alt="123"></p>
+<ul>
+<li>步长：由该step的物理过程决定。</li>
+<li><p>边界：step不能穿过两个物理体的边界，即边界上必须存在一个steppoint。此时step的status为fGeomBoundary</p>
+</li>
+<li><p>G4Track：定义为粒子当前的状态（与PostStepPoint容纳的信息一致）。</p>
+</li>
+<li>每个G4Step调用后，G4Track信息更新。</li>
+<li>Track ID: ID编号从1开始，每个track中也记录其父粒子的track ID。</li>
+<li>初级粒子（particlegun 发射的粒子）的父粒子Track ID为0</li>
+</ul>
+<p><img src="img/trackid.png" alt="1234"></p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>提取物理量的接口：UserAction,  G4VSensitiveDetector</strong></p>
+<ul>
+<li>G4UserSteppingAction<ul>
+<li>UserSteppingAction(const G4Step*)</li>
+</ul>
+</li>
+<li>G4UserTrackingAction<ul>
+<li>PreUserTrackingAction(const G4Track *)</li>
+<li>PostUserTrackingAction(const G4Track *)</li>
+</ul>
+</li>
+<li>G4UserEventAction<ul>
+<li>BeginOfEventAction()</li>
+<li>EndOfEventAction()</li>
+</ul>
+</li>
+<li>G4UserRunAction<ul>
+<li>BeginOfRunAction()</li>
+<li>EndOfRunAction()</li>
+</ul>
+</li>
+</ul>
+<p>Example :</p>
+<ul>
+<li>RunAction ：记录并输出程序运行时间、创建文件</li>
+<li>EventAction : 输出进度、SD得到该事件的所有数据</li>
+<li>TrackingAction : 输出每个track的初始信息、遗传标记、杀死次级粒子</li>
+<li>SteppingAction : 获得该step的所有数据</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">homework</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">FRAME</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[NbConvertApp] Converting notebook FRAME.ipynb to html
+
+[NbConvertApp] Writing 565935 bytes to FRAME.html
+
+</pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div>

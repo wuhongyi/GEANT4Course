@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>homework</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>PrimaryGeneratorAction</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,55 +14010,184 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E4%BD%9C%E4%B8%9A">&#20316;&#19994;<a class="anchor-link" href="#%E4%BD%9C%E4%B8%9A">&#182;</a></h1>
+<h1 id="%E7%B2%92%E5%AD%90%E6%BA%90%E5%AE%9A%E4%B9%89">&#31890;&#23376;&#28304;&#23450;&#20041;<a class="anchor-link" href="#%E7%B2%92%E5%AD%90%E6%BA%90%E5%AE%9A%E4%B9%89">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="1.0-%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">1.0 &#31435;&#20307;&#35282;&#27169;&#25311;<a class="anchor-link" href="#1.0-%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
-<li>设置探测器<ul>
-<li>粒子源位于原点 （0，0，0）</li>
-<li>环形探测器 2 个（型号S13），灵敏面积内径 $\Phi = 25mm$，外径 $\Phi = 121mm$，厚度 300um</li>
-<li>矩形探测器 3 个（型号BB30），灵敏面积长96mm，宽 64mm，厚度 300um</li>
-<li>2个环形探测器距离原点均为 5.0 cm,三个矩形探测器距离原点均为 6.5 cm</li>
-<li>摆放位置如下图所示</li>
-</ul>
-</li>
-<li>将材料设置为真空</li>
-<li>选择一个粒子，4$\pi$ 均匀发射</li>
-<li>模拟给出 5 个探测器的立体角和总立体角</li>
-</ul>
-<p><img src="img/hw1.png" alt="hw1"></p>
+<p>用户必须继承 G4VUserPrimaryGeneratorAction 类来实现粒子源的定义（实现纯需函数 GeneratePrimaries()）</p>
+<p><img src="img/gun1.png" alt="gun1"></p>
+<p><strong>建议大家使用 <em>G4ParticleGun</em> ，能够实现灵活度最大化。不建议使用 <em>G4GeneralParticleSource</em></strong></p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="2.0-$%5Cbeta$-%E6%8E%A2%E6%B5%8B%E6%95%88%E7%8E%87%E6%A8%A1%E6%8B%9F">2.0 $\beta$ &#25506;&#27979;&#25928;&#29575;&#27169;&#25311;<a class="anchor-link" href="#2.0-$%5Cbeta$-%E6%8E%A2%E6%B5%8B%E6%95%88%E7%8E%87%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
-<li>硅探测器<ul>
-<li>型号 W1，灵敏面积 50x50 mm, 厚度 300 um </li>
-</ul>
-</li>
-<li>假设 $\beta$("e-") 在探测器某侧表面均匀分布</li>
-<li>$\beta$ 发射方向为朝向探测器一侧 2$\pi$ 均匀分布</li>
-<li>模拟给出“能量-效率”曲线（横坐标为$\beta$能量，纵坐标为探测效率）<ul>
-<li>模拟给出 100，150, 200，300，500，700，1000, 1500, 2000 keV $\beta$的探测效率<ul>
-<li>例如，对于 200 keV 能点，模拟 1000000 个事件，数据处理得到全能峰事件为 240351 个，则 该能量下的探测效率为 24.0%</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="img/hw2.png" alt="hw2"></p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%B2%92%E5%AD%90%E5%8F%91%E5%B0%84%E6%9E%AA">&#31890;&#23376;&#21457;&#23556;&#26538;<a class="anchor-link" href="#%E7%B2%92%E5%AD%90%E5%8F%91%E5%B0%84%E6%9E%AA">&#182;</a></h2><p>初始化 G4ParticleGun ，以下两行代码通常放在构造函数中。</p>
+<div class="highlight"><pre><span></span><span class="n">G4int</span><span class="w"> </span><span class="n">n_particle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="n">particleGun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4ParticleGun</span><span class="p">(</span><span class="n">n_particle</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// 一次发射具有相同属性的n_particle个粒子</span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%B2%92%E5%AD%90%E5%AE%9A%E4%B9%89%E7%A7%8D%E7%B1%BB">&#31890;&#23376;&#23450;&#20041;&#31181;&#31867;<a class="anchor-link" href="#%E7%B2%92%E5%AD%90%E5%AE%9A%E4%B9%89%E7%A7%8D%E7%B1%BB">&#182;</a></h2><div class="highlight"><pre><span></span><span class="c1">// 方法一：声明常用粒子</span>
+<span class="n">G4ParticleTable</span><span class="o">*</span><span class="w"> </span><span class="n">particleTable</span><span class="o">=</span><span class="n">G4ParticleTable</span><span class="o">::</span><span class="n">GetParticleTable</span><span class="p">();</span><span class="w"></span>
+<span class="n">G4ParticleDefinition</span><span class="o">*</span><span class="w"> </span><span class="n">particle</span><span class="o">=</span><span class="n">particleTable</span><span class="o">-&gt;</span><span class="n">FindParticle</span><span class="p">(</span><span class="s">&quot;alpha&quot;</span><span class="p">);</span><span class="w"> </span>
+<span class="c1">//“e-”,“e+”,“gamma”,“neutron”,“proton”,…</span>
+
+<span class="c1">// 方法二：声明离子</span>
+<span class="n">G4IonTable</span><span class="w"> </span><span class="o">*</span><span class="n">particleTable</span><span class="o">=</span><span class="n">G4IonTable</span><span class="o">::</span><span class="n">GetIonTable</span><span class="p">();</span><span class="w"></span>
+<span class="n">G4ParticleDefinition</span><span class="w"> </span><span class="o">*</span><span class="n">particle</span><span class="o">=</span><span class="n">particleTable</span><span class="o">-&gt;</span><span class="n">GetIon</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.0</span><span class="p">);</span><span class="w"> </span><span class="c1">//alpha, z,a,ex</span>
+
+
+<span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleDefinition</span><span class="p">(</span><span class="n">particle</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p><img src="img/gun2.png" alt="gun2"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%B2%92%E5%AD%90%E5%B1%9E%E6%80%A7">&#31890;&#23376;&#23646;&#24615;<a class="anchor-link" href="#%E7%B2%92%E5%AD%90%E5%B1%9E%E6%80%A7">&#182;</a></h2><div class="highlight"><pre><span></span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleCharge</span><span class="p">(</span><span class="mf">0.</span><span class="p">);</span><span class="w">    </span><span class="c1">//电荷态，EM 物理过程自动修正</span>
+<span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">(</span><span class="mf">5.42</span><span class="o">*</span><span class="n">MeV</span><span class="p">);</span><span class="w">  </span><span class="c1">//动能</span>
+<span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleTime</span><span class="p">(</span><span class="mf">0.</span><span class="p">);</span><span class="w"> </span><span class="c1">//时间</span>
+<span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticlePosition</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">));</span><span class="w"> </span><span class="c1">//初始位置</span>
+<span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleMomentumDirection</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">));</span><span class="c1">//动量方向</span>
+<span class="c1">//particleGun-&gt;SetParticleMomentum(G4ParticleMomentum);//动量</span>
+<span class="c1">//particleGun-&gt;SetParticlePolarization(G4ThreeVector);  //极化方向</span>
+</pre></div>
+<p><img src="img/gun3.png" alt="gun3"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%B2%92%E5%AD%90%E5%8F%91%E5%B0%84">&#31890;&#23376;&#21457;&#23556;<a class="anchor-link" href="#%E7%B2%92%E5%AD%90%E5%8F%91%E5%B0%84">&#182;</a></h2><div class="highlight"><pre><span></span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// 只有调用了以上代码，才能使该行代码之前的粒子属性设置生效</span>
+</pre></div>
+<p><strong>如果一个事件中发射多个粒子</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// ... code 1</span>
+<span class="c1">// 这里代码省略</span>
+<span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// ... code 2</span>
+<span class="c1">// 这里代码省略</span>
+<span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#21442;&#32771;&#20195;&#30721;<a class="anchor-link" href="#%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#182;</a></h2><ul>
+<li>gamma 粒子</li>
+<li>能量 2 MeV</li>
+<li>在 50*50 mm 区域内均匀分布</li>
+<li>4pi 各向同性 </li>
+</ul>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuPrimaryGeneratorActionAll::GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span><span class="o">*</span><span class="w"> </span><span class="n">anEvent</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleTable</span><span class="o">*</span><span class="w"> </span><span class="n">particleTable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4ParticleTable</span><span class="o">::</span><span class="n">GetParticleTable</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleDefinition</span><span class="o">*</span><span class="w"> </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">particleTable</span><span class="o">-&gt;</span><span class="n">FindParticle</span><span class="p">(</span><span class="s">&quot;gamma&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleDefinition</span><span class="p">(</span><span class="n">pp</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;##Null pp in wuPrimaryGeneratorAction::SetParticleGun()&quot;</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">MeV</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// 在 50*50 mm 区域内均匀分布  </span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">G4UniformRand</span><span class="p">()</span><span class="mf">-0.5</span><span class="p">)</span><span class="o">*</span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">G4UniformRand</span><span class="p">()</span><span class="mf">-0.5</span><span class="p">)</span><span class="o">*</span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w">    </span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticlePosition</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">));</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// 4pi 各向同性  </span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="w"> </span><span class="n">acos</span><span class="p">(</span><span class="err">（</span><span class="n">G4UniformRand</span><span class="p">()</span><span class="mf">-0.5</span><span class="err">）</span><span class="o">*</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4UniformRand</span><span class="p">()</span><span class="o">*</span><span class="mf">2.0</span><span class="o">*</span><span class="n">pi</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPZ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ThreeVector</span><span class="w"> </span><span class="n">directPri</span><span class="p">(</span><span class="n">cosPX</span><span class="p">,</span><span class="w"> </span><span class="n">cosPY</span><span class="p">,</span><span class="w"> </span><span class="n">cosPZ</span><span class="p">);</span><span class="w">    </span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleMomentumDirection</span><span class="p">(</span><span class="n">directPri</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span><span class="w">  </span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<ul>
+<li>12C/p 两粒子</li>
+<li>各自能量 2-10 MeV</li>
+<li>在 50*50 mm 区域内均匀分布(同一位置)</li>
+<li>4pi 各向同性，两粒子方向相反 </li>
+</ul>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuPrimaryGeneratorActionAll::GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span><span class="o">*</span><span class="w"> </span><span class="n">anEvent</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleTable</span><span class="o">*</span><span class="w"> </span><span class="n">particleTable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4ParticleTable</span><span class="o">::</span><span class="n">GetParticleTable</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleDefinition</span><span class="o">*</span><span class="w"> </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">particleTable</span><span class="o">-&gt;</span><span class="n">FindParticle</span><span class="p">(</span><span class="s">&quot;proton&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleDefinition</span><span class="p">(</span><span class="n">pp</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;##Null pp in wuPrimaryGeneratorAction::SetParticleGun()&quot;</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">((</span><span class="mf">2.0</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">G4UniformRand</span><span class="p">())</span><span class="o">*</span><span class="n">MeV</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// 在 50*50 mm 区域内均匀分布  </span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">G4UniformRand</span><span class="p">()</span><span class="mf">-0.5</span><span class="p">)</span><span class="o">*</span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">G4UniformRand</span><span class="p">()</span><span class="mf">-0.5</span><span class="p">)</span><span class="o">*</span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w">    </span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticlePosition</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">));</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// 4pi 各向同性  </span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">theta</span><span class="o">=</span><span class="w"> </span><span class="n">acos</span><span class="p">(</span><span class="err">（</span><span class="n">G4UniformRand</span><span class="p">()</span><span class="mf">-0.5</span><span class="err">）</span><span class="o">*</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4UniformRand</span><span class="p">()</span><span class="o">*</span><span class="mf">2.0</span><span class="o">*</span><span class="n">pi</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPZ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ThreeVector</span><span class="w"> </span><span class="n">directPri</span><span class="p">(</span><span class="n">cosPX</span><span class="p">,</span><span class="w"> </span><span class="n">cosPY</span><span class="p">,</span><span class="w"> </span><span class="n">cosPZ</span><span class="p">);</span><span class="w">    </span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleMomentumDirection</span><span class="p">(</span><span class="n">directPri</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// 发射第一个粒子  </span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">IonZ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">IonA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">IonEstar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="c1">//exitition energy</span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">IonQ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;ion:Z-A-Q-E*&quot;</span><span class="o">&lt;&lt;</span><span class="n">IonZ</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">IonA</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">IonQ</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">IonEstar</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">particleTable</span><span class="o">-&gt;</span><span class="n">GetIonTable</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetIon</span><span class="p">(</span><span class="n">IonZ</span><span class="p">,</span><span class="w"> </span><span class="n">IonA</span><span class="p">,</span><span class="w"> </span><span class="n">IonEstar</span><span class="p">);</span><span class="c1">//4.10.01版本强制 G4IonTable.hh</span>
+<span class="w">  </span><span class="c1">// particleGun-&gt;SetParticleCharge(IonQ);</span>
+
+<span class="w">  </span><span class="n">articleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">((</span><span class="mf">2.0</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">G4UniformRand</span><span class="p">())</span><span class="o">*</span><span class="n">MeV</span><span class="p">);</span><span class="w">  </span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticlePosition</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">));</span><span class="w">  </span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleMomentumDirection</span><span class="p">(</span><span class="o">-</span><span class="n">directPri</span><span class="p">);</span><span class="w">    </span>
+
+<span class="w">  </span><span class="c1">// 发射第二个粒子   </span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span><span class="w">  </span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">PrimaryGeneratorAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14066,145 +14195,28 @@ a.anchor-link {
 </div>
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#21442;&#32771;&#20195;&#30721;<a class="anchor-link" href="#%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#182;</a></h2><h3 id="%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#31435;&#20307;&#35282;&#27169;&#25311;<a class="anchor-link" href="#%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#182;</a></h3><div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.hh</span>
-<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physS13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.cc</span>
-
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">96</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="o">*</span><span class="n">um</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13R1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">12.5</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13R2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60.5</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="o">*</span><span class="n">um</span><span class="p">;</span><span class="w"></span>
+<div class="jp-Cell-outputWrapper">
 
 
-<span class="w">  </span><span class="n">G4Box</span><span class="o">*</span><span class="w"> </span><span class="n">solidBB30</span><span class="w"> </span><span class="o">=</span><span class="w">    </span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;BB30&quot;</span><span class="p">,</span><span class="w">                    </span><span class="c1">//its name</span>
-<span class="w">          </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30X</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30Y</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30Z</span><span class="p">);</span><span class="w"> </span><span class="c1">//its size</span>
+<div class="jp-OutputArea jp-Cell-outputArea">
 
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_0&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
+<div class="jp-OutputArea-child">
 
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_1&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_2&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_0</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[NbConvertApp] Converting notebook PrimaryGeneratorAction.ipynb to html
 
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_1</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
+[NbConvertApp] Writing 585255 bytes to PrimaryGeneratorAction.html
 
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_2</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_2</span><span class="o">-&gt;</span><span class="n">rotateX</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_0&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_1</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">-6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_1&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_2</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_2&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-
-
-<span class="w">  </span><span class="n">G4Tubs</span><span class="o">*</span><span class="w"> </span><span class="n">solidS13</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Tubs</span><span class="p">(</span><span class="s">&quot;S13&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">           </span><span class="n">S13R1</span><span class="p">,</span><span class="c1">//内半径</span>
-<span class="w">           </span><span class="n">S13R2</span><span class="p">,</span><span class="c1">//外半径</span>
-<span class="w">           </span><span class="mf">0.5</span><span class="o">*</span><span class="n">S13Z</span><span class="p">,</span><span class="c1">//Z轴方向的半长度</span>
-<span class="w">           </span><span class="mi">0</span><span class="o">*</span><span class="n">degree</span><span class="p">,</span><span class="c1">//圆周起始位置弧度值</span>
-<span class="w">           </span><span class="mi">360</span><span class="o">*</span><span class="n">degree</span><span class="p">);</span><span class="c1">//该实体的圆心角弧度值</span>
-
-<span class="w">  </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidS13</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;S13_0&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidS13</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;S13_1&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">physS13</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">-5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;S13_0&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physS13</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;S13_1&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-</pre></div>
-
+</pre>
 </div>
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>征集示例需求</strong></p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">homework</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
-</pre></div>
 
-     </div>
-</div>
-</div>
 </div>
 
 </div>

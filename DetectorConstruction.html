@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>homework</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>DetectorConstruction</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,46 +14010,307 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="%E4%BD%9C%E4%B8%9A">&#20316;&#19994;<a class="anchor-link" href="#%E4%BD%9C%E4%B8%9A">&#182;</a></h1>
+<h1 id="%E6%8E%A2%E6%B5%8B%E5%99%A8%E6%9E%84%E5%BB%BA">&#25506;&#27979;&#22120;&#26500;&#24314;<a class="anchor-link" href="#%E6%8E%A2%E6%B5%8B%E5%99%A8%E6%9E%84%E5%BB%BA">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="1.0-%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">1.0 &#31435;&#20307;&#35282;&#27169;&#25311;<a class="anchor-link" href="#1.0-%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
-<li>设置探测器<ul>
-<li>粒子源位于原点 （0，0，0）</li>
-<li>环形探测器 2 个（型号S13），灵敏面积内径 $\Phi = 25mm$，外径 $\Phi = 121mm$，厚度 300um</li>
-<li>矩形探测器 3 个（型号BB30），灵敏面积长96mm，宽 64mm，厚度 300um</li>
-<li>2个环形探测器距离原点均为 5.0 cm,三个矩形探测器距离原点均为 6.5 cm</li>
-<li>摆放位置如下图所示</li>
+<p>G4 探测器构建顺序</p>
+<p>几何体 -&gt; 逻辑体 -&gt; 物理体</p>
+<ul>
+<li>几何体<ul>
+<li>形状</li>
 </ul>
 </li>
-<li>将材料设置为真空</li>
-<li>选择一个粒子，4$\pi$ 均匀发射</li>
-<li>模拟给出 5 个探测器的立体角和总立体角</li>
+<li>逻辑体<ul>
+<li>材料</li>
 </ul>
-<p><img src="img/hw1.png" alt="hw1"></p>
+</li>
+<li>物理体<ul>
+<li>位置</li>
+</ul>
+</li>
+</ul>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="2.0-$%5Cbeta$-%E6%8E%A2%E6%B5%8B%E6%95%88%E7%8E%87%E6%A8%A1%E6%8B%9F">2.0 $\beta$ &#25506;&#27979;&#25928;&#29575;&#27169;&#25311;<a class="anchor-link" href="#2.0-$%5Cbeta$-%E6%8E%A2%E6%B5%8B%E6%95%88%E7%8E%87%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
-<li>硅探测器<ul>
-<li>型号 W1，灵敏面积 50x50 mm, 厚度 300 um </li>
+<p><strong>用户必须继承 G4VUserDetectorConstruction 类来实现探测器的定义</strong></p>
+<p><img src="img/detector1.png" alt="det1"></p>
+<ul>
+<li>必须实现的纯虚函数是G4VPhysicalVolume* Construct();<ul>
+<li>作用：定义空间中所有的探测器</li>
 </ul>
 </li>
-<li>假设 $\beta$("e-") 在探测器某侧表面均匀分布</li>
-<li>$\beta$ 发射方向为朝向探测器一侧 2$\pi$ 均匀分布</li>
-<li>模拟给出“能量-效率”曲线（横坐标为$\beta$能量，纵坐标为探测效率）<ul>
-<li>模拟给出 100，150, 200，300，500，700，1000, 1500, 2000 keV $\beta$的探测效率<ul>
-<li>例如，对于 200 keV 能点，模拟 1000000 个事件，数据处理得到全能峰事件为 240351 个，则 该能量下的探测效率为 24.0%</li>
-</ul>
-</li>
+<li>虚函数 Void ConstructSDandField();<ul>
+<li>作用：定义电磁场、选择数据输出的灵敏体。</li>
 </ul>
 </li>
 </ul>
-<p><img src="img/hw2.png" alt="hw2"></p>
+<p><img src="img/detector2.png" alt="det2"></p>
+<p><strong>以下几点要求是多年经验的总结，目的在于提高代码可读性，方便修改。</strong></p>
+<p>为了代码的规范及可重复性，我们这里将材料的定义、探测器的定义分离成两个函数。</p>
+<p><img src="img/detector3.png" alt="det3"></p>
+<p>参数的定义建议放在函数头部部分，方便对数值的修改。</p>
+<p><img src="img/detector4.png" alt="det4"></p>
+<p>G4LogicalVolume，G4VPhysicalVolume 类对象的声明放在 hh 文件中。</p>
+<p><img src="img/detector6.png" alt="det6"></p>
+<p>下面是可视化界面的颜色设置示例，只要修改 G4Colour 中  RGB 三原色的比例即可，数值均为 [0.0,1.0]。对哪一个探测器设置颜色就仿照示例进行修改即可。</p>
+<p><img src="img/detector5.png" alt="det5"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E6%9D%90%E6%96%99%E5%AE%9A%E4%B9%89">&#26448;&#26009;&#23450;&#20041;<a class="anchor-link" href="#%E6%9D%90%E6%96%99%E5%AE%9A%E4%B9%89">&#182;</a></h2><p>参考 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/material.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/material.html</a></p>
+<p>在自然界中，一般材料（化合物、混合物）由元素构成，元素由同位素构成。因此，这是Geant4中设计的三个主要类(G4Isotope/G4Element/G4Material)。每个类都有一个表作为静态数据成员，用于跟踪各个类创建的实例。所有三个对象在构造时都会自动注册到相应的表中，并且永远不应该在用户代码中删除它们。</p>
+<p><strong>G4Isotope/G4Element/G4Material 这三个类 new 的对象，不需要 delete</strong></p>
+<p><strong>G4Materrial 材料只要一定义，就放置在一个全局的容器内，随时可以拿来使用。</strong></p>
+<h3 id="%E6%9E%84%E9%80%A0%E5%85%83%E7%B4%A0">&#26500;&#36896;&#20803;&#32032;<a class="anchor-link" href="#%E6%9E%84%E9%80%A0%E5%85%83%E7%B4%A0">&#182;</a></h3><div class="highlight"><pre><span></span><span class="c1">//定义元素，方法一</span>
+<span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Element</span><span class="p">(</span><span class="s">&quot;Hydrogen&quot;</span><span class="p">,</span><span class="s">&quot;H&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="mf">1.01</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="c1">//定义元素，方法二</span>
+<span class="n">G4NistManager</span><span class="o">*</span><span class="w"> </span><span class="n">man</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span><span class="w"></span>
+<span class="n">G4Element</span><span class="w"> </span><span class="o">*</span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">man</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;N&quot;</span><span class="p">);</span><span class="c1">//采用天然丰度</span>
+<span class="n">G4Element</span><span class="w"> </span><span class="o">*</span><span class="n">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">man</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;O&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<h3 id="%E6%9E%84%E9%80%A0%E6%9D%90%E6%96%99">&#26500;&#36896;&#26448;&#26009;<a class="anchor-link" href="#%E6%9E%84%E9%80%A0%E6%9D%90%E6%96%99">&#182;</a></h3><p><strong>单质</strong></p>
+<div class="highlight"><pre><span></span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">lAr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;liquidArgon&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">18.</span><span class="p">,</span><span class="w"> </span><span class="mf">39.95</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">,</span><span class="w"> </span><span class="mf">1.390</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<p><strong>分子/混合物</strong></p>
+<div class="highlight"><pre><span></span><span class="n">G4Material</span><span class="w"> </span><span class="o">*</span><span class="n">pVacuum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;Vacuum&quot;</span><span class="p">,</span><span class="mf">1.29e-10</span><span class="o">*</span><span class="n">mg</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">kStateGas</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                              </span><span class="mf">0.1</span><span class="o">*</span><span class="n">kelvin</span><span class="p">,</span><span class="mf">1.</span><span class="n">e</span><span class="mi">-19</span><span class="o">*</span><span class="n">pascal</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">pVacuum</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span><span class="c1">//注意这里是整型</span>
+<span class="n">pVacuum</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="c1">//表示原子个数比</span>
+
+<span class="c1">//或者</span>
+
+<span class="n">pVacuum</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="mf">70.</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="c1">//注意这里是浮点型</span>
+<span class="n">pVacuum</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="w"> </span><span class="mf">30.</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="c1">//表示质量占比</span>
+</pre></div>
+<p>对于常见的材料，G4已经封装好，直接调用即可</p>
+<div class="highlight"><pre><span></span><span class="n">G4NistManager</span><span class="o">*</span><span class="w"> </span><span class="n">man</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span><span class="w"></span>
+<span class="n">G4Material</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pAir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">man</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_AIR&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">G4Material</span><span class="w"> </span><span class="o">*</span><span class="n">pSi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">man</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_Si&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<h3 id="%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#21442;&#32771;&#20195;&#30721;<a class="anchor-link" href="#%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#182;</a></h3><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuDetectorConstruction::DefineMaterials</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"> </span>
+<span class="w">  </span><span class="c1">//在这里先定义所有可能用到的材料</span>
+<span class="w">  </span><span class="c1">// Get nist material manager</span>
+<span class="w">  </span><span class="n">G4NistManager</span><span class="o">*</span><span class="w"> </span><span class="n">nist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">//注册G4自身定义好的材料</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_Galactic&quot;</span><span class="p">);</span><span class="c1">//真空</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_Ge&quot;</span><span class="p">);</span><span class="c1">//</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_Pu&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_H&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_Al&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_lH2&quot;</span><span class="p">);</span><span class="c1">//</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_lN2&quot;</span><span class="p">);</span><span class="c1">//</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_lO2&quot;</span><span class="p">);</span><span class="c1">//</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_lAr&quot;</span><span class="p">);</span><span class="c1">//Liquid argon</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_Be&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_WATER&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_WATER_VAPOR&quot;</span><span class="p">);</span><span class="c1">//水蒸气</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_POLYETHYLENE&quot;</span><span class="p">);</span><span class="c1">//聚乙烯</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_BGO&quot;</span><span class="p">);</span><span class="c1">//</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_CARBON_DIOXIDE&quot;</span><span class="p">);</span><span class="c1">//二氧化碳</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_LEAD_OXIDE&quot;</span><span class="p">);</span><span class="c1">//氧化铅</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_MYLAR&quot;</span><span class="p">);</span><span class="c1">//mylar膜</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_PLEXIGLASS&quot;</span><span class="p">);</span><span class="c1">//有机玻璃</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_STAINLESS-STEEL&quot;</span><span class="p">);</span><span class="c1">//不锈钢</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_LUCITE&quot;</span><span class="p">);</span><span class="c1">//透明合成树脂(有机玻璃)</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_CONCRETE&quot;</span><span class="p">);</span><span class="c1">//混凝土</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_GRAPHITE&quot;</span><span class="p">);</span><span class="c1">//石墨</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_SILICON_DIOXIDE&quot;</span><span class="p">);</span><span class="c1">//二氧化硅</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_RUBBER_NATURAL&quot;</span><span class="p">);</span><span class="c1">//天然橡胶</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_PbWO4&quot;</span><span class="p">);</span><span class="c1">//</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_URANIUM_OXIDE&quot;</span><span class="p">);</span><span class="c1">//氧化铀 </span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_URANIUM_MONOCARBIDE&quot;</span><span class="p">);</span><span class="c1">//碳化铀</span>
+<span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_URANIUM_DICARBIDE&quot;</span><span class="p">);</span><span class="c1">//二碳化铀</span>
+<span class="w">  </span><span class="c1">// 更多预定义材料请看说明书</span>
+
+
+<span class="w">  </span><span class="c1">// 注册G4自身定义好的 elements，采用天然丰度</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;H&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//1</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Li</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Li&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//3</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;C&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//6</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;N&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//7</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;O&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//8</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Mg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Mg&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//12</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Al</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Al&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//13</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Si</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Si&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//14</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;P&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//15</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;S&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//16</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Cr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Cr&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//24</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Mn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Mn&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//25</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Fe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Fe&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//26</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Ni</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Ni&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//28</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;I&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//53</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Cs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Cs&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//55</span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">Ce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;Ce&quot;</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span><span class="c1">//58</span>
+
+<span class="w">  </span><span class="c1">// 同位素构建元素，用来调整材料丰度</span>
+<span class="w">  </span><span class="n">G4Isotope</span><span class="o">*</span><span class="w"> </span><span class="n">U4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Isotope</span><span class="p">(</span><span class="s">&quot;U234&quot;</span><span class="p">,</span><span class="mi">92</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mf">234.02</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Isotope</span><span class="o">*</span><span class="w"> </span><span class="n">U5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Isotope</span><span class="p">(</span><span class="s">&quot;U235&quot;</span><span class="p">,</span><span class="mi">92</span><span class="p">,</span><span class="mi">235</span><span class="p">,</span><span class="mf">235.01</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Isotope</span><span class="o">*</span><span class="w"> </span><span class="n">U6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Isotope</span><span class="p">(</span><span class="s">&quot;U236&quot;</span><span class="p">,</span><span class="mi">92</span><span class="p">,</span><span class="mi">236</span><span class="p">,</span><span class="mf">236.04</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Isotope</span><span class="o">*</span><span class="w"> </span><span class="n">U8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Isotope</span><span class="p">(</span><span class="s">&quot;U238&quot;</span><span class="p">,</span><span class="mi">92</span><span class="p">,</span><span class="mi">238</span><span class="p">,</span><span class="mf">238.03</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">HEU58</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Element</span><span class="p">(</span><span class="s">&quot;Highly-enriched Uranium 58&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HEU58&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU58</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.93</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU58</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.07</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">HEU4568</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Element</span><span class="p">(</span><span class="s">&quot;Highly-enriched Uranium 4568&quot;</span><span class="p">,</span><span class="s">&quot;HEU4568&quot;</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU4568</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U4</span><span class="p">,</span><span class="mf">0.0097</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU4568</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U5</span><span class="p">,</span><span class="mf">0.9315</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU4568</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U6</span><span class="p">,</span><span class="mf">0.0024</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU4568</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U8</span><span class="p">,</span><span class="mf">0.0564</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">//---------------------------------------------------------------------------------</span>
+
+<span class="w">  </span><span class="c1">// Scintillator(BC408) 塑闪 </span>
+<span class="w">  </span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">BC408</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;BC408&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.032</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">BC408</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">);</span><span class="n">BC408</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// BC408-&gt;AddElement(H, 10);BC408-&gt;AddElement(C, 9);</span>
+
+<span class="w">  </span><span class="c1">// LiquidScint(NE213) 液闪 </span>
+<span class="w">  </span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">NE213</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;NE213&quot;</span><span class="p">,</span><span class="mf">0.874</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">NE213</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="mi">1212</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">NE213</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="mi">1000</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// He-3 detector materials</span>
+<span class="w">  </span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">matHe3</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;He3&quot;</span><span class="p">,</span><span class="w">  </span><span class="mf">2.</span><span class="p">,</span><span class="w"> </span><span class="mf">3.</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00049</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="w"> </span><span class="n">kStateGas</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// Uranium material</span>
+<span class="w">  </span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">matHEU58</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;HEU58&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">19.1</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">kStateSolid</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matHEU58</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">HEU58</span><span class="p">,</span><span class="w"> </span><span class="mf">1.00</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">matHEU4568</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;HEU4568&quot;</span><span class="p">,</span><span class="mf">18.75</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matHEU4568</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">HEU4568</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">matSteel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;Steel&quot;</span><span class="p">,</span><span class="mf">7.788</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="mi">9</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">Fe</span><span class="p">,</span><span class="mf">62.1805</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">Cr</span><span class="p">,</span><span class="mf">20.26</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">Mn</span><span class="p">,</span><span class="mf">9.37</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">Ni</span><span class="p">,</span><span class="mf">7.5</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">Si</span><span class="p">,</span><span class="mf">0.34</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mf">0.29</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="mf">0.04</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="mf">0.018</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matSteel</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">S</span><span class="p">,</span><span class="mf">0.0015</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="c1">// Print materials，运行时在终端输出材料信息</span>
+<span class="w">  </span><span class="n">G4cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="n">G4Material</span><span class="o">::</span><span class="n">GetMaterialTable</span><span class="p">())</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E6%9E%84%E9%80%A0%E5%87%A0%E4%BD%95%E4%BD%93">&#26500;&#36896;&#20960;&#20309;&#20307;<a class="anchor-link" href="#%E6%9E%84%E9%80%A0%E5%87%A0%E4%BD%95%E4%BD%93">&#182;</a></h2><p>参考 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/Geometry/geomSolids.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/Geometry/geomSolids.html</a></p>
+<p>几何体的名字虽然允许出现相同的情况，但是不建议使用相同的名字。</p>
+<p>查阅说明书，基本集合体形状可直接创建，需要特别注意的地方：长度是全长还是半长表示。以下是最常用的几何，长方体、柱状/管状、球/球壳等。</p>
+<p><img src="img/detector7.png" alt="det7"></p>
+<div class="highlight"><pre><span></span><span class="n">G4Box</span><span class="w"> </span><span class="o">*</span><span class="n">pSolidWorld</span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;solidWorld&quot;</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">cm</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<p><img src="img/detector8.png" alt="det8"></p>
+<p><img src="img/detector9.png" alt="det9"></p>
+<p><strong>布尔运算生成几何体</strong></p>
+<p>简单几何体可以在说明书中直接找到它的使用方法。很多时候探测器的形状不在基本的几何体库中，这种情况就需要使用者通过布尔运算来构建所需要的几何体了。G4几何体构建中支持的布尔运算有：union, intersection, subtraction。参与运算中的第二个几何体可以进行平移、旋转等操作。</p>
+<div class="highlight"><pre><span></span><span class="n">G4Box</span><span class="o">*</span><span class="w">  </span><span class="n">box</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;Box&quot;</span><span class="p">,</span><span class="mi">20</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="mi">30</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="mi">40</span><span class="o">*</span><span class="n">mm</span><span class="p">);</span><span class="w"></span>
+<span class="n">G4Tubs</span><span class="o">*</span><span class="w"> </span><span class="n">cyl</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4Tubs</span><span class="p">(</span><span class="s">&quot;Cylinder&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">twopi</span><span class="p">);</span><span class="w">  </span><span class="c1">// r:     0 mm -&gt; 50 mm</span>
+<span class="w">                                                 </span><span class="c1">// z:   -50 mm -&gt; 50 mm</span>
+<span class="w">                                                 </span><span class="c1">// phi:   0 -&gt;  2 pi</span>
+<span class="n">G4UnionSolid</span><span class="o">*</span><span class="w"> </span><span class="k">union</span> <span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4UnionSolid</span><span class="p">(</span><span class="s">&quot;Box+Cylinder&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="n">cyl</span><span class="p">);</span><span class="w"></span>
+<span class="n">G4IntersectionSolid</span><span class="o">*</span><span class="w"> </span><span class="n">intersection</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4IntersectionSolid</span><span class="p">(</span><span class="s">&quot;Box*Cylinder&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="n">cyl</span><span class="p">);</span><span class="w"></span>
+<span class="n">G4SubtractionSolid</span><span class="o">*</span><span class="w"> </span><span class="n">subtraction</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4SubtractionSolid</span><span class="p">(</span><span class="s">&quot;Box-Cylinder&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="n">cyl</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">yRot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">;</span><span class="w">  </span><span class="c1">// Rotates X and Z axes only</span>
+<span class="n">yRot</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="n">M_PI</span><span class="o">/</span><span class="mf">4.</span><span class="o">*</span><span class="n">rad</span><span class="p">);</span><span class="w">                     </span><span class="c1">// Rotates 45 degrees</span>
+<span class="n">G4ThreeVector</span><span class="w"> </span><span class="nf">zTrans</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">G4UnionSolid</span><span class="o">*</span><span class="w"> </span><span class="n">unionMoved</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4UnionSolid</span><span class="p">(</span><span class="s">&quot;Box+CylinderMoved&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">yRot</span><span class="p">,</span><span class="w"> </span><span class="n">zTrans</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">G4RotationMatrix</span><span class="w"> </span><span class="n">invRot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yRot</span><span class="o">-&gt;</span><span class="n">invert</span><span class="p">();</span><span class="w"></span>
+<span class="n">G4Transform3D</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">invRot</span><span class="p">,</span><span class="w"> </span><span class="n">zTrans</span><span class="p">);</span><span class="w"></span>
+<span class="n">G4UnionSolid</span><span class="o">*</span><span class="w"> </span><span class="n">unionMoved</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4UnionSolid</span><span class="p">(</span><span class="s">&quot;Box+CylinderMoved&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">transform</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<p>以上两种方法基本能满足大部分的探测器构建需要，特别大规模或者形状复杂的还可以通过 CAD 等图纸导入的方式。</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E6%9E%84%E9%80%A0%E9%80%BB%E8%BE%91%E4%BD%93">&#26500;&#36896;&#36923;&#36753;&#20307;<a class="anchor-link" href="#%E6%9E%84%E9%80%A0%E9%80%BB%E8%BE%91%E4%BD%93">&#182;</a></h2><p>参考 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/Geometry/geomLogical.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/Geometry/geomLogical.html</a></p>
+<div class="highlight"><pre><span></span><span class="n">G4LogicalVolume</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">                  </span><span class="n">G4VSolid</span><span class="w"> </span><span class="o">*</span><span class="n">pSolid</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">G4Material</span><span class="w"> </span><span class="o">*</span><span class="n">pMaterial</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="k">const</span><span class="w"> </span><span class="n">G4String</span><span class="w"> </span><span class="o">&amp;</span><span class="n">name</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">G4FieldManager</span><span class="w"> </span><span class="o">*</span><span class="n">pFieldMgr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">G4VSensitiveDetector</span><span class="w"> </span><span class="o">*</span><span class="n">pSDetector</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">G4UserLimits</span><span class="w"> </span><span class="o">*</span><span class="n">pULimits</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="n">G4bool</span><span class="w"> </span><span class="n">optimise</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
+<span class="c1">// 参数：几何体，材料，逻辑体名字， 电磁场，灵敏探测器，截断，优化</span>
+<span class="c1">// 其中 几何体，材料，逻辑体名字 三个必须指定</span>
+</pre></div>
+<p><img src="img/detector10.png" alt="det10"></p>
+<p>这里要求每个逻辑体的名字必须唯一，这样方便后期的数据处理。</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E6%9E%84%E9%80%A0%E7%89%A9%E7%90%86%E4%BD%93">&#26500;&#36896;&#29289;&#29702;&#20307;<a class="anchor-link" href="#%E6%9E%84%E9%80%A0%E7%89%A9%E7%90%86%E4%BD%93">&#182;</a></h2><p>参考 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/Geometry/geomPhysical.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/Geometry/geomPhysical.html</a></p>
+<div class="highlight"><pre><span></span><span class="n">G4PVPlacement</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">               </span><span class="n">G4RotationMatrix</span><span class="w"> </span><span class="o">*</span><span class="n">pRot</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="k">const</span><span class="w"> </span><span class="n">G4ThreeVector</span><span class="w"> </span><span class="o">&amp;</span><span class="n">tlate</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="n">G4LogicalVolume</span><span class="w"> </span><span class="o">*</span><span class="n">pCurrentLogical</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="k">const</span><span class="w"> </span><span class="n">G4String</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pName</span><span class="p">,</span><span class="w"> </span>
+<span class="w">               </span><span class="n">G4LogicalVolume</span><span class="w"> </span><span class="o">*</span><span class="n">pMotherLogical</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="n">G4bool</span><span class="w"> </span><span class="n">pMany</span><span class="p">,</span><span class="w"> </span>
+<span class="w">               </span><span class="n">G4int</span><span class="w"> </span><span class="n">pCopyNo</span><span class="p">,</span><span class="w"> </span>
+<span class="w">               </span><span class="n">G4bool</span><span class="w"> </span><span class="n">pSurfChk</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="c1">// 参数：旋转，平移，逻辑体，本物理体名字，母体，（无用参数），拷贝号，重叠检查</span>
+</pre></div>
+<ul>
+<li>最重要的参数是 pMotherLogical，后面介绍</li>
+<li>参数 pRot 对象设置后不要修改（在程序中只以最后一次赋值为准）</li>
+<li>参数 tlate 用来设置它的空间位置</li>
+<li>物理体名字 pName 建议与它的逻辑体名一致</li>
+<li>拷贝号 pCopyNo 这里我们不用</li>
+<li>最后一个参数 pSurfChk 检查是否存在重叠，这个变量开启，如果有几何体重叠，程序运行中会给出提示</li>
+</ul>
+<p><img src="img/detector11.png" alt="det11"></p>
+<p><strong>多个物理体可以共用同一个逻辑体，然后通过不同的拷贝号来区分。这在同一个型号的探测器有几千上万的情况下显得特别必要（因为重复 new 那么多对象需要占用非常大的内存，而且初始化它们所需要的时间也很长，而它们仅仅名字不一样）。但是对于我们一般的模拟来说，创建的逻辑体不会太多，为了方便后期的数据处理，建议每个探测器创建各自的逻辑体和物理体，且用相同的名字。</strong></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%89%A9%E7%90%86%E4%BD%93%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84">&#29289;&#29702;&#20307;&#20043;&#38388;&#30340;&#23618;&#32423;&#32467;&#26500;<a class="anchor-link" href="#%E7%89%A9%E7%90%86%E4%BD%93%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84">&#182;</a></h2><p><img src="img/detector12.png" alt="det12"></p>
+<p><strong>问题：如何将物理体A放入物理体B的内部？</strong></p>
+<ul>
+<li>物理体A：Si</li>
+<li>物理体B：C</li>
+</ul>
+<p><strong>物理体A与物理体B的重叠部分：？</strong></p>
+<p>Geant4:嵌套模型(盒子模型)</p>
+<ul>
+<li>先定义母体 B，其材质为碳；</li>
+<li>再定义子体 A，其材质为硅，并声明其母体为 B。</li>
+<li>那么两者重叠区域材质最终由子体确定。</li>
+</ul>
+<p>G4中，所有的物理体必须被指定母体。对于最外层的物理体，其母体为空，此物理体称为“World”。</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14069,142 +14330,44 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#21442;&#32771;&#20195;&#30721;<a class="anchor-link" href="#%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81">&#182;</a></h2><h3 id="%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#31435;&#20307;&#35282;&#27169;&#25311;<a class="anchor-link" href="#%E7%AB%8B%E4%BD%93%E8%A7%92%E6%A8%A1%E6%8B%9F">&#182;</a></h3><div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.hh</span>
-<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physS13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="c1">// wuDetectorConstruction.cc</span>
-
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">96</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">BB30Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="o">*</span><span class="n">um</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13R1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">12.5</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13R2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60.5</span><span class="o">*</span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">S13Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="o">*</span><span class="n">um</span><span class="p">;</span><span class="w"></span>
-
-
-<span class="w">  </span><span class="n">G4Box</span><span class="o">*</span><span class="w"> </span><span class="n">solidBB30</span><span class="w"> </span><span class="o">=</span><span class="w">    </span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;BB30&quot;</span><span class="p">,</span><span class="w">                    </span><span class="c1">//its name</span>
-<span class="w">          </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30X</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30Y</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="o">*</span><span class="n">BB30Z</span><span class="p">);</span><span class="w"> </span><span class="c1">//its size</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_0&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_1&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidBB30</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;BB30_2&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_0</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_1</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">G4RotationMatrix</span><span class="o">*</span><span class="w"> </span><span class="n">rotbb30_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4RotationMatrix</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_2</span><span class="o">-&gt;</span><span class="n">rotateY</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">rotbb30_2</span><span class="o">-&gt;</span><span class="n">rotateX</span><span class="p">(</span><span class="mf">90.0</span><span class="o">*</span><span class="n">deg</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_0&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_1</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">-6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_1&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotbb30_2</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">6.5</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicBB30</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;BB30_2&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-
-
-<span class="w">  </span><span class="n">G4Tubs</span><span class="o">*</span><span class="w"> </span><span class="n">solidS13</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Tubs</span><span class="p">(</span><span class="s">&quot;S13&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">           </span><span class="n">S13R1</span><span class="p">,</span><span class="c1">//内半径</span>
-<span class="w">           </span><span class="n">S13R2</span><span class="p">,</span><span class="c1">//外半径</span>
-<span class="w">           </span><span class="mf">0.5</span><span class="o">*</span><span class="n">S13Z</span><span class="p">,</span><span class="c1">//Z轴方向的半长度</span>
-<span class="w">           </span><span class="mi">0</span><span class="o">*</span><span class="n">degree</span><span class="p">,</span><span class="c1">//圆周起始位置弧度值</span>
-<span class="w">           </span><span class="mi">360</span><span class="o">*</span><span class="n">degree</span><span class="p">);</span><span class="c1">//该实体的圆心角弧度值</span>
-
-<span class="w">  </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidS13</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;S13_0&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidS13</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
-<span class="w">            </span><span class="n">dssd_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
-<span class="w">            </span><span class="s">&quot;S13_1&quot;</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
-
-<span class="w">  </span><span class="n">physS13</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">-5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;S13_0&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-
-<span class="w">  </span><span class="n">physS13</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
-<span class="w">              </span><span class="n">logicS13</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
-<span class="w">              </span><span class="s">&quot;S13_1&quot;</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
-<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
-<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">                   </span><span class="c1">//no boolean operation</span>
-<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//copy number</span>
-<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">          </span><span class="c1">//overlaps checking</span>
-</pre></div>
-
+<h2 id="%E9%98%B5%E5%88%97%E5%88%9B%E5%BB%BA%E7%A4%BA%E4%BE%8B">&#38453;&#21015;&#21019;&#24314;&#31034;&#20363;<a class="anchor-link" href="#%E9%98%B5%E5%88%97%E5%88%9B%E5%BB%BA%E7%A4%BA%E4%BE%8B">&#182;</a></h2>
 </div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>征集示例需求</strong></p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">homework</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">DetectorConstruction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[NbConvertApp] Converting notebook DetectorConstruction.ipynb to html
+
+[NbConvertApp] Writing 615058 bytes to DetectorConstruction.html
+
+</pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div>

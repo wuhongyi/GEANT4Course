@@ -14104,13 +14104,94 @@ a.anchor-link {
 <h2 id="PrepareNewEvent">PrepareNewEvent<a class="anchor-link" href="#PrepareNewEvent">&#182;</a></h2><p><strong>这里不介绍</strong></p>
 
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span><span class="cp">## G4Track 常用函数</span>
+
+<span class="err">```</span><span class="n">cpp</span><span class="w"></span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetTrackID</span><span class="p">();</span><span class="c1">//G4int</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetParentID</span><span class="p">();</span><span class="c1">//G4int</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetWeight</span><span class="p">();</span><span class="c1">//G4double   These are methods for manipulating a weight for this track.</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetCreatorModelID</span><span class="p">();</span><span class="c1">//G4int</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetCreatorModelName</span><span class="p">();</span><span class="c1">//G4String&amp;</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetCreatorProcess</span><span class="p">();</span><span class="c1">//G4VProcess*</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">G4VProcess</span><span class="o">*</span><span class="w"> </span><span class="n">pcr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetCreatorProcess</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">pcr</span><span class="p">)</span><span class="w"> </span><span class="n">G4String</span><span class="w"> </span><span class="n">CreatorProcess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pcr</span><span class="o">-&gt;</span><span class="n">GetProcessName</span><span class="p">();</span><span class="c1">//  Returns the name of the process.</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="n">G4String</span><span class="w"> </span><span class="n">CreatorProcess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;##&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pcr</span><span class="o">-&gt;</span><span class="n">GetProcessType</span><span class="p">();</span><span class="c1">//G4ProcessType    Returns the process type.</span>
+<span class="w">  </span><span class="n">pcr</span><span class="o">-&gt;</span><span class="n">GetProcessSubType</span><span class="p">();</span><span class="c1">//G4int    Returns the process sub type.</span>
+<span class="w">  </span>
+<span class="w">  </span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetTrackLength</span><span class="p">();</span><span class="c1">//G4double</span>
+<span class="w">  </span><span class="c1">// Before the end of the AlongStepDoIt loop,StepLength keeps the initial value which is determined by the shortest geometrical Step proposed by a physics process. After finishing the AlongStepDoIt, it will be set equal to &#39;StepLength&#39; in G4Step.</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetStepLength</span><span class="p">();</span><span class="c1">//G4double</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetCurrentStepNumber</span><span class="p">();</span><span class="c1">//G4int</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetStep</span><span class="p">();</span><span class="c1">//G4Step*</span>
+<span class="w">  </span><span class="c1">// The flag of &quot;GoodForTracking&quot; is set by processes if this track should be tracked even if the energy is below threshold</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">IsGoodForTracking</span><span class="p">();</span><span class="c1">//G4bool</span>
+<span class="w">  </span><span class="c1">// The flag of &quot;BelowThreshold&quot; is set to true if this track energy is below threshold energy in this material determined by the range cut value</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">IsBelowThreshold</span><span class="p">();</span><span class="c1">//G4bool</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetTrackStatus</span><span class="p">();</span><span class="c1">//G4TrackStatus    track status, flags for tracking</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetPolarization</span><span class="p">();</span><span class="c1">//G4ThreeVector&amp; </span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">UseGivenVelocity</span><span class="p">();</span><span class="c1">//G4bool</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">CalculateVelocity</span><span class="p">();</span><span class="c1">//G4double</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">CalculateVelocityForOpticalPhoton</span><span class="p">();</span><span class="c1">//G4double</span>
+<span class="w">  </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetVelocity</span><span class="p">();</span><span class="c1">//G4double</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetMomentum();//G4ThreeVector</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetMomentumDirection();//G4ThreeVector&amp;</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetTotalEnergy();//G4double</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetKineticEnergy();//G4double</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetVolume();//G4VPhysicalVolume*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetNextVolume();//G4VPhysicalVolume*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetMaterial();//G4Material*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetNextMaterial();//G4Material*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetMaterialCutsCouple();//G4MaterialCutsCouple*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetNextMaterialCutsCouple();//G4MaterialCutsCouple*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetTouchable();//G4VTouchable*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetTouchableHandle();//G4TouchableHandle&amp;</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetNextTouchable();//G4VTouchable*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetNextTouchableHandle();//G4TouchableHandle&amp;</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetOriginTouchable();//G4VTouchable*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetOriginTouchableHandle();//G4TouchableHandle&amp;</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetPosition();//G4ThreeVector&amp;</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetGlobalTime();//G4double    Time since the event in which the track belongs is created.</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetLocalTime();//G4double    Time since the current track is created.</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetProperTime();//G4double    Proper time of the current track</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetDynamicParticle();//G4DynamicParticle*   dynamic particle </span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetParticleDefinition();//G4ParticleDefinition*    particle definition </span>
+
+<span class="w">  </span>
+<span class="w">  </span><span class="c1">// // vertex (,where this track was created) information  </span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetVertexPosition();//G4ThreeVector&amp;</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetVertexMomentumDirection();//G4ThreeVector&amp;</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetVertexKineticEnergy();//G4double</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetLogicalVolumeAtVertex();//G4LogicalVolume*</span>
+
+<span class="w">  </span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;GetUserInformation();// G4VUserTrackInformation*</span>
+<span class="w">  </span><span class="c1">// aTrack-&gt;SetUserInformation(/*G4VUserTrackInformation* aValue*/);</span>
+
+<span class="err">```</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">StackingAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">StackingAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14130,9 +14211,10 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[NbConvertApp] Converting notebook StackingAction.ipynb to html
+<pre>2022年 05月 07日 星期六 21:14:19 CST
 
-[NbConvertApp] Writing 568363 bytes to StackingAction.html
+[NbConvertApp] Converting notebook StackingAction.ipynb to html
+[NbConvertApp] Writing 568414 bytes to StackingAction.html
 
 </pre>
 </div>

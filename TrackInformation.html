@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TrackingAction</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>TrackInformation</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,36 +14010,132 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="TrackingAction">TrackingAction<a class="anchor-link" href="#TrackingAction">&#182;</a></h1>
+<h1 id="TrackInformation">TrackInformation<a class="anchor-link" href="#TrackInformation">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><a href="StackingAction.html">StackingAction</a> 中介绍了如何判选一个粒子是否进行模拟。这里</p>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">G4UserTrackingAction</span><span class="w"></span>
+<p>示例代码</p>
+<p><strong>wuTrackInformation.hh</strong></p>
+<div class="highlight"><pre><span></span><span class="cp">#ifndef _WUTRACKINFORMATION_H_</span>
+<span class="cp">#define _WUTRACKINFORMATION_H_</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4VUserTrackInformation.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4Allocator.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;globals.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4Track.hh&quot;</span><span class="cp"></span>
+<span class="c1">// enum TrackFlag {undefined,flag1,flag2,flag3};//暂时随便设置</span>
+
+<span class="c1">//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......</span>
+<span class="k">class</span> <span class="nc">wuTrackInformation</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">G4VUserTrackInformation</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="n">wuTrackInformation</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">wuTrackInformation</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">wuTrackInformation</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="w"> </span><span class="n">aTrack</span><span class="p">);</span><span class="c1">//未完待续</span>
+<span class="w">  </span><span class="n">wuTrackInformation</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="w"> </span><span class="n">Info</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kr">inline</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">Print</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">{};</span><span class="w"></span>
 
-<span class="w">     </span><span class="c1">// Constructor &amp; Destructor</span>
-<span class="w">     </span><span class="n">G4UserTrackingAction</span><span class="p">(){};</span><span class="w"></span>
-<span class="w">     </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">G4UserTrackingAction</span><span class="p">(){}</span><span class="w"></span>
+<span class="w">  </span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="k">operator</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="kt">size_t</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="k">delete</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">aTrackInfo</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">     </span><span class="c1">// Member functions</span>
-<span class="w">     </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">PreUserTrackingAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="p">){}</span><span class="w"></span>
-<span class="w">     </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">PostUserTrackingAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="p">){}</span><span class="w"></span>
 
-<span class="w">   </span><span class="k">protected</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1">//想传递什么信息都可通过Set Get 函数实现</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetFlagType</span><span class="p">(</span><span class="n">G4String</span><span class="o">&amp;</span><span class="w"> </span><span class="n">infoType</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">G4String</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">GetFlagType</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Try adding a flag and return if it is successful or not</span>
+<span class="w">  </span><span class="c1">// Cannot Add Undefine or a flag that conflicts with another flag</span>
+<span class="w">  </span><span class="c1">// Return true if the addition of flag is successful, false otherwise</span>
+<span class="w">  </span><span class="n">G4bool</span><span class="w"> </span><span class="nf">AddFlag</span><span class="p">(</span><span class="n">G4int</span><span class="w"> </span><span class="n">ss</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="nf">PrintFlag</span><span class="p">()</span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">fFlag</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Check if a certain flag is on</span>
+<span class="w">  </span><span class="n">G4bool</span><span class="w"> </span><span class="nf">IsFlag</span><span class="p">(</span><span class="n">G4int</span><span class="w"> </span><span class="n">ss</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="k">return</span><span class="w"> </span><span class="n">ss</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-<span class="w">     </span><span class="n">G4TrackingManager</span><span class="o">*</span><span class="w"> </span><span class="n">fpTrackingManager</span><span class="p">;</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">fFlag</span><span class="p">;</span><span class="c1">//默认0</span>
+<span class="w">  </span><span class="n">G4String</span><span class="o">*</span><span class="w"> </span><span class="n">fFlagType</span><span class="p">;</span><span class="w"> </span>
 <span class="p">};</span><span class="w"></span>
+
+<span class="k">extern</span><span class="w"> </span><span class="n">G4ThreadLocal</span><span class="w"> </span><span class="n">G4Allocator</span><span class="o">&lt;</span><span class="n">wuTrackInformation</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aTrackInformationAllocator</span><span class="p">;</span><span class="w"></span>
+
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="o">::</span><span class="k">operator</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">aTrackInformationAllocator</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">aTrackInformationAllocator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Allocator</span><span class="o">&lt;</span><span class="n">wuTrackInformation</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">aTrackInformationAllocator</span><span class="o">-&gt;</span><span class="n">MallocSingle</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="o">::</span><span class="k">operator</span><span class="w"> </span><span class="k">delete</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">aTrackInfo</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"> </span><span class="n">aTrackInformationAllocator</span><span class="o">-&gt;</span><span class="n">FreeSingle</span><span class="p">((</span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="p">)</span><span class="n">aTrackInfo</span><span class="p">);}</span><span class="w"></span>
+
+
+<span class="cp">#endif </span><span class="cm">/* _WUTRACKINFORMATION_H_ */</span><span class="cp"></span>
+</pre></div>
+<p><strong>wuTrackInformation.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;wuTrackInformation.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4ios.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4SystemOfUnits.hh&quot;</span><span class="c1">    </span><span class="cp"></span>
+
+<span class="n">G4ThreadLocal</span><span class="w"> </span><span class="n">G4Allocator</span><span class="o">&lt;</span><span class="n">wuTrackInformation</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aTrackInformationAllocator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="c1">//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......</span>
+<span class="n">wuTrackInformation</span><span class="o">::</span><span class="n">wuTrackInformation</span><span class="p">()</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="n">G4VUserTrackInformation</span><span class="p">(),</span><span class="w"> </span><span class="n">fFlagType</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">fFlag</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="n">wuTrackInformation</span><span class="o">::</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="w"> </span><span class="n">aTrack</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="n">G4VUserTrackInformation</span><span class="p">(),</span><span class="w"> </span><span class="n">fFlagType</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">wuTrackInformation</span><span class="o">::</span><span class="n">wuTrackInformation</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="w"> </span><span class="n">Info</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="n">G4VUserTrackInformation</span><span class="p">(),</span><span class="w"> </span><span class="n">fFlagType</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">fFlag</span><span class="o">=</span><span class="n">Info</span><span class="o">-&gt;</span><span class="n">fFlag</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fFlagType</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">fFlagType</span><span class="o">=</span><span class="n">Info</span><span class="o">-&gt;</span><span class="n">fFlagType</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="n">wuTrackInformation</span><span class="o">::~</span><span class="n">wuTrackInformation</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fFlagType</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">delete</span><span class="w"> </span><span class="n">fFlagType</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="c1">//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......</span>
+<span class="n">G4bool</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="o">::</span><span class="n">AddFlag</span><span class="p">(</span><span class="n">G4int</span><span class="w"> </span><span class="n">ss</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">//预留接口</span>
+<span class="w">  </span><span class="n">fFlag</span><span class="o">=</span><span class="n">ss</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="o">::</span><span class="n">SetFlagType</span><span class="p">(</span><span class="n">G4String</span><span class="o">&amp;</span><span class="w"> </span><span class="n">infoType</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">fFlagType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4String</span><span class="p">(</span><span class="n">infoType</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">G4String</span><span class="o">&amp;</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="o">::</span><span class="n">GetFlagType</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">G4String</span><span class="w"> </span><span class="n">NOTYPE</span><span class="o">=</span><span class="s">&quot;NONE&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">fFlagType</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="n">fFlagType</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">NOTYPE</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 
 </div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span>
+</pre></div>
 
+     </div>
 </div>
+</div>
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14047,7 +14143,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">TrackingAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">TrackInformation</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14067,11 +14163,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2022年 05月 07日 星期六 21:20:51 CST
+<pre>2022年 05月 07日 星期六 21:51:01 CST
 
-[NbConvertApp] Converting notebook TrackingAction.ipynb to html
+[NbConvertApp] Converting notebook TrackInformation.ipynb to html
 
-[NbConvertApp] Writing 559321 bytes to TrackingAction.html
+[NbConvertApp] Writing 568816 bytes to TrackInformation.html
 
 </pre>
 </div>

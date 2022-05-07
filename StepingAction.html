@@ -14219,7 +14219,7 @@ t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackI
 <span class="k">if</span><span class="p">(</span><span class="n">CurrentStepNumber</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 <p>这里需要提醒一点，“neutronInelastic” 过程中子的 Track ID 会发生改变，但是它不属于 “nFission” 产生的新粒子。</p>
-<p><strong>在进行条件筛选时，采用的条件必须金克</strong></p>
+<p><strong>在进行条件筛选时，采用的条件必须尽可能简单，避免条件问题导致模拟出现偏差。</strong></p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14249,7 +14249,7 @@ t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackI
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook StepingAction.ipynb to html
-[NbConvertApp] Writing 566186 bytes to StepingAction.html
+[NbConvertApp] Writing 590087 bytes to StepingAction.html
 
 </pre>
 </div>

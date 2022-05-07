@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TrackingAction</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>SensitiveDetector</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,36 +14010,28 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="TrackingAction">TrackingAction<a class="anchor-link" href="#TrackingAction">&#182;</a></h1>
+<h1 id="SensitiveDetector">SensitiveDetector<a class="anchor-link" href="#SensitiveDetector">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><a href="StackingAction.html">StackingAction</a> 中介绍了如何判选一个粒子是否进行模拟。这里</p>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">G4UserTrackingAction</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<p><strong>第三次课程讲</strong></p>
 
-<span class="w">     </span><span class="c1">// Constructor &amp; Destructor</span>
-<span class="w">     </span><span class="n">G4UserTrackingAction</span><span class="p">(){};</span><span class="w"></span>
-<span class="w">     </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">G4UserTrackingAction</span><span class="p">(){}</span><span class="w"></span>
-
-<span class="w">     </span><span class="c1">// Member functions</span>
-<span class="w">     </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">PreUserTrackingAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="p">){}</span><span class="w"></span>
-<span class="w">     </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">PostUserTrackingAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="p">){}</span><span class="w"></span>
-
-<span class="w">   </span><span class="k">protected</span><span class="o">:</span><span class="w"></span>
-
-<span class="w">     </span><span class="n">G4TrackingManager</span><span class="o">*</span><span class="w"> </span><span class="n">fpTrackingManager</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span>
 </pre></div>
 
+     </div>
 </div>
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div>
 
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14047,7 +14039,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">TrackingAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">SensitiveDetector</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14067,11 +14059,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2022年 05月 07日 星期六 21:20:51 CST
+<pre>2022年 05月 07日 星期六 21:28:40 CST
 
-[NbConvertApp] Converting notebook TrackingAction.ipynb to html
+[NbConvertApp] Converting notebook SensitiveDetector.ipynb to html
 
-[NbConvertApp] Writing 559321 bytes to TrackingAction.html
+[NbConvertApp] Writing 557325 bytes to SensitiveDetector.html
 
 </pre>
 </div>

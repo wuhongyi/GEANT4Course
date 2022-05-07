@@ -14015,7 +14015,211 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>第二次课程讲</strong></p>
+<p>与 G4UserRunAction 类似，G4UserSteppingAction 也是提取物理量的一个重要接口,主要通过 UserSteppingAction 函数来实现。该函数每个最小模拟单元（step）之后调用一次，用户可以通过这个接口提取数据，但是不能修改模拟粒子的状态。</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">G4UserSteppingAction</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">     </span><span class="c1">// Constructor and destructor</span>
+<span class="w">     </span><span class="n">G4UserSteppingAction</span><span class="p">(){}</span><span class="w"></span>
+<span class="w">     </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">G4UserSteppingAction</span><span class="p">(){}</span><span class="w"></span>
+
+<span class="w">     </span><span class="c1">// Member functions</span>
+<span class="w">     </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">UserSteppingAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Step</span><span class="o">*</span><span class="p">){}</span><span class="w"></span>
+
+<span class="w">   </span><span class="k">protected</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">     </span><span class="n">G4SteppingManager</span><span class="o">*</span><span class="w"> </span><span class="n">fpSteppingManager</span><span class="p">;</span><span class="w"></span>
+
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+<p>以下是我们提供示例代码中的截图</p>
+<p><img src="img/steppingaction1.png" alt="st1"></p>
+<p><img src="img/steppingaction2.png" alt="st2"></p>
+<p>在 UserSteppingAction 中，将数据填充到文件中。</p>
+<p><img src="img/steppingaction6.png" alt="st6"></p>
+<p>在填充数据之前，可以进行初级的数据筛选，主要目的也是用来降低存储的数据量。（这里的数据筛选不是为了数据分析）</p>
+<p>这里提供了 40 个变量的存储，需要根据实际的需求删除本次模拟中不必要的数据填充。</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E5%85%B8%E5%9E%8B%E6%95%B0%E6%8D%AE%E7%AD%9B%E9%80%89">&#20856;&#22411;&#25968;&#25454;&#31579;&#36873;<a class="anchor-link" href="#%E5%85%B8%E5%9E%8B%E6%95%B0%E6%8D%AE%E7%AD%9B%E9%80%89">&#182;</a></h2><p><img src="img/steppingaction3.png" alt="st33"></p>
+<p>以上数据接口得到了当前 <em>Step</em> 的模拟信息，在这里可以进行简单的数据筛选，示例如下：</p>
+<div class="highlight"><pre><span></span><span class="c1">// 该 step 在 world 中，数据不记录</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">VolNamePre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;W&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">VolNamePre</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;o&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="c1">//这里只判断前两个字符前提是创建的探测器没有名字前两个字符是“Wo”的</span>
+
+<span class="w">  </span><span class="c1">// 如果粒子是 neutron 的则不记录</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">PName</span><span class="p">.</span><span class="n">data</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;n&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="c1">//这里只判断字符“n”是因为本次模拟所差生的粒子没有第二个字符“n”开头的</span>
+
+<span class="w">  </span><span class="c1">// 如果该 step 不是粒子的第一步，则不记录</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">CurrentStepNumber</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// 其它示例</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">VolNamePre</span><span class="p">.</span><span class="n">data</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;D&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">VolNamePost</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;P&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">PName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;o&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="c1">// 以下是填充部分</span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">EventID</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleSColumn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">PName</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">EkPre</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">PosPre</span><span class="p">.</span><span class="n">x</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">PosPre</span><span class="p">.</span><span class="n">y</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">PosPre</span><span class="p">.</span><span class="n">z</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// ..... 这里省略 </span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">AddNtupleRow</span><span class="p">();</span><span class="w">  </span><span class="c1">//相当于 Fill</span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%A4%BA%E4%BE%8B">&#31034;&#20363;<a class="anchor-link" href="#%E7%A4%BA%E4%BE%8B">&#182;</a></h2><p>一个半径 5.0 cm 的 U 球（这里教学目的设置得比较小，如果设置更大，很可能一个事件得运行几个小时到几天），热中子从球中间发射，示例代码如下：</p>
+<p><strong>wuPrimaryGeneratorActionAll.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuPrimaryGeneratorActionAll::GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span><span class="o">*</span><span class="w"> </span><span class="n">anEvent</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleTable</span><span class="o">*</span><span class="w"> </span><span class="n">particleTable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4ParticleTable</span><span class="o">::</span><span class="n">GetParticleTable</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleDefinition</span><span class="o">*</span><span class="w"> </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">particleTable</span><span class="o">-&gt;</span><span class="n">FindParticle</span><span class="p">(</span><span class="s">&quot;neutron&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleDefinition</span><span class="p">(</span><span class="n">pp</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;##Null pp in wuPrimaryGeneratorAction::SetParticleGun()&quot;</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">//primary particle kinetic energy</span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">(</span><span class="mf">0.025</span><span class="o">*</span><span class="n">MeV</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// primary particle position</span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticlePosition</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// primary particle moving direction</span>
+<span class="w">  </span><span class="n">G4double</span><span class="w">  </span><span class="n">DirectRotX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.</span><span class="o">*</span><span class="n">rad</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w">  </span><span class="n">DirectRotY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.</span><span class="o">*</span><span class="n">rad</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w">  </span><span class="n">DirectRotZ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.</span><span class="o">*</span><span class="n">rad</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">theta</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">RangeThetaPri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">180</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.</span><span class="o">*</span><span class="n">rad</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4UniformRand</span><span class="p">()</span><span class="o">*</span><span class="mf">2.0</span><span class="o">*</span><span class="n">pi</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">rg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="o">-</span><span class="n">cos</span><span class="p">(</span><span class="n">RangeThetaPri</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">acos</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">G4UniformRand</span><span class="p">()</span><span class="o">*</span><span class="n">rg</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">cosPZ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ThreeVector</span><span class="w"> </span><span class="n">directPri</span><span class="p">(</span><span class="n">cosPX</span><span class="p">,</span><span class="w"> </span><span class="n">cosPY</span><span class="p">,</span><span class="w"> </span><span class="n">cosPZ</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">directPri</span><span class="p">.</span><span class="n">rotateX</span><span class="p">(</span><span class="n">DirectRotX</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">directPri</span><span class="p">.</span><span class="n">rotateY</span><span class="p">(</span><span class="n">DirectRotY</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">directPri</span><span class="p">.</span><span class="n">rotateZ</span><span class="p">(</span><span class="n">DirectRotZ</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleMomentumDirection</span><span class="p">(</span><span class="n">directPri</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<hr>
+<p><strong>wuDetectorConstruction.hh</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 添加</span>
+<span class="w">  </span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">logicHEU</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">physHEU</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<hr>
+<p><strong>wuDetectorConstruction.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuDetectorConstruction::DefineMaterials</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"> </span>
+<span class="w">  </span><span class="c1">// 这里省略 ...</span>
+
+<span class="w">  </span><span class="c1">// 添加这部分代码</span>
+<span class="w">  </span><span class="n">G4Isotope</span><span class="o">*</span><span class="w"> </span><span class="n">U4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Isotope</span><span class="p">(</span><span class="s">&quot;U234&quot;</span><span class="p">,</span><span class="mi">92</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mf">234.02</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Isotope</span><span class="o">*</span><span class="w"> </span><span class="n">U5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Isotope</span><span class="p">(</span><span class="s">&quot;U235&quot;</span><span class="p">,</span><span class="mi">92</span><span class="p">,</span><span class="mi">235</span><span class="p">,</span><span class="mf">235.01</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Isotope</span><span class="o">*</span><span class="w"> </span><span class="n">U6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Isotope</span><span class="p">(</span><span class="s">&quot;U236&quot;</span><span class="p">,</span><span class="mi">92</span><span class="p">,</span><span class="mi">236</span><span class="p">,</span><span class="mf">236.04</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Isotope</span><span class="o">*</span><span class="w"> </span><span class="n">U8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Isotope</span><span class="p">(</span><span class="s">&quot;U238&quot;</span><span class="p">,</span><span class="mi">92</span><span class="p">,</span><span class="mi">238</span><span class="p">,</span><span class="mf">238.03</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w">    </span>
+
+<span class="w">  </span><span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">HEU4568</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Element</span><span class="p">(</span><span class="s">&quot;Highly-enriched Uranium 4568&quot;</span><span class="p">,</span><span class="s">&quot;HEU4568&quot;</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU4568</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U4</span><span class="p">,</span><span class="mf">0.0097</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU4568</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U5</span><span class="p">,</span><span class="mf">0.9315</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU4568</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U6</span><span class="p">,</span><span class="mf">0.0024</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">HEU4568</span><span class="o">-&gt;</span><span class="n">AddIsotope</span><span class="p">(</span><span class="n">U8</span><span class="p">,</span><span class="mf">0.0564</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">matHEU4568</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;HEU4568&quot;</span><span class="p">,</span><span class="mf">18.75</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">matHEU4568</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">HEU4568</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// 这里省略 ...  </span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">G4VPhysicalVolume</span><span class="o">*</span><span class="nf">wuDetectorConstruction::DefineVolumes</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 这里省略 ...</span>
+
+<span class="w">  </span><span class="c1">// 相应位置添加以下部分代码</span>
+<span class="w">  </span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">heu_mat</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">G4Material</span><span class="o">::</span><span class="n">GetMaterial</span><span class="p">(</span><span class="s">&quot;HEU4568&quot;</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">HEUR0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="o">*</span><span class="n">cm</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">HEUR1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5.0</span><span class="o">*</span><span class="n">cm</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">G4Sphere</span><span class="o">*</span><span class="w"> </span><span class="n">solidHEU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4Sphere</span><span class="p">(</span><span class="s">&quot;HEU&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="n">HEUR0</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="n">HEUR1</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="mi">0</span><span class="o">*</span><span class="n">degree</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="mi">360</span><span class="o">*</span><span class="n">degree</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="mi">0</span><span class="o">*</span><span class="n">degree</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="mi">180</span><span class="o">*</span><span class="n">degree</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">logicHEU</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidHEU</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="n">heu_mat</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="s">&quot;HEU&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">physHEU</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span>
+<span class="w">              </span><span class="n">logicHEU</span><span class="p">,</span><span class="w">    </span>
+<span class="w">              </span><span class="s">&quot;HEU&quot;</span><span class="p">,</span><span class="w">    </span>
+<span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">    </span>
+<span class="w">              </span><span class="nb">false</span><span class="p">,</span><span class="w">   </span>
+<span class="w">              </span><span class="mi">0</span><span class="p">,</span><span class="w">      </span>
+<span class="w">              </span><span class="n">checkOverlaps</span><span class="p">);</span><span class="w">     </span>
+
+
+
+<span class="w">  </span><span class="c1">// 这里省略 ...  </span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<hr>
+<p><strong>注意：本示例代码在不熟悉之前，一次不要运行太多事件。建议刚开始调试时候只运行 10 个事件！！！如果 10 个事件中没有运行出几万行的事件来，则再加 10 个事件，直到出来几万行 entry 的事件。</strong></p>
+<ul>
+<li>本示例运行 10 个事件，查看输出数据情况。<ul>
+<li>文件大小</li>
+<li>数据中包含哪些反应</li>
+<li>生成哪些粒子</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span>t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackID:CurrentStepNumber:PName:CreatorProcess:EkPre:EDep&quot;</span><span class="o">)</span>
+<span class="c1">#或者</span>
+t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackID:CurrentStepNumber:PName:CreatorProcess:EkPre:EDep&quot;</span>,<span class="s2">&quot;&quot;</span>,<span class="s2">&quot;colsize=20&quot;</span><span class="o">)</span>
+</pre></div>
+<p>可以看到一个事件产生几万 entry，对一个事件来说：</p>
+<p>从粒子可以看到 “neutron”， “gamma”， “e-”， “e+”， “U235”， “alpha”， “Th231[387.836]”， “Th231[185.718]”， “Th231”， “anti_nu_e”， “Pa231[101.409]”， “Pa231[84.215]”， “Pa231”， “Ac227[46.350]”， “Ac227[27.370]”， “Ac227”， “Th227”， “Ra223[61.424]”， “Ra223”， “Rn219[598.720]”， “Rn219”， “Po215”， “Pb211”， “Bi211[831.960]”， “Bi211”， “Tl207”， 等等。</p>
+<p>从物理相互作用过程可以看到 “nFission”， “neutronInelastic”， “phot”， “compt”， “nCapture”， “conv”， “hadElastic”， “RadioactiveDecayBase”， “annihil”， 等等。</p>
+<p>这几万 entry 数据中，很多是我们不感兴趣的。我们尝试在数据输出中把它屏蔽掉。</p>
+<p>例如，想知道一个中子入射产生多少个次级中子，因此把非中子的 entry 屏蔽掉。</p>
+<div class="highlight"><pre><span></span><span class="c1">// 在数据输出前添加以下代码</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">PName</span><span class="p">.</span><span class="n">data</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;n&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>不做任何数据筛选之前，一个热中子裂变事件产生约 20000+ 多 entry 数据, 数据量约为 4 MB。筛选之后数据只剩 100+ entry，数据量约为 60 kB。此时发现同一个粒子，它的 tracking 中有多个 step, 我们只需要记录一个即可，再加以下限制条件，同一个事件只剩 50+ entry。</p>
+<div class="highlight"><pre><span></span><span class="c1">// 在数据输出前添加以下代码</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">CurrentStepNumber</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>这里需要提醒一点，“neutronInelastic” 过程中子的 Track ID 会发生改变，但是它不属于 “nFission” 产生的新粒子。</p>
+<p><strong>在进行条件筛选时，采用的条件必须金克</strong></p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14045,8 +14249,7 @@ a.anchor-link {
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook StepingAction.ipynb to html
-
-[NbConvertApp] Writing 557321 bytes to StepingAction.html
+[NbConvertApp] Writing 566186 bytes to StepingAction.html
 
 </pre>
 </div>

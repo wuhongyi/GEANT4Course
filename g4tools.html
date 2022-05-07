@@ -14034,6 +14034,11 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0">&#24120;&#29992;&#20989;&#25968;<a class="anchor-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4CsvAnalysisManager.hh&quot;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4XmlAnalysisManager.hh&quot;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4RootAnalysisManager.hh&quot;</span><span class="cp"></span>
@@ -14075,115 +14080,62 @@ a.anchor-link {
 <span class="n">G4bool</span><span class="w">  </span><span class="n">FillNtupleSColumn</span><span class="w"> </span><span class="p">(</span><span class="n">G4int</span><span class="w"> </span><span class="n">ntupleId</span><span class="p">,</span><span class="w"> </span><span class="n">G4int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">G4String</span><span class="w"> </span><span class="o">&amp;</span><span class="n">value</span><span class="p">)</span><span class="w"></span>
 <span class="n">G4bool</span><span class="w">  </span><span class="n">AddNtupleRow</span><span class="w"> </span><span class="p">(</span><span class="n">G4int</span><span class="w"> </span><span class="n">ntupleId</span><span class="p">)</span><span class="w"></span>
 </pre></div>
+<p>关键：函数中的 <strong>I</strong>、<strong>F</strong>、<strong>D</strong>、<strong>S</strong> 分别表示 int、float、double、string 类型。</p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">&#31034;&#20363;&#20195;&#30721;<a class="anchor-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>在 <strong>.hh</strong> 文件中添加头文件</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4CsvAnalysisManager.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4XmlAnalysisManager.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4RootAnalysisManager.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4VAnalysisManager.hh&quot;</span><span class="cp"></span>
+</pre></div>
+<p>同时添加类的对象</p>
 <div class="highlight"><pre><span></span><span class="n">G4VAnalysisManager</span><span class="o">*</span><span class="w"> </span><span class="n">analysisManager</span><span class="p">;</span><span class="w"></span>
 </pre></div>
-<p>打开文件</p>
+<p>获得线程中对象指针，通常放在构造函数或者该类中第一次使用之前</p>
 <div class="highlight"><pre><span></span><span class="n">analysisManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4RootAnalysisManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span><span class="w"></span>
 <span class="w">  </span><span class="c1">// analysisManager = G4CsvAnalysisManager::Instance();</span>
 <span class="w">  </span><span class="c1">// analysisManager = G4XmlAnalysisManager::Instance();</span>
-
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">SetVerboseLevel</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<hr>
+<h3 id="%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6">&#25171;&#24320;&#25991;&#20214;<a class="anchor-link" href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6">&#182;</a></h3><div class="highlight"><pre><span></span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">SetVerboseLevel</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtuple</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Geant4 data !&quot;</span><span class="p">);</span><span class="w"></span>
+
 
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleIColumn</span><span class="p">(</span><span class="s">&quot;EventID&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleIColumn</span><span class="p">(</span><span class="s">&quot;ParentID&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleIColumn</span><span class="p">(</span><span class="s">&quot;TrackID&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleIColumn</span><span class="p">(</span><span class="s">&quot;CurrentStepNumber&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleSColumn</span><span class="p">(</span><span class="s">&quot;PName&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;TrackWeight&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleSColumn</span><span class="p">(</span><span class="s">&quot;CreatorProcess&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;EDep&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;TrackLength&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;StepLength&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleIColumn</span><span class="p">(</span><span class="s">&quot;TrackStatus&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;Mass&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;Charge&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;MagneticMoment&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleSColumn</span><span class="p">(</span><span class="s">&quot;VolNamePre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleSColumn</span><span class="p">(</span><span class="s">&quot;VolNamePost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;GlobalTimePre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;GlobalTimePost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;LocalTimePre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;LocalTimePost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;ProperTimePre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;ProperTimePost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleIColumn</span><span class="p">(</span><span class="s">&quot;StepStatusPre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleIColumn</span><span class="p">(</span><span class="s">&quot;StepStatusPost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;EkPre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;EkPost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;xPre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;yPre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;zPre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;xPost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;yPost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;zPost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;xMomentumDirectionPre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;yMomentumDirectionPre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;zMomentumDirectionPre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;Velocitypre&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;xMomentumDirectionPost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;yMomentumDirectionPost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;zMomentumDirectionPost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CreateNtupleDColumn</span><span class="p">(</span><span class="s">&quot;Velocitypost&quot;</span><span class="p">);</span><span class="w"></span>
+
 
 
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FinishNtuple</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">OpenFile</span><span class="p">(</span><span class="s">&quot;outputdata&quot;</span><span class="p">);</span><span class="c1">//输出文件名</span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">OpenFile</span><span class="p">(</span><span class="s">&quot;outputdata&quot;</span><span class="p">);</span><span class="c1">//设置输出文件名</span>
 </pre></div>
-<p>关闭文件</p>
-<div class="highlight"><pre><span></span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">Write</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CloseFile</span><span class="p">();</span><span class="w"></span>
-</pre></div>
-<p>填充数据</p>
-<div class="highlight"><pre><span></span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">EventID</span><span class="p">);</span><span class="w"></span>
+<h3 id="%E5%A1%AB%E5%85%85%E6%95%B0%E6%8D%AE">&#22635;&#20805;&#25968;&#25454;<a class="anchor-link" href="#%E5%A1%AB%E5%85%85%E6%95%B0%E6%8D%AE">&#182;</a></h3><div class="highlight"><pre><span></span><span class="c1">// 这里 0-5 与前面创建的顺序</span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">EventID</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ParentID</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">TrackID</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">CurrentStepNumber</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleSColumn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">PName</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">TrackWeight</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleSColumn</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">CreatorProcess</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">EDep</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">TrackLength</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">StepLength</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">TrackStatus</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="n">Mass</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="n">Charge</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="n">MagneticMoment</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleSColumn</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="n">VolNamePre</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleSColumn</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="n">VolNamePost</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="n">GlobalTimePre</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="n">GlobalTimePost</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="n">LocalTimePre</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="n">LocalTimePost</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">ProperTimePre</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="n">ProperTimePost</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span><span class="w"> </span><span class="n">StepStatusPre</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleIColumn</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="n">StepStatusPost</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="w"> </span><span class="n">EkPre</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="n">EkPost</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="n">PosPre</span><span class="p">.</span><span class="n">x</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="n">PosPre</span><span class="p">.</span><span class="n">y</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="n">PosPre</span><span class="p">.</span><span class="n">z</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="n">PosPost</span><span class="p">.</span><span class="n">x</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="n">PosPost</span><span class="p">.</span><span class="n">y</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="n">PosPost</span><span class="p">.</span><span class="n">z</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">MomentumDirectionPre</span><span class="p">.</span><span class="n">x</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span><span class="w"> </span><span class="n">MomentumDirectionPre</span><span class="p">.</span><span class="n">y</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span><span class="w"> </span><span class="n">MomentumDirectionPre</span><span class="p">.</span><span class="n">z</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span><span class="w"> </span><span class="n">VelocityPre</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="n">MomentumDirectionPost</span><span class="p">.</span><span class="n">x</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span><span class="w"> </span><span class="n">MomentumDirectionPost</span><span class="p">.</span><span class="n">y</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">38</span><span class="p">,</span><span class="w"> </span><span class="n">MomentumDirectionPost</span><span class="p">.</span><span class="n">z</span><span class="p">());</span><span class="w"></span>
-<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="n">VelocityPost</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleSColumn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">PName</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleSColumn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">CreatorProcess</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">FillNtupleDColumn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">EDep</span><span class="p">);</span><span class="w"></span>
 
 
 <span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">AddNtupleRow</span><span class="p">();</span><span class="w">  </span><span class="c1">//相当于 Fill</span>
 </pre></div>
+<h3 id="%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6">&#20851;&#38381;&#25991;&#20214;<a class="anchor-link" href="#%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6">&#182;</a></h3><div class="highlight"><pre><span></span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">Write</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">CloseFile</span><span class="p">();</span><span class="w"></span>
+</pre></div>
 
 </div>
 </div>
@@ -14201,10 +14153,10 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">g4tools</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
@@ -14213,6 +14165,30 @@ a.anchor-link {
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[NbConvertApp] Converting notebook g4tools.ipynb to html
+
+[NbConvertApp] Writing 582650 bytes to g4tools.html
+
+</pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div>

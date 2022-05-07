@@ -14015,7 +14015,127 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>第二次课程讲</strong></p>
+<p><a href="g4tools.html">g4tools</a> 中介绍了如何在多线程中存储 ROOT/TTree 结构的数据</p>
+<p>该类有三个虚函数，G4RunManager会为每次运行调用它们：</p>
+<ul>
+<li>GenerateRun()<ul>
+<li>此函数在 BeamOn 开始时调用。因为用户可以继承类 G4Run 并创建自己的具体类来存储有关运行的一些信息，所以 GenerateRun() 函数是实例化此类对象的地方。它也是为特定运行设置影响物理表的变量（如产生次级粒子阈值）的理想场所，因为 GenerateRun() 是在计算物理表之前调用的。</li>
+</ul>
+</li>
+<li>BeginOfRunAction()<ul>
+<li>此函数在进入事件循环之前被调用。此函数的典型用途是初始化存储的数据结构/直方图等。此函数在计算物理表后调用。</li>
+</ul>
+</li>
+<li>EndOfRunAction()<ul>
+<li>在运行处理的最后调用此函数。它通常用于对已处理的运行进行简单分析。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">G4UserRunAction</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">G4UserRunAction</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">G4UserRunAction</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="n">G4Run</span><span class="o">*</span><span class="w"> </span><span class="n">GenerateRun</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">BeginOfRunAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Run</span><span class="o">*</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">EndOfRunAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Run</span><span class="o">*</span><span class="p">);</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+<ul>
+<li>G4UserRunAction 类是提取物理量的一个重要接口,主要通过以下两个函数<ul>
+<li>BeginOfRunAction()</li>
+<li>EndOfRunAction()</li>
+</ul>
+</li>
+</ul>
+<p>以下是我们提供示例代码中的截图</p>
+<p><img src="img/runaction1.png" alt="ra1"></p>
+<p>在 BeginOfRunAction() 函数中，创建 tree，打开文件；在 EndOfRunAction() 函数中将缓存中的数据写入磁盘，关闭文件。</p>
+<p><img src="img/runaction2.png" alt="ra2"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E5%A6%82%E4%BD%95%E7%BB%99%E4%B8%8D%E5%90%8C%E6%AC%A1%E8%BF%90%E8%A1%8C%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%EF%BC%9F">&#22914;&#20309;&#32473;&#19981;&#21516;&#27425;&#36816;&#34892;&#35774;&#32622;&#19981;&#21516;&#30340;&#25991;&#20214;&#21517;&#65311;<a class="anchor-link" href="#%E5%A6%82%E4%BD%95%E7%BB%99%E4%B8%8D%E5%90%8C%E6%AC%A1%E8%BF%90%E8%A1%8C%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%EF%BC%9F">&#182;</a></h2>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>假设每次开启程序运行 10000000 个事件（为了避免单个文件过大），总共需要模拟 100000000 个事件，那需要运行 10 次。我们希望这 10 次运行输出的文件名分别是 data0000，data0001，...，data0009。一个较为容易的实现方式如下：</p>
+<p>将文件名通过 main.cc 传递给 RunAction， 然后通过以下方式运行。</p>
+<div class="highlight"><pre><span></span>./wu -l data0003
+</pre></div>
+<p>代码修改如下：</p>
+<p><strong>main.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 这里的代码省略</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4String</span><span class="w"> </span><span class="n">commandfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuActionInitialization</span><span class="p">(</span><span class="n">commandfile</span><span class="p">));</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">else</span><span class="w"></span>
+<span class="w">  </span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuActionInitialization</span><span class="p">(</span><span class="s">&quot;outputdata&quot;</span><span class="p">));</span><span class="w">  </span>
+
+<span class="c1">// 这里的代码省略</span>
+</pre></div>
+<p><strong>wuActionInitialization.hh</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 添加头文件</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4String.hh&quot;</span><span class="cp"></span>
+
+<span class="c1">// 构造函数修改如下</span>
+<span class="n">wuActionInitialization</span><span class="p">(</span><span class="n">G4String</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;outputdata&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">//添加变量</span>
+<span class="n">G4String</span><span class="w"> </span><span class="n">filename</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p><strong>wuActionInitialization.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 进行如下修改</span>
+<span class="n">wuActionInitialization</span><span class="o">::</span><span class="n">wuActionInitialization</span><span class="p">(</span><span class="n">G4String</span><span class="w"> </span><span class="n">file</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">G4VUserActionInitialization</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+
+<span class="kt">void</span><span class="w"> </span><span class="n">wuActionInitialization</span><span class="o">::</span><span class="n">Build</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// 这里的代码省略</span>
+
+<span class="w">   </span><span class="n">actsRun</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserRunActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuRunActionAll</span><span class="p">(</span><span class="n">filename</span><span class="p">)));</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// 这里的代码省略  </span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p><strong>wuRunActionAll.hh</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 添加头文件</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4String.hh&quot;</span><span class="cp"></span>
+
+<span class="c1">// 构造函数修改如下</span>
+<span class="n">wuRunActionAll</span><span class="p">(</span><span class="n">G4String</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;outputdata&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">//添加变量</span>
+<span class="n">G4String</span><span class="w"> </span><span class="n">filename</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p><strong>wuRunActionAll.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 进行如下修改</span>
+<span class="n">wuRunActionAll</span><span class="o">::</span><span class="n">wuRunActionAll</span><span class="p">(</span><span class="n">G4String</span><span class="w"> </span><span class="n">file</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">wuRunActionAll</span><span class="o">::</span><span class="n">BeginOfRunAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Run</span><span class="o">*</span><span class="w"> </span><span class="cm">/*aRun*/</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 这里的代码省略</span>
+
+<span class="w">  </span><span class="n">analysisManager</span><span class="o">-&gt;</span><span class="n">OpenFile</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span><span class="c1">//输出文件名</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p><strong>用户将参数传递给 main.cc，然后传递给 wuActionInitialization，再传递给 wuRunActionAll。</strong></p>
+<p>这只是一个参数传递的一般示例，大家可以改成传递多个参数，或者使用其它类型的数据。</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14046,7 +14166,7 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook RunAction.ipynb to html
 
-[NbConvertApp] Writing 557317 bytes to RunAction.html
+[NbConvertApp] Writing 569158 bytes to RunAction.html
 
 </pre>
 </div>

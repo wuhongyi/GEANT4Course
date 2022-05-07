@@ -14008,6 +14008,141 @@ a.anchor-link {
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="StackingAction">StackingAction<a class="anchor-link" href="#StackingAction">&#182;</a></h1>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>前面介绍的 <a href="RunAction.html">RunAction</a> 和 <a href="StepingAction.html">StepingAction</a> 都只能用来提取数据，不能改变粒子的模拟状态，而这里 StackingAction 则可以改变粒子模拟的先后顺序，甚至直接 kill 该粒子。</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4ClassificationOfNewTrack.hh&quot;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">G4UserStackingAction</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">      </span><span class="n">G4UserStackingAction</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">G4UserStackingAction</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">protected</span><span class="o">:</span><span class="w"></span>
+<span class="w">      </span><span class="n">G4StackManager</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">stackManager</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="c1">//---------------------------------------------------------------</span>
+<span class="c1">// virtual methods to be implemented by user</span>
+<span class="c1">//---------------------------------------------------------------</span>
+<span class="c1">//</span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="n">G4ClassificationOfNewTrack</span><span class="w"> </span><span class="n">ClassifyNewTrack</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">NewStage</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">PrepareNewEvent</span><span class="p">();</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+<p>这个类有三个虚函数，ClassifyNewTrack、NewStage 和 PrepareNewEvent，用户可以重写它们来控制各种模拟 track 堆叠机制。</p>
+<p>每当 G4EventManager 将新的 G4Track 对象 “推” 到堆栈上时，G4StackManager 就会调用 ClassifyNewTrack()。ClassifyNewTrack() 返回枚举器 G4ClassificationOfNewTrack，其值指示 track 将发送到哪个堆栈（如果有）。该值应由用户确定。</p>
+<p>G4ClassificationOfNewTrack 有四个可能的值：</p>
+<ul>
+<li>fUrgent (track 被放置在紧急堆栈中)<ul>
+<li>优先模拟</li>
+</ul>
+</li>
+<li>fWaiting (track 被放置在等待堆栈中，在紧急堆栈为空之前不会被模拟)</li>
+<li>fPostpone (track 将推迟到下一个 event)</li>
+<li>fKill (track 会立即删除，不会存储在任何堆栈中)<ul>
+<li>主要用来剔除不关心的粒子</li>
+<li>加快模拟进度</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="ClassifyNewTrack">ClassifyNewTrack<a class="anchor-link" href="#ClassifyNewTrack">&#182;</a></h2><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4VProcess.hh&quot;</span><span class="cp"></span>
+
+<span class="n">G4ClassificationOfNewTrack</span><span class="w"> </span><span class="nf">wuStackingActionAll::ClassifyNewTrack</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="w"> </span><span class="n">aTrack</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">parent_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">get_parentID</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="c1">//      parent_ID = 0 : primary particle</span>
+<span class="w">  </span><span class="c1">//                &gt; 0 : secondary particle</span>
+<span class="w">  </span><span class="c1">//                &lt; 0 : postponed from the previous event    </span>
+
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">fUrgent</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p><strong>典型示例</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 保留初级粒子</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetParentID</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">fUrgent</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// 杀掉所有次级粒子 </span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">fKill</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p><strong>常用筛选条件</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 需要添加头文件</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;G4VProcess.hh&quot;</span><span class="cp"></span>
+
+<span class="w"> </span><span class="n">G4String</span><span class="w"> </span><span class="n">PName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetDefinition</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetParticleName</span><span class="p">();</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">G4int</span><span class="w"> </span><span class="n">TrackID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetTrackID</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="n">G4int</span><span class="w"> </span><span class="n">ParentID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetParentID</span><span class="p">();</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">G4String</span><span class="w"> </span><span class="n">CreatorProcess</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">G4VProcess</span><span class="o">*</span><span class="w"> </span><span class="n">pcr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetCreatorProcess</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">pcr</span><span class="p">)</span><span class="w"> </span><span class="n">CreatorProcess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pcr</span><span class="o">-&gt;</span><span class="n">GetProcessName</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">CreatorProcess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;##&quot;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="c1">// 不模拟所有非中子粒子</span>
+<span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">PName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">fKill</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">fUrgent</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="NewStage">NewStage<a class="anchor-link" href="#NewStage">&#182;</a></h2><p><strong>这里不介绍</strong></p>
+<h2 id="PrepareNewEvent">PrepareNewEvent<a class="anchor-link" href="#PrepareNewEvent">&#182;</a></h2><p><strong>这里不介绍</strong></p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">StackingAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[NbConvertApp] Converting notebook StackingAction.ipynb to html
+
+[NbConvertApp] Writing 568363 bytes to StackingAction.html
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
 </body>
 
 

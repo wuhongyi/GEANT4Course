@@ -14055,7 +14055,35 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="3.0-%E8%A7%92%E5%88%86%E5%B8%83%E6%A8%A1%E6%8B%9F">3.0 &#35282;&#20998;&#24067;&#27169;&#25311;<a class="anchor-link" href="#3.0-%E8%A7%92%E5%88%86%E5%B8%83%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
+<h2 id="3.0-%E7%A7%BB%E9%99%A4%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA">3.0 &#31227;&#38500;&#19981;&#24517;&#35201;&#30340;&#25968;&#25454;&#36755;&#20986;<a class="anchor-link" href="#3.0-%E7%A7%BB%E9%99%A4%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA">&#182;</a></h2><ul>
+<li>在 2.0 $\beta$ 探测效率模拟中，默认的数据输出中有 40 个 Branch，其中绝大多数 Branch 在后期的数据分析中是多余的</li>
+<li>修改 wuRunActionAll 和 wuSteppingActionAll 两个类，删除多余的 Branch，使输出的数据尽可能小。</li>
+<li>参考 <a href="RunAction.html">RunAction</a> 中代码，传递运行参数。</li>
+<li>重复模拟作业 2.0 中的“能量-效率”曲线，需给出每个点的误差。</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="c1">// 如何将多个 ROOT 文件 串起来处理，供参考</span>
+<span class="n">TChain</span><span class="w"> </span><span class="o">*</span><span class="n">tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TCahin</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">);</span><span class="c1">//“t” 是 ROOT 文件中 TTree 的名字</span>
+
+<span class="c1">// 采用通配符示例 1</span>
+<span class="n">tree</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;*.root&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// 采用通配符示例 2</span>
+<span class="n">tree</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;data*.root&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// 逐个文件添加</span>
+<span class="n">tree</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;data0002_t0.root&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">tree</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;data0002_t1.root&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">tree</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;data0003_t0.root&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">tree</span><span class="o">-&gt;</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;data0003_t1.root&quot;</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="c1">// tree-&gt;Process();</span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="4.0-%E8%A7%92%E5%88%86%E5%B8%83%E6%A8%A1%E6%8B%9F">4.0 &#35282;&#20998;&#24067;&#27169;&#25311;<a class="anchor-link" href="#4.0-%E8%A7%92%E5%88%86%E5%B8%83%E6%A8%A1%E6%8B%9F">&#182;</a></h2><ul>
 <li>双面硅探测器 <ul>
 <li>厚度分别为 140 um，40 um，300 um，依次排列</li>
 <li>140 um 与 40 um 硅中心距离 10 mm，40 um 与 300 um 硅中心距离 15 mm</li>
@@ -14072,10 +14100,23 @@ a.anchor-link {
 <li>模拟给出探测到的两个质子的角分布<ul>
 <li>横坐标是角度，[0,180] 度，纵坐标是计数</li>
 <li>双质子均位于 140 um 硅探测器，双质子均位于 300 um 硅探测器，一个质子位于 140 um、一个位于 300 um 硅探测器</li>
-<li>给出以上三种情况夏各自的角分布，和总角分布</li>
+<li>给出以上三种情况夏各自的角分布以及总角分布</li>
 </ul>
 </li>
 </ul>
+<p><strong>提示： 实际探测中，只能知道粒子打在哪个像素中，不能得到像素中的具体位置。因此数据处理中，计算角度时候，需要考虑这个因素！！！</strong></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="x.0-%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8-ROOT">x.0 &#35843;&#29992;&#22806;&#37096; ROOT<a class="anchor-link" href="#x.0-%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8-ROOT">&#182;</a></h2><p>（选作）</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="x.0-%E7%BB%9F%E8%AE%A1%E4%B8%AD%E5%AD%90%E5%A4%9A%E9%87%8D%E6%80%A7">x.0 &#32479;&#35745;&#20013;&#23376;&#22810;&#37325;&#24615;<a class="anchor-link" href="#x.0-%E7%BB%9F%E8%AE%A1%E4%B8%AD%E5%AD%90%E5%A4%9A%E9%87%8D%E6%80%A7">&#182;</a></h2><p>（选作）</p>
 
 </div>
 </div>
@@ -14233,7 +14274,7 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook homework.ipynb to html
 
-[NbConvertApp] Writing 582335 bytes to homework.html
+[NbConvertApp] Writing 586464 bytes to homework.html
 
 </pre>
 </div>

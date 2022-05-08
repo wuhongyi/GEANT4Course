@@ -14136,6 +14136,7 @@ a.anchor-link {
 </pre></div>
 <p><strong>用户将参数传递给 main.cc，然后传递给 wuActionInitialization，再传递给 wuRunActionAll。</strong></p>
 <p>这只是一个参数传递的一般示例，大家可以改成传递多个参数，或者使用其它类型的数据。</p>
+<p>G4String 类是继承于 std::string，添加了一些功能函数。所以简单的可以当成 std::string 来使用。详细可以查看文件 G4String.hh。</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14144,7 +14145,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">RunAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">RunAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14164,9 +14166,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[NbConvertApp] Converting notebook RunAction.ipynb to html
+<pre>2022年 05月 08日 星期日 12:44:40 CST
 
-[NbConvertApp] Writing 569158 bytes to RunAction.html
+[NbConvertApp] Converting notebook RunAction.ipynb to html
+
+[NbConvertApp] Writing 569315 bytes to RunAction.html
 
 </pre>
 </div>

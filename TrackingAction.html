@@ -14015,7 +14015,9 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><a href="StackingAction.html">StackingAction</a> 中介绍了如何判选一个粒子是否进行模拟。这里</p>
+<p><img src="img/trackid.png" alt="1234"></p>
+<p><a href="StackingAction.html">StackingAction</a> 中介绍了如何判选一个粒子是否进行模拟。而 G4UserTrackingAction 则对每个粒子模拟的开始和结束提供用户操纵接口。PreUserTrackingAction() 在一个 Tarck 开始时被调用， PostUserTrackingAction() 在一个 Track 结束之后被调用。</p>
+<p>GEANT4 的机制中，一个 tracking 中的多个 step 中均可能产生新的粒子，只有在当前粒子（track）完成模拟，才会进行下一个粒子的模拟。</p>
 <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">G4UserTrackingAction</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
 <span class="w">   </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
@@ -14033,11 +14035,113 @@ a.anchor-link {
 <span class="w">     </span><span class="n">G4TrackingManager</span><span class="o">*</span><span class="w"> </span><span class="n">fpTrackingManager</span><span class="p">;</span><span class="w"></span>
 <span class="p">};</span><span class="w"></span>
 </pre></div>
+<p>与 <a href="RunAction.html">RunAction</a> 中函数 BeginOfRunAction()/EndOfRunAction() 类似，PreUserTrackingAction()/PostUserTrackingAction() 可以用来提取数据。下面介绍通过这两个函数进行遗传信息的标记。</p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="TrackInformation-%E6%A0%87%E8%AE%B0%E7%A4%BA%E4%BE%8B">TrackInformation &#26631;&#35760;&#31034;&#20363;<a class="anchor-link" href="#TrackInformation-%E6%A0%87%E8%AE%B0%E7%A4%BA%E4%BE%8B">&#182;</a></h2><p><strong>wuTrackingActionAll.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 添加头文件</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;wuTrackInformation.hh&quot;</span><span class="cp"></span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuTrackingAction::PreUserTrackingAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="w"> </span><span class="n">aTrack</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="w"> </span><span class="n">trackInformation</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetUserInformation</span><span class="p">())</span><span class="w"> </span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">trackInformation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">fpTrackingManager</span><span class="o">-&gt;</span><span class="n">SetUserTrackInformation</span><span class="p">(</span><span class="n">trackInformation</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">trackInformation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="p">)(</span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetUserInformation</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetParentID</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="c1">//入射粒子 </span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">trackInformation</span><span class="o">-&gt;</span><span class="n">AddFlag</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="c1">//初始中子为第0代</span>
+<span class="w">      </span><span class="n">fpTrackingManager</span><span class="o">-&gt;</span><span class="n">SetUserTrackInformation</span><span class="p">(</span><span class="n">trackInformation</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">//fpTrackingManager-&gt;SetUserTrackInformation(trackInformation);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// 标记第几代裂变中子</span>
+<span class="c1">// 其它粒子虽然也被标记了，但是对最终的数据分析没有影响</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">wuTrackingAction::PostUserTrackingAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="w"> </span><span class="n">aTrack</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">G4TrackVector</span><span class="o">*</span><span class="w"> </span><span class="n">secondaries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fpTrackingManager</span><span class="o">-&gt;</span><span class="n">GimmeSecondaries</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">secondaries</span><span class="p">)</span><span class="c1">//如果当前 tracking 中产生了次级粒子</span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="p">)(</span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetUserInformation</span><span class="p">());</span><span class="c1">//当前 track 的信息</span>
+
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nSeco</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">secondaries</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">nSeco</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="c1">//对次级粒子进行遍历</span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">nSeco</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span>
+<span class="w">          </span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="w"> </span><span class="n">infoNew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">wuTrackInformation</span><span class="p">(</span><span class="n">info</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="p">((</span><span class="o">*</span><span class="n">secondaries</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">GetCreatorProcess</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetProcessName</span><span class="p">()</span><span class="o">==</span><span class="s">&quot;nFission&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">             </span><span class="n">infoNew</span><span class="o">-&gt;</span><span class="n">AddFlag</span><span class="p">(</span><span class="n">infoNew</span><span class="o">-&gt;</span><span class="n">PrintFlag</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span><span class="c1">//fission产生的中子才加一，非弹散的中子虽然ID也变了，但是并不是新的中子</span>
+
+<span class="w">          </span><span class="c1">//G4cout&lt;&lt;infoNew-&gt;PrintFlag()&lt;&lt;G4endl;</span>
+<span class="w">          </span><span class="c1">// G4cout&lt;&lt;&quot;###  &quot;&lt;&lt;(*secondaries)[i]-&gt;GetCreatorProcess()-&gt;GetProcessName()&lt;&lt;&quot;  &quot;&lt;&lt;(*secondaries)[i]-&gt;GetParticleDefinition()-&gt;GetParticleName()&lt;&lt;G4endl;</span>
+
+<span class="w">          </span><span class="p">(</span><span class="o">*</span><span class="n">secondaries</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">SetUserInformation</span><span class="p">(</span><span class="n">infoNew</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E7%A4%BA%E4%BE%8B">&#25968;&#25454;&#25552;&#21462;&#31034;&#20363;<a class="anchor-link" href="#%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E7%A4%BA%E4%BE%8B">&#182;</a></h2><p><strong>wuStackingActionAll.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 根据遗传标记进行判选</span>
+<span class="c1">// 不模拟三代以上的中子</span>
+
+<span class="c1">// 添加头文件</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;wuTrackInformation.hh&quot;</span><span class="cp"></span>
+
+<span class="n">G4ClassificationOfNewTrack</span><span class="w"> </span><span class="nf">wuStackingActionAll::ClassifyNewTrack</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Track</span><span class="o">*</span><span class="w"> </span><span class="n">aTrack</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetUserInformation</span><span class="p">())</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="w"> </span><span class="n">trackInformation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="p">)(</span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetUserInformation</span><span class="p">());</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">trackInformation</span><span class="o">-&gt;</span><span class="n">PrintFlag</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">fKill</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">fUrgent</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p><strong>wuSteppingAction.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 添加头文件</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;wuTrackInformation.hh&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">wuSteppingAction::UserSteppingAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Step</span><span class="o">*</span><span class="w"> </span><span class="n">step</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 这部分省略</span>
+<span class="w">  </span><span class="c1">// G4Track* aTrack = step-&gt;GetTrack();  </span>
+
+
+<span class="w">  </span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="w"> </span><span class="n">trackInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="p">(</span><span class="n">wuTrackInformation</span><span class="o">*</span><span class="p">)(</span><span class="n">aTrack</span><span class="o">-&gt;</span><span class="n">GetUserInformation</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">Info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trackInfo</span><span class="o">-&gt;</span><span class="n">PrintFlag</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// 这部分省略</span>
+<span class="w">  </span><span class="c1">// 将 Info 填充到 tree 中</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14067,11 +14171,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2022年 05月 07日 星期六 21:20:51 CST
+<pre>2022年 05月 08日 星期日 15:29:29 CST
 
 [NbConvertApp] Converting notebook TrackingAction.ipynb to html
 
-[NbConvertApp] Writing 559321 bytes to TrackingAction.html
+[NbConvertApp] Writing 575438 bytes to TrackingAction.html
 
 </pre>
 </div>

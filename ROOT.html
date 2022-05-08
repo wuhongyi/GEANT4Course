@@ -14007,18 +14007,157 @@ a.anchor-link {
     </script>
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="ROOT">ROOT<a class="anchor-link" href="#ROOT">&#182;</a></h1>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>GEANT4 模拟使用的输入量有时是实验测量的信息，例如能谱、位置分布等。而这些信息通常以 TH1/TH2 等 ROOT 的形式保存。</p>
+<p>GEANT4 耦合 ROOT 程序进行模拟在很多情况下是必要的，这里我们简单介绍如何调用 ROOT。</p>
+<p><strong>注意：当前 GEANT4 多线程模式下采用 ROOT TFile/TTree 方式保存数据存在问题。单线程下没问题。</strong></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E4%BF%AE%E6%94%B9-CMakeLists.txt-%E6%96%87%E4%BB%B6">&#20462;&#25913; CMakeLists.txt &#25991;&#20214;<a class="anchor-link" href="#%E4%BF%AE%E6%94%B9-CMakeLists.txt-%E6%96%87%E4%BB%B6">&#182;</a></h2><p>G4 中调用 ROOT 库，首先需要修改 <em>CMakeLists.txt</em> 文件，</p>
+<p><strong>CMakeLists.txt</strong></p>
+<div class="highlight"><pre><span></span><span class="c">## 添加以下代码</span>
+<span class="c">## 在 include_directories 之前</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">ROOT</span> <span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">ROOT_FOUND</span><span class="p">)</span>
+  <span class="c"># message(&quot;ROOT find...&quot;)</span>
+  <span class="nb">include</span><span class="p">(</span><span class="o">${</span><span class="nv">ROOT_DIR</span><span class="o">}</span><span class="s">/ROOTUseFile.cmake</span><span class="p">)</span>
+  <span class="nb">message</span><span class="p">(</span><span class="o">${</span><span class="nv">ROOT_INCLUDE_DIRS</span><span class="o">}</span><span class="p">)</span>
+  <span class="nb">message</span><span class="p">(</span><span class="o">${</span><span class="nv">ROOT_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+
+
+<span class="c">## 修改以下两行如下：</span>
+
+<span class="c"># 添加 ${ROOT_INCLUDE_DIRS}</span>
+<span class="nb">include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/include</span> <span class="o">${</span><span class="nv">Geant4_INCLUDE_DIR</span><span class="o">}</span> <span class="o">${</span><span class="nv">ROOT_INCLUDE_DIRS</span><span class="o">}</span><span class="p">)</span>
+<span class="c"># 添加 ${ROOT_LIBRARIES}</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJ_NAME</span><span class="o">}</span> <span class="o">${</span><span class="nv">Geant4_LIBRARIES</span><span class="o">}</span> <span class="o">${</span><span class="nv">ROOT_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+<p><img src="img/G4ROOTcmake.png" alt="cmake"></p>
+<p>执行 <strong>cmake</strong> 指令之后，可以看到 ROOT 头文件以及动态连接库。 显示的动态链接库是变量 ${ROOT_LIBRARIES} 中默认的，额外的可通过以下方式进行添加</p>
+<div class="highlight"><pre><span></span><span class="c">## 添加 MathMore</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJ_NAME</span><span class="o">}</span> <span class="o">${</span><span class="nv">Geant4_LIBRARIES</span><span class="o">}</span> <span class="o">${</span><span class="nv">ROOT_LIBRARIES</span><span class="o">}</span> <span class="s">MathMore</span><span class="p">)</span>
+</pre></div>
+<p>完成以上配置，基本上与前面课程中介绍的 ROOT 使用没有区别。</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">&#31034;&#20363;&#20195;&#30721;<a class="anchor-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">&#182;</a></h2><p><a href="homework.html">作业</a> 5.0 部分提供的代码生成 TH1/TH2 分布。这里展示如何使用该分布进行抽样</p>
+<p><strong>main.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">//</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;TROOT.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// main 中添加以下代码</span>
+<span class="n">ROOT</span><span class="o">::</span><span class="n">EnableThreadSafety</span><span class="p">();</span><span class="w"> </span><span class="c1">// 这一行非常重要，少了程序就崩溃</span>
+
+<span class="c1">// 太老版本的 ROOT 可能没有该函数，可通过使用单线程模式来规避线程安全问题</span>
+</pre></div>
+<p><strong>wuPrimaryGeneratorActionAll.hh</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 添加头文件</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;TFile.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;TH1.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;TH2.h&quot;</span><span class="cp"></span>
+
+
+<span class="c1">// wuPrimaryGeneratorActionAll 类中添加三个变量</span>
+<span class="w">  </span><span class="n">TFile</span><span class="w"> </span><span class="o">*</span><span class="n">filer</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">TH1I</span><span class="w"> </span><span class="o">*</span><span class="n">h1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">TH2I</span><span class="w"> </span><span class="o">*</span><span class="n">h2</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p><strong>wuPrimaryGeneratorActionAll.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="n">wuPrimaryGeneratorActionAll</span><span class="o">::</span><span class="n">wuPrimaryGeneratorActionAll</span><span class="p">()</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">G4VUserPrimaryGeneratorAction</span><span class="p">(),</span><span class="n">particleGun</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 这里省略    </span>
+
+<span class="w">  </span><span class="c1">// 打开文件，读取 TH1/TH2   </span>
+<span class="w">  </span><span class="n">filer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TFile</span><span class="p">(</span><span class="s">&quot;dis.root&quot;</span><span class="p">,</span><span class="s">&quot;READ&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">filer</span><span class="o">-&gt;</span><span class="n">IsOpen</span><span class="p">())</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Can&#39;t open root file&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">h1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">TH1I</span><span class="o">*</span><span class="p">)</span><span class="n">filer</span><span class="o">-&gt;</span><span class="n">Get</span><span class="p">(</span><span class="s">&quot;h1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">h2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">TH2I</span><span class="o">*</span><span class="p">)</span><span class="n">filer</span><span class="o">-&gt;</span><span class="n">Get</span><span class="p">(</span><span class="s">&quot;h2&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="p">}</span><span class="w">    </span>
+
+
+<span class="n">wuPrimaryGeneratorActionAll</span><span class="o">::~</span><span class="n">wuPrimaryGeneratorActionAll</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 这里省略    </span>
+
+<span class="w">  </span><span class="c1">// 关闭文件</span>
+<span class="w">  </span><span class="n">filer</span><span class="o">-&gt;</span><span class="n">Close</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+
+
+<span class="kt">void</span><span class="w"> </span><span class="n">wuPrimaryGeneratorActionAll</span><span class="o">::</span><span class="n">GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span><span class="o">*</span><span class="w"> </span><span class="n">anEvent</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 这里省略    </span>
+
+<span class="w">  </span><span class="c1">// 抽取数据  </span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">depz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h1</span><span class="o">-&gt;</span><span class="n">GetRandom</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">depx</span><span class="p">,</span><span class="w"> </span><span class="n">depy</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">h2</span><span class="o">-&gt;</span><span class="n">GetRandom2</span><span class="p">(</span><span class="n">depx</span><span class="p">,</span><span class="w"> </span><span class="n">depy</span><span class="p">);</span><span class="w">   </span>
+<span class="w">  </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="n">depx</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">depy</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">depz</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w">        </span>
+
+<span class="w">  </span><span class="c1">// 这里省略        </span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">ROOT</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>2022年 05月 08日 星期日 15:31:07 CST
+
+[NbConvertApp] Converting notebook ROOT.ipynb to html
+[NbConvertApp] Writing 569785 bytes to ROOT.html
+
+</pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div>

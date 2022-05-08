@@ -14015,6 +14015,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><img src="img/trackid.png" alt="1234"></p>
 <p>与 G4UserRunAction 类似，G4UserSteppingAction 也是提取物理量的一个重要接口,主要通过 UserSteppingAction 函数来实现。该函数每个最小模拟单元（step）之后调用一次，用户可以通过这个接口提取数据，但是不能修改模拟粒子的状态。</p>
 <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">G4UserSteppingAction</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
@@ -14203,6 +14204,7 @@ a.anchor-link {
 <div class="highlight"><pre><span></span>t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackID:CurrentStepNumber:PName:CreatorProcess:EkPre:EDep&quot;</span><span class="o">)</span>
 <span class="c1">#或者</span>
 t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackID:CurrentStepNumber:PName:CreatorProcess:EkPre:EDep&quot;</span>,<span class="s2">&quot;&quot;</span>,<span class="s2">&quot;colsize=20&quot;</span><span class="o">)</span>
+t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackID:CurrentStepNumber:PName:CreatorProcess:EkPre:EDep:GlobalTimePre&quot;</span>,<span class="s2">&quot;&quot;</span>,<span class="s2">&quot;colsize=18&quot;</span><span class="o">)</span>
 </pre></div>
 <p>可以看到一个事件产生几万 entry，对一个事件来说：</p>
 <p>从粒子可以看到 “neutron”， “gamma”， “e-”， “e+”， “U235”， “alpha”， “Th231[387.836]”， “Th231[185.718]”， “Th231”， “anti_nu_e”， “Pa231[101.409]”， “Pa231[84.215]”， “Pa231”， “Ac227[46.350]”， “Ac227[27.370]”， “Ac227”， “Th227”， “Ra223[61.424]”， “Ra223”， “Rn219[598.720]”， “Rn219”， “Po215”， “Pb211”， “Bi211[831.960]”， “Bi211”， “Tl207”， 等等。</p>
@@ -14219,7 +14221,7 @@ t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackI
 <span class="k">if</span><span class="p">(</span><span class="n">CurrentStepNumber</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 <p>这里需要提醒一点，“neutronInelastic” 过程中子的 Track ID 会发生改变，但是它不属于 “nFission” 产生的新粒子。</p>
-<p><strong>在进行条件筛选时，采用的条件必须尽可能简单，避免条件问题导致模拟出现偏差。</strong></p>
+<p><strong>在进行条件筛选时，采用的条件必须尽可能简单，避免筛选条件不当导致模拟出现偏差。</strong></p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14228,7 +14230,8 @@ t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackI
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">StepingAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">StepingAction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14248,8 +14251,11 @@ t-&gt;Scan<span class="o">(</span><span class="s2">&quot;EventID:ParentID:TrackI
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[NbConvertApp] Converting notebook StepingAction.ipynb to html
-[NbConvertApp] Writing 590087 bytes to StepingAction.html
+<pre>2022年 05月 08日 星期日 15:26:15 CST
+
+[NbConvertApp] Converting notebook StepingAction.ipynb to html
+
+[NbConvertApp] Writing 590529 bytes to StepingAction.html
 
 </pre>
 </div>

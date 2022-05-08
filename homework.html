@@ -14092,7 +14092,7 @@ a.anchor-link {
 </ul>
 </li>
 <li>假设在 40 um 探测器上发生某原子核的双质子衰变（从粒子源发射出两个质子）<ul>
-<li>衰变位置位于 40 um 硅上均匀分布</li>
+<li>衰变位置位于 40 um 硅上均匀分布(x/y/z 三个维度)</li>
 <li>质子总能量为 5.0 MeV，随机分配给两个质子</li>
 <li>每个质子独立 4$\pi$ 均匀发射</li>
 </ul>
@@ -14110,13 +14110,63 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="x.0-%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8-ROOT">x.0 &#35843;&#29992;&#22806;&#37096; ROOT<a class="anchor-link" href="#x.0-%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8-ROOT">&#182;</a></h2><p>（选作）</p>
+<h2 id="5.0-%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8-ROOT">5.0 &#35843;&#29992;&#22806;&#37096; ROOT<a class="anchor-link" href="#5.0-%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8-ROOT">&#182;</a></h2><p><em>（选作）</em></p>
+<ul>
+<li>利用以下代码生成衰变位置在硅上的分布信息<ul>
+<li>TH2 为 16$\times$16 的位置信息</li>
+<li>TH1 为注入深度分布信息（0-40 um）</li>
+</ul>
+</li>
+<li>采用 TH2/TH1 分布抽用来产生作业 4.0 中的衰变位置</li>
+<li>重复作业 4.0 中的模拟，并将结果画在一起进行对比</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="c1">// 根据以下代码生成衰变位置在硅上的分布</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">TH2I</span><span class="w"> </span><span class="o">*</span><span class="n">h2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH2I</span><span class="p">(</span><span class="s">&quot;h2&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">TH1I</span><span class="w"> </span><span class="o">*</span><span class="n">h1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH1I</span><span class="p">(</span><span class="s">&quot;h1&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">gausx</span><span class="p">,</span><span class="w"> </span><span class="n">gausy</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">dep</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000000</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">gausx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gRandom</span><span class="o">-&gt;</span><span class="n">Gaus</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">gausy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gRandom</span><span class="o">-&gt;</span><span class="n">Gaus</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">gausx</span><span class="w"> </span><span class="o">&gt;=</span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">gausx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">gausy</span><span class="w"> </span><span class="o">&gt;=</span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">gausy</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">16</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">h2</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">gausx</span><span class="p">,</span><span class="w"> </span><span class="n">gausy</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">dep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gRandom</span><span class="o">-&gt;</span><span class="n">Landau</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">dep</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dep</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">40</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">h1</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">dep</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">TCanvas</span><span class="w"> </span><span class="o">*</span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TCanvas</span><span class="p">(</span><span class="s">&quot;c1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">Divide</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">cd</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">h2</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;colz&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">c1</span><span class="o">-&gt;</span><span class="n">cd</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">h1</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">TFile</span><span class="w"> </span><span class="o">*</span><span class="n">filew</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TFile</span><span class="p">(</span><span class="s">&quot;dis.root&quot;</span><span class="p">,</span><span class="s">&quot;RECREATE&quot;</span><span class="p">);</span><span class="c1">//&quot;RECREATE&quot; &quot;READ&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">filew</span><span class="o">-&gt;</span><span class="n">IsOpen</span><span class="p">())</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Can&#39;t open root file&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">h2</span><span class="o">-&gt;</span><span class="n">Write</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">h1</span><span class="o">-&gt;</span><span class="n">Write</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">filew</span><span class="o">-&gt;</span><span class="n">Close</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p><img src="img/rootsource.png" alt="hw5"></p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="x.0-%E7%BB%9F%E8%AE%A1%E4%B8%AD%E5%AD%90%E5%A4%9A%E9%87%8D%E6%80%A7">x.0 &#32479;&#35745;&#20013;&#23376;&#22810;&#37325;&#24615;<a class="anchor-link" href="#x.0-%E7%BB%9F%E8%AE%A1%E4%B8%AD%E5%AD%90%E5%A4%9A%E9%87%8D%E6%80%A7">&#182;</a></h2><p>（选作）</p>
+<h2 id="x.0-%E7%BB%9F%E8%AE%A1%E4%B8%AD%E5%AD%90%E5%A4%9A%E9%87%8D%E6%80%A7">x.0 &#32479;&#35745;&#20013;&#23376;&#22810;&#37325;&#24615;<a class="anchor-link" href="#x.0-%E7%BB%9F%E8%AE%A1%E4%B8%AD%E5%AD%90%E5%A4%9A%E9%87%8D%E6%80%A7">&#182;</a></h2><p>（选作）
+<strong>待补充</strong></p>
 
 </div>
 </div>
@@ -14252,7 +14302,9 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">homework</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">homework</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">homework</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14272,9 +14324,15 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[NbConvertApp] Converting notebook homework.ipynb to html
+<pre>2022年 05月 08日 星期日 15:32:07 CST
 
-[NbConvertApp] Writing 586952 bytes to homework.html
+[NbConvertApp] Converting notebook homework.ipynb to html
+
+[NbConvertApp] Writing 596231 bytes to homework.html
+
+[NbConvertApp] Converting notebook homework.ipynb to html
+
+[NbConvertApp] Writing 596231 bytes to homework.html
 
 </pre>
 </div>

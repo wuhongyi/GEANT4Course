@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>index</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Random</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,86 +14010,35 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="GEANT4">GEANT4<a class="anchor-link" href="#GEANT4">&#182;</a></h1>
+<h1 id="%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%AE%BE%E7%BD%AE">&#38543;&#26426;&#25968;&#35774;&#32622;<a class="anchor-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0%E8%AE%BE%E7%BD%AE">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5">&#24120;&#29992;&#38142;&#25509;<a class="anchor-link" href="#%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5">&#182;</a></h2><ul>
-<li>官网 <a href="https://geant4.web.cern.ch/">https://geant4.web.cern.ch/</a></li>
-<li>官方教程主页 <a href="https://geant4.web.cern.ch/support">https://geant4.web.cern.ch/support</a></li>
-</ul>
-<p><strong>基础</strong></p>
+<p>在运行我们前面的模拟代码中，是否发现一个现象</p>
 <ul>
-<li>安装 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/index.html</a></li>
-<li>应用手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/index.html</a></li>
+<li>多次运行模拟程序，每次均跑相同事件数</li>
+<li>生成的数据确是一样的</li>
 </ul>
-<p><strong>进阶</strong></p>
-<ul>
-<li>开发者手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForToolkitDeveloper/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForToolkitDeveloper/html/index.html</a></li>
-<li>物理列表指南 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/index.html</a></li>
-<li>物理参考手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsReferenceManual/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsReferenceManual/html/index.html</a></li>
-</ul>
-<hr>
+<p>这将会造成一个问题：如果总共需要模拟 10 亿个事件，分 10 次运行，每次运行 1 亿个事件。那模拟结果将是 1 亿个模拟事件的 10 倍重复。</p>
+<p>这是因为默认随机数种子是与电脑硬件相关的，每个电脑是一个固定值（不同电脑不同），因此由该随机种子产生的随机数序列每次都一样。避免这个问题的一个简单方式是人为每次设置不同的随机种子。一个简单的方式是随机种子与当前程序执行的时刻相关联，那么不同次运行时的随机种子就不一样。</p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E7%9B%AE%E5%BD%95">&#30446;&#24405;<a class="anchor-link" href="#%E7%9B%AE%E5%BD%95">&#182;</a></h2><ul>
-<li><a href="INSTALL.html">安装</a></li>
-<li><a href="FRAME.html">程序框架</a></li>
-<li><a href="MAIN.html">主函数</a></li>
-<li><a href="DetectorConstruction.html">探测器设置</a></li>
-<li><a href="PrimaryGeneratorAction.html">粒子源设置</a></li>
-<li><p><a href="dataana.html">数据提取</a></p>
-</li>
-<li><p><a href="g4tools.html">g4tools</a></p>
-</li>
-<li><a href="RunAction.html">RunAction</a></li>
-<li><a href="StepingAction.html">StepingAction</a></li>
-<li><a href="StackingAction.html">StackingAction</a></li>
-<li><a href="TrackInformation.html">TrackInformation</a></li>
-<li><p><a href="TrackingAction.html">TrackingAction</a></p>
-</li>
-<li><p><a href="Random.html">随机数设置</a></p>
-</li>
-<li><p><a href="ROOT.html">调用 ROOT 库</a></p>
-</li>
-<li><p><a href="homework.html">作业</a></p>
-</li>
-</ul>
-<p>示例代码包 <em>geant4_step</em> <a href="https://disk.pku.edu.cn:443/link/0D41F07C358D1E42E16A00B0144BB3D4">下载</a> 2022年4月15日更新</p>
-<p>示例代码包 <em>geant4_step</em> <a href="https://disk.pku.edu.cn:443/link/A29C2A9D9F08DFBD551DFE4946A6CF07">下载</a> 2022年5月8日更新</p>
-<p><strong>运行中如出现异常，请及时在群里反馈或者与吴鸿毅联系</strong></p>
+<p><strong>main.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Randomize.hh&quot;</span><span class="cp"></span>
 
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Random</span><span class="o">::</span><span class="n">setTheEngine</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">CLHEP</span><span class="o">::</span><span class="n">RanecuEngine</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4Random</span><span class="o">::</span><span class="n">setTheSeed</span><span class="p">(</span><span class="n">seconds</span><span class="p">);</span><span class="w"></span>
 
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9B%AE%E5%BD%95">&#26410;&#23436;&#25104;&#30446;&#24405;<a class="anchor-link" href="#%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9B%AE%E5%BD%95">&#182;</a></h2><ul>
-<li><a href="EventAction.html">EventAction</a></li>
-<li><a href="SensitiveDetector.html">SensitiveDetector</a></li>
-<li>闪烁体光学光子传输</li>
-<li>...</li>
-</ul>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<span class="w">  </span><span class="c1">// 这里省略   </span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14113,7 +14062,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">Random</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14133,11 +14082,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2022年 05月 08日 星期日 15:28:28 CST
+<pre>2022年 05月 08日 星期日 13:14:00 CST
 
-[NbConvertApp] Converting notebook index.ipynb to html
+[NbConvertApp] Converting notebook Random.ipynb to html
 
-[NbConvertApp] Writing 563591 bytes to index.html
+[NbConvertApp] Writing 561310 bytes to Random.html
 
 </pre>
 </div>

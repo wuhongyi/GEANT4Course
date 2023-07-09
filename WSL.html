@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>index</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>WSL</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,89 +14010,79 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="GEANT4">GEANT4<a class="anchor-link" href="#GEANT4">&#182;</a></h1>
+<h1 id="Windows-Subsystem-for-Linux(WSL)">Windows Subsystem for Linux(WSL)<a class="anchor-link" href="#Windows-Subsystem-for-Linux(WSL)">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5">&#24120;&#29992;&#38142;&#25509;<a class="anchor-link" href="#%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5">&#182;</a></h2><ul>
-<li>官网 <a href="https://geant4.web.cern.ch/">https://geant4.web.cern.ch/</a></li>
-<li>官方教程主页 <a href="https://geant4.web.cern.ch/support">https://geant4.web.cern.ch/support</a></li>
-</ul>
-<p><strong>基础</strong></p>
+<h2 id="%E5%AE%89%E8%A3%85">&#23433;&#35013;<a class="anchor-link" href="#%E5%AE%89%E8%A3%85">&#182;</a></h2><p>在 windows10 或者 windows11 系统中，打开 <strong>Microsoft Store</strong>，搜索 <em>wsl</em>，在结果中寻找 <em>Ubuntu 20.04.x LTS</em>，点击进入。</p>
+<p><img src="img/wsl01.PNG" alt="wsl01"></p>
+<p>点击右上角的 <em>获取</em>，等待安装结束。</p>
+<p><img src="img/wsl02.PNG" alt="wsl02"></p>
+<p>安装完成之后。首次启动，会提示创建用户。输入用户名，密码</p>
+<p><img src="img/wsl04.PNG" alt="wsl04"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E9%85%8D%E7%BD%AE">&#22270;&#24418;&#30028;&#38754;&#37197;&#32622;<a class="anchor-link" href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E9%85%8D%E7%BD%AE">&#182;</a></h2><p>安装 <strong>MobaXterm</strong>，下载地址 <a href="https://mobaxterm.mobatek.net/download.html">https://mobaxterm.mobatek.net/download.html</a></p>
+<p>选择免费版本，进入下载页面，有 <em>便携版</em> 和 <em>安装板</em> 两种可供选择。 <em>便携版</em> 即不需要安装，解压之后点击程序即可运行。</p>
+<p><img src="img/wsl06.PNG" alt="wsl06"></p>
+<p>打开软件，如上图左侧会显示 WSL 系统，双击即自动登陆。</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE">&#36719;&#20214;&#37197;&#32622;<a class="anchor-link" href="#%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE">&#182;</a></h2><p>登陆 WSL 之后，执行以下操作</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/wuhongyi/BasicConfiguration.git
+</pre></div>
+<p><img src="img/wsl05.PNG" alt="wsl05"></p>
+<p>执行以上指令之后，会下载 <em>BasicConfiguration</em> 文件夹，依次执行以下指令</p>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> BasicConfiguration/Ubuntu
+sudo sh autoaddsource.sh
+sudo sh autoinstallapt.sh
+sudo sh autoinstallpip.sh
+
+
+sudo sh autoinstallroot624.sh
+</pre></div>
+<p>安装之后将 以下添加在 .bashrc 文件中</p>
+<p>source /opt/ROOT/root62402/bin/thisroot.sh</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF">&#24120;&#35265;&#38169;&#35823;<a class="anchor-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF">&#182;</a></h2><p><img src="img/wsl03.PNG" alt="wsl03"></p>
+<p>出现这个error的原因是：未安装Windows子系统支持。</p>
+<p>解决办法：</p>
 <ul>
-<li>安装 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/index.html</a></li>
-<li>应用手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/index.html</a></li>
+<li>win+x，选择Windows PowerShell（管理员）</li>
+<li>输入：Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</li>
+<li>回车，输入Y，等待安装结束</li>
+<li>重启电脑</li>
 </ul>
-<p><strong>进阶</strong></p>
-<ul>
-<li>开发者手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForToolkitDeveloper/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForToolkitDeveloper/html/index.html</a></li>
-<li>物理列表指南 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/index.html</a></li>
-<li>物理参考手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsReferenceManual/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsReferenceManual/html/index.html</a></li>
-</ul>
-<hr>
+<p>重新打开已经安装的子系统，等几分钟，输入账户和密码。</p>
+<p>解决方法参考 <a href="https://blog.csdn.net/qq_37085158/article/details/125172803">https://blog.csdn.net/qq_37085158/article/details/125172803</a></p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E7%9B%AE%E5%BD%95">&#30446;&#24405;<a class="anchor-link" href="#%E7%9B%AE%E5%BD%95">&#182;</a></h2><ul>
-<li><a href="INSTALL.html">安装</a><ul>
-<li><a href="VirtualMachine.html">虚拟机</a></li>
-<li><a href="WSL.html">WSL</a></li>
-</ul>
-</li>
-<li><a href="FRAME.html">程序框架</a></li>
-<li><a href="MAIN.html">主函数</a></li>
-<li><a href="DetectorConstruction.html">探测器设置</a></li>
-<li><a href="PrimaryGeneratorAction.html">粒子源设置</a></li>
-<li><p><a href="dataana.html">数据提取</a></p>
-</li>
-<li><p><a href="g4tools.html">g4tools</a></p>
-</li>
-<li><a href="RunAction.html">RunAction</a></li>
-<li><a href="StepingAction.html">StepingAction</a></li>
-<li><a href="StackingAction.html">StackingAction</a></li>
-<li><a href="TrackInformation.html">TrackInformation</a></li>
-<li><p><a href="TrackingAction.html">TrackingAction</a></p>
-</li>
-<li><p><a href="Random.html">随机数设置</a></p>
-</li>
-<li><p><a href="ROOT.html">调用 ROOT 库</a></p>
-</li>
-<li><p><a href="homework.html">作业</a></p>
-</li>
-</ul>
-<p>示例代码包 <em>geant4_step</em> <a href="https://disk.pku.edu.cn:443/link/DBD1AA26BDB3BC466D4AB9C1A58291D2">下载</a> 2022年5月8日更新   <strong>测试版本4.10.07，4.11 未测试</strong>。</p>
-<p><strong>运行中如出现异常，请及时在群里反馈或者与吴鸿毅联系</strong></p>
+<h2 id="%E5%85%B3%E4%BA%8E%E4%B8%8D%E8%83%BD%E5%90%AF%E5%8A%A8-GEANT4/Qt-%E5%BA%94%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98">&#20851;&#20110;&#19981;&#33021;&#21551;&#21160; GEANT4/Qt &#24212;&#29992;&#30340;&#38382;&#39064;<a class="anchor-link" href="#%E5%85%B3%E4%BA%8E%E4%B8%8D%E8%83%BD%E5%90%AF%E5%8A%A8-GEANT4/Qt-%E5%BA%94%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98">&#182;</a></h2><p>问题的原因，在于 Ubuntu 20.04 的自带 QtCore 会搜索 Linux 内核的某个特性，在不符合的情况下认为自己不可用。然而 WSL1 本身并不使用 Linux 内核。</p>
+<p>所以问题就会表现为：找不到 libQtCore 。</p>
+<p>解决办法是删除 libQtCore 中的相关代码：</p>
+<div class="highlight"><pre><span></span>sudo strip --remove-section<span class="o">=</span>.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+</pre></div>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9B%AE%E5%BD%95">&#26410;&#23436;&#25104;&#30446;&#24405;<a class="anchor-link" href="#%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9B%AE%E5%BD%95">&#182;</a></h2><ul>
-<li><a href="EventAction.html">EventAction</a></li>
-<li><a href="SensitiveDetector.html">SensitiveDetector</a></li>
-<li>闪烁体光学光子传输</li>
-<li>...</li>
-</ul>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><a href="https://blog.csdn.net/yzpbright/article/details/122861236">https://blog.csdn.net/yzpbright/article/details/122861236</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps?source=recommendations">https://docs.microsoft.com/zh-cn/windows/wsl/tutorials/gui-apps?source=recommendations</a></p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14116,8 +14106,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">WSL</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14137,11 +14126,7 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023年 07月 10日 星期一 01:15:35 CST
-
-[NbConvertApp] Converting notebook index.ipynb to html
-
-[NbConvertApp] Writing 564057 bytes to index.html
+<pre>2023年 07月 10日 星期一 01:14:16 CST
 
 [NbConvertApp] Converting notebook index.ipynb to html
 

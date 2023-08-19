@@ -14245,7 +14245,7 @@ a.anchor-link {
 <span class="n">G4UnionSolid</span><span class="o">*</span><span class="w"> </span><span class="n">unionMoved</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
 <span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4UnionSolid</span><span class="p">(</span><span class="s">&quot;Box+CylinderMoved&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">transform</span><span class="p">);</span><span class="w"></span>
 </pre></div>
-<p>以上两种方法基本能满足大部分的探测器构建需要，特别大规模或者形状复杂的还可以通过 CAD 等图纸导入的方式。</p>
+<p>以上两种方法基本能满足大部分的探测器构建需要，特别大规模或者形状复杂的还可以通过 STL 格式图纸导入的方式。</p>
 
 </div>
 </div>
@@ -14291,7 +14291,7 @@ a.anchor-link {
 <li>最后一个参数 pSurfChk 检查是否存在重叠，这个变量开启，如果有几何体重叠，程序运行中会给出提示</li>
 </ul>
 <p><img src="img/detector11.png" alt="det11"></p>
-<p><strong>多个物理体可以共用同一个逻辑体，然后通过不同的拷贝号来区分。这在同一个型号的探测器有几千上万的情况下显得特别必要（因为重复 new 那么多对象需要占用非常大的内存，而且初始化它们所需要的时间也很长，而它们仅仅名字不一样）。但是对于我们一般的模拟来说，创建的逻辑体不会太多，为了方便后期的数据处理，建议每个探测器创建各自的逻辑体和物理体，且用相同的名字。</strong></p>
+<p><strong>多个物理体可以共用同一个逻辑体，然后通过不同的拷贝号来区分。这在同一个型号的探测器有几千上万的情况下显得特别必要（因为重复 new 那么多对象需要占用非常大的内存，而且初始化它们所需要的时间也很长，而它们仅仅名字不一样）。但是对于我们一般的模拟来说，创建的逻辑体不会太多，为了方便后期的数据处理，建议每个探测器创建各自的逻辑体和物理体，且逻辑体和对应的物理体用相同的名字。</strong></p>
 
 </div>
 </div>
@@ -14360,7 +14360,9 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook DetectorConstruction.ipynb to html
 
-[NbConvertApp] Writing 615058 bytes to DetectorConstruction.html
+
+[NbConvertApp] Writing 615065 bytes to DetectorConstruction.html
+
 
 </pre>
 </div>

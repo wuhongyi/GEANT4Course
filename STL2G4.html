@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>index</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>STL2G4</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,158 +14010,78 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="GEANT4">GEANT4<a class="anchor-link" href="#GEANT4">&#182;</a></h1>
+<h1 id="%E5%9C%A8%E6%8E%A2%E6%B5%8B%E5%99%A8%E6%9E%84%E5%BB%BA%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8-STL-%E5%87%A0%E4%BD%95%E6%A8%A1%E5%9E%8B">&#22312;&#25506;&#27979;&#22120;&#26500;&#24314;&#20013;&#20351;&#29992;&#22806;&#37096; STL &#20960;&#20309;&#27169;&#22411;<a class="anchor-link" href="#%E5%9C%A8%E6%8E%A2%E6%B5%8B%E5%99%A8%E6%9E%84%E5%BB%BA%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8-STL-%E5%87%A0%E4%BD%95%E6%A8%A1%E5%9E%8B">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5">&#24120;&#29992;&#38142;&#25509;<a class="anchor-link" href="#%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5">&#182;</a></h2><ul>
-<li>官网 <a href="https://geant4.web.cern.ch/">https://geant4.web.cern.ch/</a></li>
-<li>官方教程主页 <a href="https://geant4.web.cern.ch/support">https://geant4.web.cern.ch/support</a></li>
-</ul>
-<p><strong>基础</strong></p>
+<p>使用中如遇到问题，联系张集智 (zhangjizhi@pku.edu.cn)</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%E8%8E%B7%E5%BE%97-STL-%E6%A8%A1%E5%9E%8B%E6%96%87%E4%BB%B6%EF%BC%88%E4%BB%A5-Solidworks-%E4%B8%BA%E4%BE%8B%EF%BC%89">&#33719;&#24471; STL &#27169;&#22411;&#25991;&#20214;&#65288;&#20197; Solidworks &#20026;&#20363;&#65289;<a class="anchor-link" href="#%E8%8E%B7%E5%BE%97-STL-%E6%A8%A1%E5%9E%8B%E6%96%87%E4%BB%B6%EF%BC%88%E4%BB%A5-Solidworks-%E4%B8%BA%E4%BE%8B%EF%BC%89">&#182;</a></h3><p>1、使用 Solidworks 等三维 CAD 软件进行建模。建模时，应按照实际坐标系进行放置。</p>
+<p>2、完成建模后，用“显示/隐藏”功能对需要输出 STL 文件的部分进行筛选。</p>
 <ul>
-<li>安装 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/index.html</a></li>
-<li>应用手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/index.html</a></li>
+<li><p>对于探测器灵敏体积，每个探头需要单独输出一个 STL 文件（对于对称的设计，可以只输出一个探头，然后在 G4 中作旋转对称）。</p>
+</li>
+<li><p>对于非灵敏体积（如外壳、支架），属于同一种材料的实体可输出为同一个 STL 文件（各实体允许在空间上存在隔离）。不同材料的实体需输出为不同文件。</p>
+</li>
 </ul>
-<p><strong>进阶</strong></p>
+<p>3、另存为 STL 格式，保存前点击“选项”进行 STL 文件格式设置。</p>
 <ul>
-<li>开发者手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForToolkitDeveloper/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForToolkitDeveloper/html/index.html</a></li>
-<li>物理列表指南 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/index.html</a></li>
-<li>物理参考手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsReferenceManual/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsReferenceManual/html/index.html</a></li>
-</ul>
-<hr>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E7%9B%AE%E5%BD%95">&#30446;&#24405;<a class="anchor-link" href="#%E7%9B%AE%E5%BD%95">&#182;</a></h2><ul>
-<li><a href="INSTALL.html">安装</a><ul>
-<li><a href="VirtualMachine.html">虚拟机</a></li>
-<li><a href="WSL.html">WSL</a></li>
-</ul>
+<li><p>输出格式选择 ASCII 格式。二进制格式不支持。</p>
 </li>
-<li><a href="FRAME.html">程序框架</a></li>
-<li><a href="MAIN.html">主函数</a></li>
-<li><a href="DetectorConstruction.html">探测器设置</a><ul>
-<li><a href="">三维软件构建几何体</a></li>
-</ul>
+<li><p>点选“不要转换 STL 输出数据到正的坐标空间”，保持坐标与建模时一致。</p>
 </li>
-<li><a href="PrimaryGeneratorAction.html">粒子源设置</a></li>
-<li><p><a href="dataana.html">数据提取</a></p>
-</li>
-<li><p><a href="g4tools.html">g4tools</a></p>
-</li>
-<li><a href="RunAction.html">RunAction</a></li>
-<li><a href="StepingAction.html">StepingAction</a></li>
-<li><a href="StackingAction.html">StackingAction</a></li>
-<li><a href="TrackInformation.html">TrackInformation</a></li>
-<li><p><a href="TrackingAction.html">TrackingAction</a></p>
-</li>
-<li><p><a href="Random.html">随机数设置</a></p>
-</li>
-<li><p><a href="ROOT.html">调用 ROOT 库</a></p>
-</li>
-<li><p><a href="homework.html">作业</a></p>
+<li><p>若文件为装配体，点选“在单一文件中保存装配体的所有零部件”。</p>
 </li>
 </ul>
-<p>示例代码包 <em>geant4_step</em> <a href="https://disk.pku.edu.cn:443/link/C2D5AE5574F6CD49A97E07956DD0529E">下载</a> 2023年7月10日更新   <strong>测试版本4.10.07，4.11.1</strong>。</p>
-<p><strong>运行中如出现异常，请及时在群里反馈或者与吴鸿毅(wuhongyi@qq.com)联系</strong></p>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9B%AE%E5%BD%95">&#26410;&#23436;&#25104;&#30446;&#24405;<a class="anchor-link" href="#%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9B%AE%E5%BD%95">&#182;</a></h2><ul>
-<li><a href="EventAction.html">EventAction</a></li>
-<li><a href="SensitiveDetector.html">SensitiveDetector</a></li>
-<li>闪烁体光学光子传输</li>
-<li>...</li>
+<p>4、检查输出的 STL 文件。</p>
+<ul>
+<li><p>ASCII 格式应能用记事本打开。否则可能是误用了二进制格式。</p>
+</li>
+<li><p>文件首行应以 "solid" 开头，后接一空格，以几何体的名称结尾。此名称必须为纯英文字母，不允许存在数字或符号，否则应予修改。该名称与几何体在 G4 中的名称无关联，且可以重复。</p>
+</li>
 </ul>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
+<p><img src="img/STL1.png" alt="STL1"></p>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%E5%9C%A8-G4-%E4%B8%AD%E8%AF%BB%E5%8F%96-STL-%E6%A8%A1%E5%9E%8B%E6%96%87%E4%BB%B6%EF%BC%88%E4%BD%BF%E7%94%A8-CADMesh-%E5%BA%93%EF%BC%89">&#22312; G4 &#20013;&#35835;&#21462; STL &#27169;&#22411;&#25991;&#20214;&#65288;&#20351;&#29992; CADMesh &#24211;&#65289;<a class="anchor-link" href="#%E5%9C%A8-G4-%E4%B8%AD%E8%AF%BB%E5%8F%96-STL-%E6%A8%A1%E5%9E%8B%E6%96%87%E4%BB%B6%EF%BC%88%E4%BD%BF%E7%94%A8-CADMesh-%E5%BA%93%EF%BC%89">&#182;</a></h3><ul>
+<li><p>在 include 文件夹中添加 CADMesh 库文件，并在 DetectorConstruction.cc 中包含该文件</p>
+<ul>
+<li>文件下载链接 <a href="https://disk.pku.edu.cn:443/link/661F6263B99FFB6C6496ADD8A357B2B7">https://disk.pku.edu.cn:443/link/661F6263B99FFB6C6496ADD8A357B2B7</a></li>
+</ul>
+</li>
+<li><p>将 STL 模型文件移动到 G4 文件夹中。建议在程序目录下新建 model 文件夹。</p>
+</li>
+<li><p>读取代码示例</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CADMesh</span><span class="o">::</span><span class="n">TessellatedMesh</span><span class="o">::</span><span class="n">FromSTL</span><span class="p">(</span><span class="s">&quot;../model/model.STL&quot;</span><span class="p">);</span><span class="w"></span>
 
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">logicmodel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">model</span><span class="o">-&gt;</span><span class="n">GetSolid</span><span class="p">(),</span><span class="w">    </span><span class="c1">//its solid</span>
+<span class="w">                                       </span><span class="n">model_mat</span><span class="p">,</span><span class="w">            </span><span class="c1">//its material</span>
+<span class="w">                                       </span><span class="s">&quot;model&quot;</span><span class="p">);</span><span class="w">             </span><span class="c1">//its name</span>
 </pre></div>
 
-     </div>
 </div>
 </div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2023年 07月 10日 星期一 01:34:07 CST
-
-[NbConvertApp] Converting notebook index.ipynb to html
-
-
-[NbConvertApp] Writing 564084 bytes to index.html
-
-
-[NbConvertApp] Converting notebook index.ipynb to html
-
-
-[NbConvertApp] Writing 564084 bytes to index.html
-
-
-</pre>
-</div>
-</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>!date
+!jupyter nbconvert STL2G4.ipynb --to html</p>
 
 </div>
-
-</div>
-
 </div>
 </body>
 

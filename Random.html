@@ -14018,7 +14018,7 @@ a.anchor-link {
 <p>在运行我们前面的模拟代码中，是否发现一个现象</p>
 <ul>
 <li>多次运行模拟程序，每次均跑相同事件数</li>
-<li>生成的数据确是一样的</li>
+<li>生成的数据却是一样的？</li>
 </ul>
 <p>这将会造成一个问题：如果总共需要模拟 10 亿个事件，分 10 次运行，每次运行 1 亿个事件。那模拟结果将是 1 亿个模拟事件的 10 倍重复。</p>
 <p>这是因为默认随机数种子是与电脑硬件相关的，每个电脑是一个固定值（不同电脑不同），因此由该随机种子产生的随机数序列每次都一样。避免这个问题的一个简单方式是人为每次设置不同的随机种子。一个简单的方式是随机种子与当前程序执行的时刻相关联，那么不同次运行时的随机种子就不一样。</p>
@@ -14047,7 +14047,19 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="err">```</span><span class="n">bash</span><span class="w"></span>
+<span class="cp">## 设置运行模拟的事件数</span>
+<span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">beamOn</span><span class="w"> </span><span class="mi">1000000</span><span class="w"></span>
+<span class="err">```</span><span class="w"></span>
+
+<span class="err">```</span><span class="n">cpp</span><span class="w"></span>
+<span class="c1">// 设置模拟事件数</span>
+<span class="n">G4MTRunManager</span><span class="o">::</span><span class="n">BeamOn</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="p">)</span><span class="w"> </span>
+<span class="err">```</span><span class="w"></span>
+
+<span class="err">由于设置模拟的事件数类型为</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="err">型，因此一次</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="err">最大的事件数为</span><span class="w"> </span><span class="mi">2147483647</span><span class="err">。</span><span class="w"></span>
+
+<span class="err">如果某个</span><span class="w"> </span><span class="mi">4000000000</span><span class="w"> </span><span class="err">个事件的模拟，最少需要分成两次</span><span class="w"> </span><span class="mi">2000000000</span><span class="w"> </span><span class="err">的</span><span class="w"> </span><span class="n">Run</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14082,11 +14094,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2022年 05月 08日 星期日 13:14:00 CST
+<pre>2022年 05月 08日 星期日 13:14:46 CST
 
 [NbConvertApp] Converting notebook Random.ipynb to html
 
-[NbConvertApp] Writing 561310 bytes to Random.html
+[NbConvertApp] Writing 561799 bytes to Random.html
 
 </pre>
 </div>

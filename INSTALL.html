@@ -14034,7 +14034,7 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><strong>通常的安装步骤</strong></p>
-<p><em>我们测试到 4.10.7p04，4.11.1 版本</em></p>
+<p><em>我们测试了 4.10.04，4.10.05，4.10.06，4.10.7，4.11.1.1, 4.11.2.1 版本</em></p>
 <div class="highlight"><pre><span></span>tar -zxvf geant4.10.04.p03.tar.gz
   mkdir buildgeant41004p03
   <span class="nb">cd</span> buildgeant41004p03
@@ -14045,8 +14045,14 @@ a.anchor-link {
   make install
 </pre></div>
 <ul>
-<li>将数据解压缩至 pathinstall/share/Geant4-10.4.3/data</li>
-<li>在.bashrc中添加  source  pathinstall/bin/geant4.sh</li>
+<li><p>将依赖数据解压缩至指定位置</p>
+<ul>
+<li>4.10 版本，默认数据位置为 pathinstall/share/Geant4-10.4.3/data ， 其中 Geant4-10.4.3 修改为对应</li>
+<li>4.11 版本，默认数据位置为 pathinstall/share/data</li>
+</ul>
+</li>
+<li><p>在.bashrc中添加  source  pathinstall/bin/geant4.sh</p>
+</li>
 </ul>
 <p><strong>一些自动安装脚本</strong></p>
 <ul>
@@ -14172,8 +14178,8 @@ make
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">INSTALL</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
-<span class="o">!</span><span class="n">date</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">INSTALL</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14193,13 +14199,11 @@ make
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[NbConvertApp] Converting notebook INSTALL.ipynb to html
+<pre>2024年 04月 21日 星期日 14:35:05 CST
 
+[NbConvertApp] Converting notebook INSTALL.ipynb to html
 
-[NbConvertApp] Writing 566879 bytes to INSTALL.html
-
-
-2023年 07月 10日 星期一 01:11:31 CST
+[NbConvertApp] Writing 567023 bytes to INSTALL.html
 
 </pre>
 </div>

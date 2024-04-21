@@ -14016,8 +14016,8 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>本教程目的在于教授 G4 的基本运行原理，以及如何快速应用到</li>
-<li>刻意放弃一些类（功能）的使用，例如 SensitiveDetector, Hit, hist 等等</li>
+<li>本教程目的在于教授 G4 的基本运行原理，以及如何快速应用自己的科研中</li>
+<li>刻意放弃一些类（功能）的使用，例如数据存储中的 hist 等等</li>
 <li>模拟与数据处理分离<ul>
 <li>为何模拟与数据处理必须分离？</li>
 <li>G4程序只负责模拟部分（一次运行）</li>
@@ -14032,15 +14032,15 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="%E8%BF%90%E8%A1%8C%E9%9C%80%E8%A6%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B1%BB">&#36816;&#34892;&#38656;&#35201;&#30340;&#22522;&#26412;&#31867;<a class="anchor-link" href="#%E8%BF%90%E8%A1%8C%E9%9C%80%E8%A6%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B1%BB">&#182;</a></h2><ul>
-<li>DetectorConstruction: 继承自G4VUserDetectorConstruction</li>
-<li>PhysicsList: 继承自G4VModularPhysicsList</li>
-<li>ActionInitialization: 继承自G4VUserActionInitialization<ul>
-<li>PrimaryGeneratorAction: 继承自G4VUserPrimaryGeneratorAction</li>
-<li>RunAction:继承自G4UserRunAction</li>
-<li>EventAction:继承自G4UserEventAction</li>
-<li>TrackingAction:继承自G4UserTrackingAction</li>
-<li>SteppingAction:继承自G4UserSteppingAction</li>
-<li>StackingAction:继承自G4UserStackingAction</li>
+<li>DetectorConstruction: 继承自 G4VUserDetectorConstruction</li>
+<li>PhysicsList: 继承自 G4VModularPhysicsList</li>
+<li>ActionInitialization: 继承自 G4VUserActionInitialization<ul>
+<li>PrimaryGeneratorAction: 继承自 G4VUserPrimaryGeneratorAction</li>
+<li>RunAction:继承自 G4UserRunAction</li>
+<li>EventAction:继承自 G4UserEventAction</li>
+<li>TrackingAction:继承自 G4UserTrackingAction</li>
+<li>SteppingAction:继承自 G4UserSteppingAction</li>
+<li>StackingAction:继承自 G4UserStackingAction</li>
 </ul>
 </li>
 </ul>
@@ -14095,10 +14095,16 @@ a.anchor-link {
 <li>电荷量：eplus</li>
 </ul>
 <p>其中，默认单位为：mm, MeV, g, mole, ns, eplus，即如果没有写单位，则为默认单位。</p>
+<p><strong>为了方便代码阅读，我们要求在数字后面指定单位。</strong></p>
 <p>例如:</p>
 <div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5.0</span><span class="o">*</span><span class="n">m</span><span class="p">;</span><span class="w"></span>
 <span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.0</span><span class="o">*</span><span class="n">m</span><span class="p">;</span><span class="w"></span>
 <span class="kt">double</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.0</span><span class="o">*</span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>对于输出数据，采用默认单位进行输出。如果要进行单位转换，只需要除以相应的单位即可。</p>
+<p>例如:</p>
+<div class="highlight"><pre><span></span><span class="n">G4cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">KineticEnergy</span><span class="o">/</span><span class="n">keV</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; keV&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">G4cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">density</span><span class="o">/</span><span class="p">(</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">)</span><span class="w">   </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; g/cm3&quot;</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 
 </div>
@@ -14120,15 +14126,16 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>G4MTRunManager::Initialize()调用后，初始化G4内核</li>
-<li>G4MTRunManager::BeamOn()调用后，开始一次 G4Run</li>
+<li>Run 是 GEANT4 最大的模拟单元。</li>
+<li>G4MTRunManager::Initialize() 调用后，初始化 G4 内核</li>
+<li>G4MTRunManager::BeamOn() 调用后，开始一次 G4Run</li>
 </ul>
 <p><img src="img/RunEventTrackStep.png" alt="111"></p>
 <ul>
-<li>一次BeamOn调用就是一次G4Run; 一次G4Run过程中，探测器设置和物理过程不可修改。</li>
-<li>BeamOn(1000) : 一次G4Run中，发射1000个事件（G4Event）</li>
-<li>一个粒子的产生到该粒子停止追踪，径迹信息由同一个G4Track记录</li>
-<li>在一个步长中，粒子信息该变量由G4Step记录</li>
+<li>一次 BeamOn 调用就是一次 G4Run; 一次 G4Run 过程中，探测器设置和物理过程不可修改。</li>
+<li>BeamOn(1000) : 一次 G4Run 中，发射 1000 个事件（G4Event）</li>
+<li>一个粒子的产生到该粒子停止追踪，径迹信息由同一个 G4Track 记录</li>
+<li>在一个步长中，粒子信息该变量由 G4Step 记录</li>
 </ul>
 
 </div>
@@ -14136,21 +14143,21 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>G4Step包括两个“点”：PreStepPoint，PostStepPoint（对应class均为G4StepPoint）。</li>
-<li>PreStepPoint容纳物理过程发生前该粒子的状态（动能，电荷量等），</li>
-<li>PostStepPoint容纳物理过程发生后该粒子的状态。</li>
-<li>G4Step中保存的是这两“点”的粒子属性改变量（deltaE等）</li>
+<li>G4Step 类包括两个“点”：PreStepPoint，PostStepPoint（对应类均为 G4StepPoint）。</li>
+<li>PreStepPoint 容纳物理过程发生前该粒子的状态（动能，电荷量等），</li>
+<li>PostStepPoint 容纳物理过程发生后该粒子的状态。</li>
+<li>G4Step 中保存的是这两“点”的粒子属性改变量（deltaE 等）</li>
 </ul>
 <p><img src="img/steppoint.png" alt="123"></p>
 <ul>
-<li>步长：由该step的物理过程决定。</li>
-<li><p>边界：step不能穿过两个物理体的边界，即边界上必须存在一个steppoint。此时step的status为fGeomBoundary</p>
+<li>步长：由该 step 的物理过程决定。</li>
+<li><p>边界：step 不能穿过两个物理体的边界，即边界上必须存在一个 steppoint。此时 step 的 status 为 fGeomBoundary</p>
 </li>
-<li><p>G4Track：定义为粒子当前的状态（与PostStepPoint容纳的信息一致）。</p>
+<li><p>G4Track：定义为粒子当前的状态（与 PostStepPoint 容纳的信息一致）。</p>
 </li>
-<li>每个G4Step调用后，G4Track信息更新。</li>
-<li>Track ID: ID编号从1开始，每个track中也记录其父粒子的track ID。</li>
-<li>初级粒子（particlegun 发射的粒子）的父粒子Track ID为0</li>
+<li>每个 G4Step 调用后，G4Track 信息更新。</li>
+<li>Track ID: ID 编号从 1 开始，每个 track 中也记录其父粒子的 track ID。</li>
+<li>初级粒子（particlegun 发射的粒子）的父粒子 Track ID 为 0</li>
 </ul>
 <p><img src="img/trackid.png" alt="1234"></p>
 
@@ -14183,9 +14190,9 @@ a.anchor-link {
 <p>Example :</p>
 <ul>
 <li>RunAction ：记录并输出程序运行时间、创建文件</li>
-<li>EventAction : 输出进度、SD得到该事件的所有数据</li>
-<li>TrackingAction : 输出每个track的初始信息、遗传标记、杀死次级粒子</li>
-<li>SteppingAction : 获得该step的所有数据</li>
+<li>EventAction : 输出进度、SD 得到该事件的所有数据</li>
+<li>TrackingAction : 输出每个 track 的初始信息、遗传标记、杀死次级粒子</li>
+<li>SteppingAction : 获得该 step 的所有数据</li>
 </ul>
 
 </div>
@@ -14217,7 +14224,7 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook FRAME.ipynb to html
 
-[NbConvertApp] Writing 565935 bytes to FRAME.html
+[NbConvertApp] Writing 567070 bytes to FRAME.html
 
 </pre>
 </div>

@@ -14015,9 +14015,9 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>用户必须继承 G4VUserPrimaryGeneratorAction 类来实现粒子源的定义（实现纯需函数 GeneratePrimaries()）</p>
+<p>用户必须继承抽象基类 G4VUserPrimaryGeneratorAction 来实现粒子源的定义（实现纯虚函数 GeneratePrimaries(G4Eent*)）</p>
 <p><img src="img/gun1.png" alt="gun1"></p>
-<p><strong>建议大家使用 <em>G4ParticleGun</em> ，能够实现灵活度最大化。不建议使用 <em>G4GeneralParticleSource</em></strong></p>
+<p><strong>建议大家使用 <em>G4ParticleGun</em> ，能够实现灵活度最大化。不建议使用 <em>G4GeneralParticleSource</em> 输入卡的方式。</strong></p>
 
 </div>
 </div>
@@ -14031,7 +14031,8 @@ a.anchor-link {
 <h2 id="%E7%B2%92%E5%AD%90%E5%8F%91%E5%B0%84%E6%9E%AA">&#31890;&#23376;&#21457;&#23556;&#26538;<a class="anchor-link" href="#%E7%B2%92%E5%AD%90%E5%8F%91%E5%B0%84%E6%9E%AA">&#182;</a></h2><p>初始化 G4ParticleGun ，以下两行代码通常放在构造函数中。</p>
 <div class="highlight"><pre><span></span><span class="n">G4int</span><span class="w"> </span><span class="n">n_particle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="n">particleGun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4ParticleGun</span><span class="p">(</span><span class="n">n_particle</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// 一次发射具有相同属性的n_particle个粒子</span>
+<span class="c1">// 一次发射具有相同属性的 n_particle 个粒子</span>
+<span class="c1">// 通常设置为 1</span>
 </pre></div>
 
 </div>
@@ -14209,7 +14210,7 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook PrimaryGeneratorAction.ipynb to html
 
-[NbConvertApp] Writing 585255 bytes to PrimaryGeneratorAction.html
+[NbConvertApp] Writing 585262 bytes to PrimaryGeneratorAction.html
 
 </pre>
 </div>

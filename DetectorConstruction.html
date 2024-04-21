@@ -14036,7 +14036,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>用户必须继承 G4VUserDetectorConstruction 类来实现探测器的定义</strong></p>
+<p><strong>用户必须继承抽象基类 G4VUserDetectorConstruction 来实现探测器的定义</strong></p>
 <p><img src="img/detector1.png" alt="det1"></p>
 <ul>
 <li>必须实现的纯虚函数是G4VPhysicalVolume* Construct();<ul>
@@ -14064,13 +14064,13 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="%E6%9D%90%E6%96%99%E5%AE%9A%E4%B9%89">&#26448;&#26009;&#23450;&#20041;<a class="anchor-link" href="#%E6%9D%90%E6%96%99%E5%AE%9A%E4%B9%89">&#182;</a></h2><p>参考 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/material.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/material.html</a></p>
-<p>在自然界中，一般材料（化合物、混合物）由元素构成，元素由同位素构成。因此，这是Geant4中设计的三个主要类(G4Isotope/G4Element/G4Material)。每个类都有一个表作为静态数据成员，用于跟踪各个类创建的实例。所有三个对象在构造时都会自动注册到相应的表中，并且永远不应该在用户代码中删除它们。</p>
+<p>在自然界中，一般材料（化合物、混合物）由元素构成，元素由同位素构成。因此，这是 Geant4 中设计的三个主要类(G4Isotope/G4Element/G4Material)。每个类都有一个表作为静态数据成员，用于跟踪各个类创建的实例。所有三个对象在构造时都会自动注册到相应的表中，并且永远不应该在用户代码中删除它们。</p>
 <p><strong>G4Isotope/G4Element/G4Material 这三个类 new 的对象，不需要 delete</strong></p>
 <p><strong>G4Materrial 材料只要一定义，就放置在一个全局的容器内，随时可以拿来使用。</strong></p>
 <h3 id="%E6%9E%84%E9%80%A0%E5%85%83%E7%B4%A0">&#26500;&#36896;&#20803;&#32032;<a class="anchor-link" href="#%E6%9E%84%E9%80%A0%E5%85%83%E7%B4%A0">&#182;</a></h3><div class="highlight"><pre><span></span><span class="c1">//定义元素，方法一</span>
-<span class="n">G4Element</span><span class="o">*</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Element</span><span class="p">(</span><span class="s">&quot;Hydrogen&quot;</span><span class="p">,</span><span class="s">&quot;H&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="mf">1.01</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">G4Element</span><span class="w"> </span><span class="o">*</span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Element</span><span class="p">(</span><span class="s">&quot;Hydrogen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;H&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.</span><span class="p">,</span><span class="w"> </span><span class="mf">1.01</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">);</span><span class="w"></span>
 <span class="c1">//定义元素，方法二</span>
-<span class="n">G4NistManager</span><span class="o">*</span><span class="w"> </span><span class="n">man</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span><span class="w"></span>
+<span class="n">G4NistManager</span><span class="w"> </span><span class="o">*</span><span class="n">man</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span><span class="w"></span>
 <span class="n">G4Element</span><span class="w"> </span><span class="o">*</span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">man</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;N&quot;</span><span class="p">);</span><span class="c1">//采用天然丰度</span>
 <span class="n">G4Element</span><span class="w"> </span><span class="o">*</span><span class="n">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">man</span><span class="o">-&gt;</span><span class="n">FindOrBuildElement</span><span class="p">(</span><span class="s">&quot;O&quot;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
@@ -14078,8 +14078,8 @@ a.anchor-link {
 <div class="highlight"><pre><span></span><span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">lAr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;liquidArgon&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">18.</span><span class="p">,</span><span class="w"> </span><span class="mf">39.95</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">mole</span><span class="p">,</span><span class="w"> </span><span class="mf">1.390</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 <p><strong>分子/混合物</strong></p>
-<div class="highlight"><pre><span></span><span class="n">G4Material</span><span class="w"> </span><span class="o">*</span><span class="n">pVacuum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;Vacuum&quot;</span><span class="p">,</span><span class="mf">1.29e-10</span><span class="o">*</span><span class="n">mg</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">kStateGas</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                              </span><span class="mf">0.1</span><span class="o">*</span><span class="n">kelvin</span><span class="p">,</span><span class="mf">1.</span><span class="n">e</span><span class="mi">-19</span><span class="o">*</span><span class="n">pascal</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="n">G4Material</span><span class="w"> </span><span class="o">*</span><span class="n">pVacuum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="s">&quot;Vacuum&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.29e-10</span><span class="o">*</span><span class="n">mg</span><span class="o">/</span><span class="n">cm3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">kStateGas</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                              </span><span class="mf">0.1</span><span class="o">*</span><span class="n">kelvin</span><span class="p">,</span><span class="w"> </span><span class="mf">1.</span><span class="n">e</span><span class="mi">-19</span><span class="o">*</span><span class="n">pascal</span><span class="p">);</span><span class="w"></span>
 
 <span class="n">pVacuum</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span><span class="c1">//注意这里是整型</span>
 <span class="n">pVacuum</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="c1">//表示原子个数比</span>
@@ -14088,8 +14088,27 @@ a.anchor-link {
 
 <span class="n">pVacuum</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="mf">70.</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="c1">//注意这里是浮点型</span>
 <span class="n">pVacuum</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="w"> </span><span class="mf">30.</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="c1">//表示质量占比</span>
+
+<span class="c1">//原子个数比还是质量比，设置方式需要非常小心!</span>
 </pre></div>
-<p>对于常见的材料，G4已经封装好，直接调用即可</p>
+<div class="highlight"><pre><span></span><span class="c1">// define a material from elements and/or others materials (mixture of mixtures)</span>
+<span class="n">density</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.200</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="n">cm3</span><span class="p">;</span><span class="w"></span>
+<span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">Aerog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Aerogel&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">density</span><span class="p">,</span><span class="w"> </span><span class="n">ncomponents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<span class="n">Aerog</span><span class="o">-&gt;</span><span class="n">AddMaterial</span><span class="p">(</span><span class="n">SiO2</span><span class="p">,</span><span class="w"> </span><span class="n">fractionmass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">62.5</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="n">Aerog</span><span class="o">-&gt;</span><span class="n">AddMaterial</span><span class="p">(</span><span class="n">H2O</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">fractionmass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">37.4</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+<span class="n">Aerog</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="w"> </span><span class="p">(</span><span class="n">elC</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">fractionmass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="o">*</span><span class="n">perCent</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="c1">// examples of gas in non STP conditions</span>
+<span class="n">density</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mf">27.</span><span class="o">*</span><span class="n">mg</span><span class="o">/</span><span class="n">cm3</span><span class="p">;</span><span class="w"></span>
+<span class="n">pressure</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mf">50.</span><span class="o">*</span><span class="n">atmosphere</span><span class="p">;</span><span class="w"></span>
+<span class="n">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">325.</span><span class="o">*</span><span class="n">kelvin</span><span class="p">;</span><span class="w"></span>
+<span class="n">G4Material</span><span class="o">*</span><span class="w"> </span><span class="n">CO2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Material</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Carbonic gas&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">density</span><span class="p">,</span><span class="w"> </span><span class="n">ncomponents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="n">kStateGas</span><span class="p">,</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span><span class="w"> </span><span class="n">pressure</span><span class="p">);</span><span class="w"></span>
+<span class="n">CO2</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">elC</span><span class="p">,</span><span class="w"> </span><span class="n">natoms</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="n">CO2</span><span class="o">-&gt;</span><span class="n">AddElement</span><span class="p">(</span><span class="n">elO</span><span class="p">,</span><span class="w"> </span><span class="n">natoms</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<p><strong>对于常见的材料，G4已经封装好，直接调用即可</strong></p>
+<p>更多材料信息可访问 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Appendix/materialNames.html#g4matrdb">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Appendix/materialNames.html#g4matrdb</a></p>
 <div class="highlight"><pre><span></span><span class="n">G4NistManager</span><span class="o">*</span><span class="w"> </span><span class="n">man</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span><span class="w"></span>
 <span class="n">G4Material</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pAir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">man</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_AIR&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="n">G4Material</span><span class="w"> </span><span class="o">*</span><span class="n">pSi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">man</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_Si&quot;</span><span class="p">);</span><span class="w"></span>
@@ -14129,7 +14148,7 @@ a.anchor-link {
 <span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_URANIUM_OXIDE&quot;</span><span class="p">);</span><span class="c1">//氧化铀 </span>
 <span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_URANIUM_MONOCARBIDE&quot;</span><span class="p">);</span><span class="c1">//碳化铀</span>
 <span class="w">  </span><span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_URANIUM_DICARBIDE&quot;</span><span class="p">);</span><span class="c1">//二碳化铀</span>
-<span class="w">  </span><span class="c1">// 更多预定义材料请看说明书</span>
+<span class="w">  </span><span class="c1">// 更多预定义材料请看说明书 https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Appendix/materialNames.html#g4matrdb</span>
 
 
 <span class="w">  </span><span class="c1">// 注册G4自身定义好的 elements，采用天然丰度</span>
@@ -14212,7 +14231,8 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="%E6%9E%84%E9%80%A0%E5%87%A0%E4%BD%95%E4%BD%93">&#26500;&#36896;&#20960;&#20309;&#20307;<a class="anchor-link" href="#%E6%9E%84%E9%80%A0%E5%87%A0%E4%BD%95%E4%BD%93">&#182;</a></h2><p>参考 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/Geometry/geomSolids.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Detector/Geometry/geomSolids.html</a></p>
 <p>几何体的名字虽然允许出现相同的情况，但是不建议使用相同的名字。</p>
-<p>查阅说明书，基本集合体形状可直接创建，需要特别注意的地方：长度是全长还是半长表示。以下是最常用的几何，长方体、柱状/管状、球/球壳等。</p>
+<p>查阅说明书，基本几何形状可直接创建，<strong>需要特别注意的地方：长度是全长还是半长表示</strong>。使用哪个几何体，则在 wuDetectorConstruction.cc 文件中添加相应的头文件。</p>
+<p>以下是最常用的几何，长方体、柱状/管状、球/球壳等。</p>
 <p><img src="img/detector7.png" alt="det7"></p>
 <div class="highlight"><pre><span></span><span class="n">G4Box</span><span class="w"> </span><span class="o">*</span><span class="n">pSolidWorld</span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;solidWorld&quot;</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="mi">10</span><span class="o">*</span><span class="n">cm</span><span class="p">);</span><span class="w"></span>
 </pre></div>
@@ -14221,9 +14241,9 @@ a.anchor-link {
 <p><strong>布尔运算生成几何体</strong></p>
 <p>简单几何体可以在说明书中直接找到它的使用方法。很多时候探测器的形状不在基本的几何体库中，这种情况就需要使用者通过布尔运算来构建所需要的几何体了。G4几何体构建中支持的布尔运算有：union, intersection, subtraction。参与运算中的第二个几何体可以进行平移、旋转等操作。</p>
 <div class="highlight"><pre><span></span><span class="n">G4Box</span><span class="o">*</span><span class="w">  </span><span class="n">box</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;Box&quot;</span><span class="p">,</span><span class="mi">20</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="mi">30</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="mi">40</span><span class="o">*</span><span class="n">mm</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;Box&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="o">*</span><span class="n">mm</span><span class="p">);</span><span class="w"></span>
 <span class="n">G4Tubs</span><span class="o">*</span><span class="w"> </span><span class="n">cyl</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4Tubs</span><span class="p">(</span><span class="s">&quot;Cylinder&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">twopi</span><span class="p">);</span><span class="w">  </span><span class="c1">// r:     0 mm -&gt; 50 mm</span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4Tubs</span><span class="p">(</span><span class="s">&quot;Cylinder&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">twopi</span><span class="p">);</span><span class="w">  </span><span class="c1">// r:     0 mm -&gt; 50 mm</span>
 <span class="w">                                                 </span><span class="c1">// z:   -50 mm -&gt; 50 mm</span>
 <span class="w">                                                 </span><span class="c1">// phi:   0 -&gt;  2 pi</span>
 <span class="n">G4UnionSolid</span><span class="o">*</span><span class="w"> </span><span class="k">union</span> <span class="o">=</span><span class="w"></span>
@@ -14245,7 +14265,7 @@ a.anchor-link {
 <span class="n">G4UnionSolid</span><span class="o">*</span><span class="w"> </span><span class="n">unionMoved</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
 <span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">G4UnionSolid</span><span class="p">(</span><span class="s">&quot;Box+CylinderMoved&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">box</span><span class="p">,</span><span class="w"> </span><span class="n">cyl</span><span class="p">,</span><span class="w"> </span><span class="n">transform</span><span class="p">);</span><span class="w"></span>
 </pre></div>
-<p>以上两种方法基本能满足大部分的探测器构建需要，特别大规模或者形状复杂的还可以通过 STL 格式图纸导入的方式。</p>
+<p>以上两种方法基本能满足大部分的探测器构建需要，特别大规模或者形状复杂的还可以通过三维软件构造，然后 STL 格式图纸导入的方式。</p>
 
 </div>
 </div>
@@ -14330,6 +14350,14 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>思考</strong></p>
+<p>对于一个正面 48 条，条宽 1mm，条缝隙 0.1mm；背面 128 条，条宽 1mm，条缝隙 0.1mm 的双面硅微条。安装在束流方向 45度，探测器中心距离靶点 15 cm 的位置。</p>
+<p>为了模拟粒子最终沉积在哪一个像素，因此在几何构造的时候，需要构造 48x128 个像素。如何构造?</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="%E9%98%B5%E5%88%97%E5%88%9B%E5%BB%BA%E7%A4%BA%E4%BE%8B">&#38453;&#21015;&#21019;&#24314;&#31034;&#20363;<a class="anchor-link" href="#%E9%98%B5%E5%88%97%E5%88%9B%E5%BB%BA%E7%A4%BA%E4%BE%8B">&#182;</a></h2>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14338,7 +14366,8 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">DetectorConstruction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">DetectorConstruction</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14358,11 +14387,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[NbConvertApp] Converting notebook DetectorConstruction.ipynb to html
+<pre>2024年 04月 21日 星期日 19:42:12 CST
 
+[NbConvertApp] Converting notebook DetectorConstruction.ipynb to html
 
-[NbConvertApp] Writing 615065 bytes to DetectorConstruction.html
-
+[NbConvertApp] Writing 621041 bytes to DetectorConstruction.html
 
 </pre>
 </div>

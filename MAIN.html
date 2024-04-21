@@ -14136,6 +14136,24 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>G4RunManager 管理运行过程。G4MTRunManager 是 G4RunManager 在多线程模式下的替代。在执行函数 Initialize() 之后，才创建并启用线程。</p>
+<p>在函数 Initialize()  之前，用户定义的所有 user initialization 类都应该赋值给 G4RunManager/G4MTRunManager。这些用户类的赋值由 SetuserInitialization() 函数完成。</p>
+<p>G4RunManager/G4MTRunManager 常用的函数:</p>
+<div class="highlight"><pre><span></span><span class="n">Initialize</span><span class="p">()</span><span class="w"></span>
+</pre></div>
+<ul>
+<li>探测器几何结构的构建和灵敏探测器和/或数字化模块的设置</li>
+<li>粒子和物理过程的构建</li>
+<li>截面表的计算</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="n">BeamOn</span><span class="p">(</span><span class="n">G4int</span><span class="w"> </span><span class="n">numberOfEvent</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>设置模拟的事件数，并启动模拟。</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Physics-list">Physics list<a class="anchor-link" href="#Physics-list">&#182;</a></h3><p><strong>Physics list</strong> 对于入门级别来说，选择以下哪个区别不大</p>
 <div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;wuPhysicsList.hh&quot;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FTF_BIC.hh&quot;</span><span class="c1">// G4EmStandardPhysics G4EmExtraPhysics G4DecayPhysics G4HadronElasticPhysic G4HadronPhysicsFTF_BIC G4StoppingPhysics G4IonPhysics G4NeutronTrackingCut</span><span class="cp"></span>
@@ -14230,7 +14248,7 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook MAIN.ipynb to html
 
-[NbConvertApp] Writing 557312 bytes to MAIN.html
+[NbConvertApp] Writing 583276 bytes to MAIN.html
 
 </pre>
 </div>

@@ -14024,7 +14024,7 @@ a.anchor-link {
 <li>CurrentStepNumber 当前step 在track中的编号（从1开始）</li>
 <li>PName 粒子名称</li>
 <li>TrackWeight 权重</li>
-<li>CreatorProcess 相互作用的名字</li>
+<li>CreatorProcess 相互作用类型，"##" 为程序设置</li>
 <li>EDep 当前step的能损</li>
 <li>TrackLength  </li>
 <li>StepLength   </li>
@@ -14032,11 +14032,11 @@ a.anchor-link {
 <li>Mass        粒子的质量</li>
 <li>Charge      粒子的电荷态</li>
 <li>MagneticMoment </li>
-<li>VolNamePre  所在逻辑体的名称</li>
+<li>VolNamePre  所在逻辑体的名称。前面要求每个探测器初始化唯一的逻辑体，目的在于此处通过名字可以区分不同的探测器</li>
 <li>VolNamePost  </li>
 <li>GlobalTimePre   全局时间，事件开始为时间起点</li>
 <li>GlobalTimePost</li>
-<li>LocalTimePre </li>
+<li>LocalTimePre    当前 track 时间，track 开始为时间起点</li>
 <li>LocalTimePost </li>
 <li>ProperTimePre </li>
 <li>ProperTimePost </li>
@@ -14092,12 +14092,13 @@ a.anchor-link {
 <span class="w">   </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">nentries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fChain</span><span class="o">-&gt;</span><span class="n">GetEntriesFast</span><span class="p">();</span><span class="w"></span>
 
 <span class="w">   </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">nbytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Long64_t</span><span class="w"> </span><span class="n">jentry</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">jentry</span><span class="o">&lt;</span><span class="n">nentries</span><span class="p">;</span><span class="n">jentry</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Long64_t</span><span class="w"> </span><span class="n">jentry</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">jentry</span><span class="o">&lt;</span><span class="n">nentries</span><span class="p">;</span><span class="w"> </span><span class="n">jentry</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">      </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">ientry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadTree</span><span class="p">(</span><span class="n">jentry</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ientry</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fChain</span><span class="o">-&gt;</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">jentry</span><span class="p">);</span><span class="w">   </span><span class="n">nbytes</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">nb</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="c1">// if (Cut(ientry) &lt; 0) continue;</span>
 
+<span class="w">       </span><span class="c1">// 示例代码中，两个探测器名字分别为 Clover、DSSD</span>
 <span class="w">       </span><span class="c1">// 如果名字第一个字符为 D</span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">VolNamePre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;D&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">count</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
 <span class="w">   </span><span class="p">}</span><span class="w"></span>
@@ -14120,7 +14121,7 @@ a.anchor-link {
 <span class="p">{</span><span class="w"></span>
 
 <span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">TH1I</span><span class="w"> </span><span class="o">*</span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH1I</span><span class="p">(</span><span class="s">&quot;h&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">2500</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.5</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">TH1I</span><span class="w"> </span><span class="o">*</span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TH1I</span><span class="p">(</span><span class="s">&quot;h&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2500</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.5</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">ene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fChain</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
@@ -14128,17 +14129,19 @@ a.anchor-link {
 <span class="w">   </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">nentries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fChain</span><span class="o">-&gt;</span><span class="n">GetEntriesFast</span><span class="p">();</span><span class="w"></span>
 
 <span class="w">   </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">nbytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Long64_t</span><span class="w"> </span><span class="n">jentry</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">jentry</span><span class="o">&lt;</span><span class="n">nentries</span><span class="p">;</span><span class="n">jentry</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Long64_t</span><span class="w"> </span><span class="n">jentry</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">jentry</span><span class="o">&lt;</span><span class="n">nentries</span><span class="p">;</span><span class="w"> </span><span class="n">jentry</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">      </span><span class="n">Long64_t</span><span class="w"> </span><span class="n">ientry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadTree</span><span class="p">(</span><span class="n">jentry</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ientry</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="n">nb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fChain</span><span class="o">-&gt;</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">jentry</span><span class="p">);</span><span class="w">   </span><span class="n">nbytes</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">nb</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="c1">// if (Cut(ientry) &lt; 0) continue;</span>
 
+<span class="w">      </span><span class="c1">// 示例代码中，两个探测器名字分别为 Clover、DSSD</span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">VolNamePre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;C&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 粒子有  e-、e+、gamma </span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">PName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;e&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
 
-<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">EventID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ID</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">EventID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ID</span><span class="p">)</span><span class="c1">//读取完一个 Event 的所有 entry 之后，进行操作</span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">ID</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="p">{</span><span class="w"></span>
 <span class="w">          </span><span class="k">if</span><span class="p">(</span><span class="n">ene</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">h</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">(</span><span class="n">ene</span><span class="p">);</span><span class="w"></span>
@@ -14146,8 +14149,9 @@ a.anchor-link {
 
 <span class="w">      </span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EventID</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="n">ene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
 
+<span class="w">      </span><span class="c1">//  一个 Event 的 entry 能量沉积相加</span>
 <span class="w">      </span><span class="n">ene</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">EDep</span><span class="p">;</span><span class="w"></span>
 <span class="w">   </span><span class="p">}</span><span class="w"></span>
 
@@ -14205,9 +14209,10 @@ a.anchor-link {
 <span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidCrystal</span><span class="p">,</span><span class="w">            </span><span class="c1">//its solid</span>
 <span class="w">                </span><span class="n">crystal_mat</span><span class="p">,</span><span class="w">             </span><span class="c1">//its material</span>
 <span class="w">                </span><span class="n">tempname</span><span class="p">);</span><span class="w">         </span><span class="c1">//its name</span>
+
 <span class="w">      </span><span class="n">physCrystal</span><span class="p">[</span><span class="n">num</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
 <span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">                       </span><span class="c1">//no rotation set 0</span>
-<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">((</span><span class="mf">31.86-7.08</span><span class="o">*</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cm</span><span class="p">,(</span><span class="mf">31.86-7.08</span><span class="o">*</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="mf">20.0</span><span class="o">*</span><span class="n">cm</span><span class="o">+</span><span class="mf">0.5</span><span class="o">*</span><span class="n">crystalZ</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
+<span class="w">              </span><span class="n">G4ThreeVector</span><span class="p">((</span><span class="mf">31.86-7.08</span><span class="o">*</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mf">31.86-7.08</span><span class="o">*</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="mf">20.0</span><span class="o">*</span><span class="n">cm</span><span class="o">+</span><span class="mf">0.5</span><span class="o">*</span><span class="n">crystalZ</span><span class="p">),</span><span class="w"> </span><span class="c1">//at (0,0,0)</span>
 <span class="w">              </span><span class="n">logicCrystal</span><span class="p">[</span><span class="n">num</span><span class="p">],</span><span class="w">               </span><span class="c1">//its logical volume</span>
 <span class="w">              </span><span class="n">tempname</span><span class="p">,</span><span class="w">              </span><span class="c1">//its name</span>
 <span class="w">              </span><span class="n">logicWorld</span><span class="p">,</span><span class="w">              </span><span class="c1">//its mother  volume</span>
@@ -14218,17 +14223,19 @@ a.anchor-link {
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 <p><img src="img/dataana6.png" alt="ana6"></p>
+<p><strong>数据处理关键代码</strong></p>
 <div class="highlight"><pre><span></span><span class="cp">#define N_CRYSTALS 10000</span>
 <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span><span class="w"> </span><span class="n">s2i</span><span class="p">;</span><span class="c1">//sstream cstring</span>
 <span class="kt">double</span><span class="w"> </span><span class="n">energy</span><span class="p">[</span><span class="n">N_CRYSTALS</span><span class="p">];</span><span class="w"></span>
 <span class="kt">short</span><span class="w"> </span><span class="n">crystal</span><span class="p">;</span><span class="w"></span>
 <span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w"></span>
 <span class="kt">int</span><span class="w"> </span><span class="n">tmpi</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">de</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 <div class="highlight"><pre><span></span><span class="c1">// 循环内</span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">id</span><span class="o">!=</span><span class="n">EventID</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">EventID</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">id</span><span class="o">!=</span><span class="mi">-1</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
 <span class="w">      </span><span class="c1">//fill</span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_CRYSTALS</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
@@ -14236,7 +14243,6 @@ a.anchor-link {
 <span class="w">          </span><span class="k">if</span><span class="p">(</span><span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="p">{</span><span class="w"></span>
 <span class="w">          </span><span class="n">crystal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="c1">// count = photon[i];</span>
 <span class="w">          </span><span class="n">de</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
 <span class="w">          </span><span class="n">treewrite</span><span class="o">-&gt;</span><span class="n">Fill</span><span class="p">();</span><span class="c1">//loop</span>
 <span class="w">        </span><span class="p">}</span><span class="w"></span>
@@ -14247,19 +14253,18 @@ a.anchor-link {
 
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_CRYSTALS</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="c1">// photon[i] = 0;</span>
 <span class="w">      </span><span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 
 
-<span class="w">  </span><span class="c1">// 获得探测</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">test</span><span class="p">(</span><span class="n">VolNamePre</span><span class="o">+</span><span class="mi">7</span><span class="p">);</span><span class="c1">//PMT+3</span>
+<span class="w">  </span><span class="c1">// 获得探测器编号</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">test</span><span class="p">(</span><span class="n">VolNamePre</span><span class="o">+</span><span class="mi">7</span><span class="p">);</span><span class="c1">//&quot;Crystal%04d</span>
 <span class="w">  </span><span class="c1">// std::cout&lt;&lt;test&lt;&lt;std::endl;</span>
 <span class="w">  </span><span class="n">s2i</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="c1">//重复使用前一定要清空</span>
 <span class="w">  </span><span class="n">s2i</span><span class="o">&lt;&lt;</span><span class="n">test</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="n">s2i</span><span class="o">&gt;&gt;</span><span class="n">tmpi</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// photon[tmpi]++;</span>
+
 <span class="w">  </span><span class="n">energy</span><span class="p">[</span><span class="n">tmpi</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">EDep</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 
@@ -14291,8 +14296,7 @@ a.anchor-link {
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook dataana.ipynb to html
-
-[NbConvertApp] Writing 575810 bytes to dataana.html
+[NbConvertApp] Writing 589778 bytes to dataana.html
 
 </pre>
 </div>

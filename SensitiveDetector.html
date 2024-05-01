@@ -14021,18 +14021,15 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>灵敏探测器继承抽象基类 G4VSensitiveDetector</p>
-<p><img src="img/G4VSensitiveDetector.png" alt="sd1"></p>
+<h2 id="G4VSensitiveDetector">G4VSensitiveDetector<a class="anchor-link" href="#G4VSensitiveDetector">&#182;</a></h2><p>灵敏探测器继承抽象基类 G4VSensitiveDetector</p>
+<p><img src="img/G4VSensitiveDetector.png" alt="picsd1"></p>
 <p>必须实现的纯虚函数为 G4bool ProcessHits(G4Step<em> aStep, G4TouchableHistory</em> ROhist)，可以简单将其理解为处理模拟的 step 数据。</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span><span class="k">class</span> <span class="nc">wuSensitiveDetector</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">G4VSensitiveDetector</span><span class="w"></span>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">wuSensitiveDetector</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">G4VSensitiveDetector</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
 <span class="k">public</span><span class="o">:</span><span class="w"></span>
 <span class="w">  </span><span class="n">wuSensitiveDetector</span><span class="p">(</span><span class="n">G4String</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w"></span>
@@ -14057,7 +14054,7 @@ a.anchor-link {
 <span class="w">  </span><span class="c1">// is stored in the PreStepPoint object of G4Step.</span>
 <span class="w">  </span><span class="n">G4bool</span><span class="w"> </span><span class="n">ProcessHits</span><span class="p">(</span><span class="n">G4Step</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">G4TouchableHistory</span><span class="o">*</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">  </span>
+
 <span class="k">private</span><span class="o">:</span><span class="w"></span>
 <span class="w">  </span><span class="n">wuHitCollection</span><span class="o">*</span><span class="w"> </span><span class="n">hitsCollection</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">HCID</span><span class="p">;</span><span class="w"> </span><span class="c1">//hits collection ID</span>
@@ -14067,59 +14064,22 @@ a.anchor-link {
 
 <span class="p">};</span><span class="w"></span>
 </pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre><span class="ansi-bold">input_line_41:1:36: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">expected class name</span>
-class wuSensitiveDetector : public G4VSensitiveDetector
-<span class="ansi-green-intense-fg ansi-bold">                                   ^
-</span><span class="ansi-bold">input_line_41:4:23: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4String&#39;</span>
-  wuSensitiveDetector(G4String name);
-<span class="ansi-green-intense-fg ansi-bold">                      ^
-</span><span class="ansi-bold">input_line_41:11:19: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4HCofThisEvent&#39;</span>
-  void Initialize(G4HCofThisEvent*);
-<span class="ansi-green-intense-fg ansi-bold">                  ^
-</span><span class="ansi-bold">input_line_41:12:19: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4HCofThisEvent&#39;</span>
-  void EndOfEvent(G4HCofThisEvent*);
-<span class="ansi-green-intense-fg ansi-bold">                  ^
-</span><span class="ansi-bold">input_line_41:24:3: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4bool&#39;</span>
-  G4bool ProcessHits(G4Step*, G4TouchableHistory*);
-<span class="ansi-green-intense-fg ansi-bold">  ^
-</span><span class="ansi-bold">input_line_41:24:22: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4Step&#39;</span>
-  G4bool ProcessHits(G4Step*, G4TouchableHistory*);
-<span class="ansi-green-intense-fg ansi-bold">                     ^
-</span><span class="ansi-bold">input_line_41:24:31: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4TouchableHistory&#39;</span>
-  G4bool ProcessHits(G4Step*, G4TouchableHistory*);
-<span class="ansi-green-intense-fg ansi-bold">                              ^
-</span><span class="ansi-bold">input_line_41:28:3: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;wuHitCollection&#39;</span>
-  wuHitCollection* hitsCollection;
-<span class="ansi-green-intense-fg ansi-bold">  ^
-</span><span class="ansi-bold">input_line_41:29:3: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4int&#39;</span>
-  G4int HCID; //hits collection ID
-<span class="ansi-green-intense-fg ansi-bold">  ^
-</span></pre>
-</div>
-</div>
+<p><img src="img/processhits.png" alt="picsd2"></p>
+<p><strong>ProcessHits</strong> 函数中，又是大家熟悉的 UserSteppingAction(const G4Step*) 中获得各种数据，这里我们同样将可能用到的数据全部罗列出来。在灵敏探测器中，通常将每个 step 的数据暂存在 G4VHit 中，等到当前 Event 模拟结束，再统一进行数据筛选以及数据存储。</p>
 
 </div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="G4VHit">G4VHit<a class="anchor-link" href="#G4VHit">&#182;</a></h2><p>G4 中，提供 G4VHit 基类，用户继承该类来实现 step 所有信息的暂存。类 G4THitsCollection 实现了容器来存放 hit。</p>
+<ul>
+<li>Hit：记录 SD 中每个 G4Step 中的信息，因此一个 SD 中将产生多个 Hit 对象。</li>
+<li>HitCollection：一个 SD 中产生的 Hit，可以被记录在一个或者多个容器中， 该容器即为 HitCollection 对象。</li>
+</ul>
+<p><img src="img/wuhit.png" alt="picsd3"></p>
+<p>数据的 Set/Get 函数，方便数据暂存以及读取。</p>
 
 </div>
-
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14134,48 +14094,38 @@ class wuSensitiveDetector : public G4VSensitiveDetector
 </div>
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E5%AE%9A%E4%B9%89%E7%81%B5%E6%95%8F%E6%8E%A2%E6%B5%8B%E5%99%A8">&#23450;&#20041;&#28789;&#25935;&#25506;&#27979;&#22120;<a class="anchor-link" href="#%E5%AE%9A%E4%B9%89%E7%81%B5%E6%95%8F%E6%8E%A2%E6%B5%8B%E5%99%A8">&#182;</a></h2><p>G4VSensitiveDetector 对象可以被分配给 G4LogicalVolume，为了方便进行灵敏探测器的指定，我们在 <strong>wuDetectorConstruction.cc</strong> 中封装了一个函数，</p>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuDetectorConstruction::BuildSensitiveDetector</span><span class="p">(</span><span class="n">G4LogicalVolume</span><span class="o">*</span><span class="w"> </span><span class="n">lv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">lv</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">G4cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;$$No logical volume, no SD built&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4SDManager</span><span class="o">*</span><span class="w"> </span><span class="n">SDman</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4SDManager</span><span class="o">::</span><span class="n">GetSDMpointer</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">wuSensitiveDetector</span><span class="o">*</span><span class="w"> </span><span class="n">sd1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">wuSensitiveDetector</span><span class="p">(</span><span class="n">lv</span><span class="o">-&gt;</span><span class="n">GetName</span><span class="p">());</span><span class="w"> </span><span class="c1">//</span>
+<span class="w">  </span><span class="n">SDman</span><span class="o">-&gt;</span><span class="n">AddNewDetector</span><span class="p">(</span><span class="n">sd1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">lv</span><span class="o">-&gt;</span><span class="n">SetSensitiveDetector</span><span class="p">(</span><span class="n">sd1</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>在函数 <strong>ConstructSDandField()</strong> 中调用我们封装的函数来指定灵敏探测器。</p>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuDetectorConstruction::ConstructSDandField</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">//快速添加SD</span>
+<span class="w">  </span><span class="c1">// BuildSensitiveDetector(logicWorld);</span>
+
+<span class="w">  </span><span class="c1">// 如果采用 SD 输出，则关闭 step 输出</span>
+
+<span class="w">  </span><span class="n">BuildSensitiveDetector</span><span class="p">(</span><span class="n">logicDSSD</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">BuildSensitiveDetector</span><span class="p">(</span><span class="n">logicClover</span><span class="p">);</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 
-     </div>
 </div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14183,7 +14133,7 @@ class wuSensitiveDetector : public G4VSensitiveDetector
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">SensitiveDetector</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14203,13 +14153,11 @@ class wuSensitiveDetector : public G4VSensitiveDetector
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2022年 05月 07日 星期六 21:31:15 CST
+<pre>2024年 05月 01日 星期三 23:26:43 CST
 
-[NbConvertApp] Converting notebook SensitiveDetector.ipynb to html
+[NbConvertApp] Converting notebook index.ipynb to html
 
-
-[NbConvertApp] Writing 559690 bytes to SensitiveDetector.html
-
+[NbConvertApp] Writing 564425 bytes to index.html
 
 </pre>
 </div>
@@ -14219,6 +14167,13 @@ class wuSensitiveDetector : public G4VSensitiveDetector
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>!date
+!jupyter nbconvert SensitiveDetector.ipynb --to html</p>
+
+</div>
 </div>
 </body>
 

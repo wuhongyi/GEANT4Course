@@ -14015,6 +14015,13 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>GEANT4 与 ROOT 一些版本存在冲突，通常是 ROOT 发布完于 GEANT4 的版本可以耦合运行。</p>
+<p>按照我们的测试，GEANT4.10.07 及以下版本 与 ROOT6.24.02及以上能够通过编译。 GEANT4.11 与 ROOT6.26.16 及以上版本能够编译通过。入股</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>GEANT4 模拟使用的输入量有时是实验测量的信息，例如能谱、位置分布等。而这些信息通常以 TH1/TH2 等 ROOT 的形式保存。</p>
 <p>GEANT4 耦合 ROOT 程序进行模拟在很多情况下是必要的，这里我们简单介绍如何调用 ROOT。</p>
 <p><strong>注意：当前 GEANT4 多线程模式下采用 ROOT TFile/TTree 方式保存数据存在问题。单线程下没问题。</strong></p>
@@ -14128,6 +14135,7 @@ a.anchor-link {
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
 <span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">ROOT</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">ROOT</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14147,7 +14155,10 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2022年 05月 08日 星期日 15:31:07 CST
+<pre>2022年 05月 08日 星期日 15:31:27 CST
+
+[NbConvertApp] Converting notebook ROOT.ipynb to html
+[NbConvertApp] Writing 569785 bytes to ROOT.html
 
 [NbConvertApp] Converting notebook ROOT.ipynb to html
 [NbConvertApp] Writing 569785 bytes to ROOT.html

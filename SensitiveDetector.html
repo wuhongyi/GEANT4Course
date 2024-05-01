@@ -14015,9 +14015,153 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>第三次课程讲</strong></p>
+<p>通过 G4UserSteppingAction 中的函数 UserSteppingAction(const G4Step*) 可以获得模拟中每个 step 的信息。当时当我们的模拟阵列比较复杂，且我们感兴趣的探测器数量又比较少时，SensitiveDetector 提供一种机制，当模拟发生在我们指定的逻辑体内部时，我们才获取该 step 的信息。</p>
 
 </div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>灵敏探测器继承抽象基类 G4VSensitiveDetector</p>
+<p><img src="img/G4VSensitiveDetector.png" alt="sd1"></p>
+<p>必须实现的纯虚函数为 G4bool ProcessHits(G4Step<em> aStep, G4TouchableHistory</em> ROhist)，可以简单将其理解为处理模拟的 step 数据。</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span><span class="k">class</span> <span class="nc">wuSensitiveDetector</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">G4VSensitiveDetector</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="n">wuSensitiveDetector</span><span class="p">(</span><span class="n">G4String</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">wuSensitiveDetector</span><span class="p">();</span><span class="w"></span>
+
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1">//  These two methods are invoked at the begining and at the end of each</span>
+<span class="w">  </span><span class="c1">// event. The hits collection(s) created by this sensitive detector must</span>
+<span class="w">  </span><span class="c1">// be set to the G4HCofThisEvent object at one of these two methods.</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">Initialize</span><span class="p">(</span><span class="n">G4HCofThisEvent</span><span class="o">*</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">EndOfEvent</span><span class="p">(</span><span class="n">G4HCofThisEvent</span><span class="o">*</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">protected</span><span class="o">:</span><span class="w"> </span>
+<span class="w">  </span><span class="c1">//  The user MUST implement this method for generating hit(s) using the</span>
+<span class="w">  </span><span class="c1">// information of G4Step object. Note that the volume and the position</span>
+<span class="w">  </span><span class="c1">// information is kept in PreStepPoint of G4Step.</span>
+<span class="w">  </span><span class="c1">//  Be aware that this method is a protected method and it sill be invoked</span>
+<span class="w">  </span><span class="c1">// by Hit() method of Base class after Readout geometry associated to the</span>
+<span class="w">  </span><span class="c1">// sensitive detector is handled.</span>
+<span class="w">  </span><span class="c1">//  &quot;ROhist&quot; will be given only is a Readout geometry is defined to this</span>
+<span class="w">  </span><span class="c1">// sensitive detector. The G4TouchableHistory object of the tracking geometry</span>
+<span class="w">  </span><span class="c1">// is stored in the PreStepPoint object of G4Step.</span>
+<span class="w">  </span><span class="n">G4bool</span><span class="w"> </span><span class="n">ProcessHits</span><span class="p">(</span><span class="n">G4Step</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">G4TouchableHistory</span><span class="o">*</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="n">wuHitCollection</span><span class="o">*</span><span class="w"> </span><span class="n">hitsCollection</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">HCID</span><span class="p">;</span><span class="w"> </span><span class="c1">//hits collection ID</span>
+
+
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre><span class="ansi-bold">input_line_41:1:36: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">expected class name</span>
+class wuSensitiveDetector : public G4VSensitiveDetector
+<span class="ansi-green-intense-fg ansi-bold">                                   ^
+</span><span class="ansi-bold">input_line_41:4:23: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4String&#39;</span>
+  wuSensitiveDetector(G4String name);
+<span class="ansi-green-intense-fg ansi-bold">                      ^
+</span><span class="ansi-bold">input_line_41:11:19: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4HCofThisEvent&#39;</span>
+  void Initialize(G4HCofThisEvent*);
+<span class="ansi-green-intense-fg ansi-bold">                  ^
+</span><span class="ansi-bold">input_line_41:12:19: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4HCofThisEvent&#39;</span>
+  void EndOfEvent(G4HCofThisEvent*);
+<span class="ansi-green-intense-fg ansi-bold">                  ^
+</span><span class="ansi-bold">input_line_41:24:3: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4bool&#39;</span>
+  G4bool ProcessHits(G4Step*, G4TouchableHistory*);
+<span class="ansi-green-intense-fg ansi-bold">  ^
+</span><span class="ansi-bold">input_line_41:24:22: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4Step&#39;</span>
+  G4bool ProcessHits(G4Step*, G4TouchableHistory*);
+<span class="ansi-green-intense-fg ansi-bold">                     ^
+</span><span class="ansi-bold">input_line_41:24:31: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4TouchableHistory&#39;</span>
+  G4bool ProcessHits(G4Step*, G4TouchableHistory*);
+<span class="ansi-green-intense-fg ansi-bold">                              ^
+</span><span class="ansi-bold">input_line_41:28:3: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;wuHitCollection&#39;</span>
+  wuHitCollection* hitsCollection;
+<span class="ansi-green-intense-fg ansi-bold">  ^
+</span><span class="ansi-bold">input_line_41:29:3: </span><span class="ansi-red-intense-fg ansi-bold">error: </span><span class="ansi-bold">unknown type name &#39;G4int&#39;</span>
+  G4int HCID; //hits collection ID
+<span class="ansi-green-intense-fg ansi-bold">  ^
+</span></pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14059,11 +14203,13 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2022年 05月 07日 星期六 21:28:40 CST
+<pre>2022年 05月 07日 星期六 21:31:15 CST
 
 [NbConvertApp] Converting notebook SensitiveDetector.ipynb to html
 
-[NbConvertApp] Writing 557325 bytes to SensitiveDetector.html
+
+[NbConvertApp] Writing 559690 bytes to SensitiveDetector.html
+
 
 </pre>
 </div>

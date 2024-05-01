@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>index</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>PhotoEvaporation</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14010,120 +14010,110 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="GEANT4">GEANT4<a class="anchor-link" href="#GEANT4">&#182;</a></h1>
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5">&#24120;&#29992;&#38142;&#25509;<a class="anchor-link" href="#%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5">&#182;</a></h2><ul>
-<li>官网 <a href="https://geant4.web.cern.ch/">https://geant4.web.cern.ch/</a></li>
-<li>官方教程主页 <a href="https://geant4.web.cern.ch/support">https://geant4.web.cern.ch/support</a></li>
-</ul>
-<p><strong>基础</strong></p>
+<h1 id="PhotoEvaporation">PhotoEvaporation<a class="anchor-link" href="#PhotoEvaporation">&#182;</a></h1><p>GEANT4 安装的数据库中，有一个文件夹 <strong>PhotoEvaporation5.x</strong>，里面文件格式 z[xx].a[xx]，每个文件对应一个核素，z 后面的数值为其质子数，a 后面的数值为核子数。</p>
+<p>我们以 <em>60Ni</em> 为例，</p>
+<p><img src="img/photoevaporationz28a60.png" alt="picpe1"></p>
+<p>该数据库为原子核的给定能级的退激数据，能级信号包含自旋宇称、跃迁角动量等。</p>
 <ul>
-<li>安装 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/InstallationGuide/html/index.html</a></li>
-<li>应用手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/index.html</a></li>
+<li>一个文件的数据可划分为多个子块，每个子块为一个能级。能级中包含基态。</li>
+<li>每个子块第一行为该能级的信息。</li>
+<li>子块后面的行为从该能级往下跃迁到较低能级的 gamma 信息。</li>
 </ul>
-<p><strong>进阶</strong></p>
+<hr>
+<p>定义同位素能级的数据包含6列：</p>
 <ul>
-<li>开发者手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/ForToolkitDeveloper/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/ForToolkitDeveloper/html/index.html</a></li>
-<li>物理列表指南 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/index.html</a></li>
-<li>物理参考手册 <a href="https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsReferenceManual/html/index.html">https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsReferenceManual/html/index.html</a></li>
-</ul>
-<hr>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E7%9B%AE%E5%BD%95">&#30446;&#24405;<a class="anchor-link" href="#%E7%9B%AE%E5%BD%95">&#182;</a></h2><ul>
-<li><a href="INSTALL.html">安装</a><ul>
-<li><a href="VirtualMachine.html">虚拟机</a></li>
-<li><a href="WSL.html">WSL</a></li>
+<li>1） 一个整数，定义基态从 0 开始的能级的顺序索引(编号)</li>
+<li>2） 定义浮动级别（-、+X、+Y、+Z、+U、+V、+W、+R、+S、+T、+A、+B、+C）的字符串<ul>
+<li>"-" 字符串表示它是一个非浮动能级。</li>
 </ul>
 </li>
-<li><a href="FRAME.html">程序框架</a></li>
-<li><a href="MAIN.html">主函数</a></li>
-<li><a href="DetectorConstruction.html">探测器设置</a><ul>
-<li><a href="STL2G4.html">三维软件构建几何体</a></li>
+<li>3） 能级激发能（keV）</li>
+<li>4） 能级半衰期。-1 半衰期意味着稳定的基态。</li>
+<li>5） 该能级的自旋宇称。符号表示奇偶性。当 ENSDF 文件中缺少 Jpi 时，将使用值 99。</li>
+<li>6） n_gammas， 该能级可能的 gamma 退激路径数。<ul>
+<li>0 意味着该能级在 ENSDF 中没有退激 gamma</li>
 </ul>
 </li>
-<li><a href="PrimaryGeneratorAction.html">粒子源设置</a></li>
-<li><a href="dataana.html">数据提取</a></li>
 </ul>
 <hr>
+<p>在定义能级之后，n_gammas 行信数据描述退激 gamma 的信息。gamma 的信息如下:</p>
 <ul>
-<li><a href="g4tools.html">g4tools</a></li>
-<li><a href="RunAction.html">RunAction</a></li>
-<li><a href="StepingAction.html">StepingAction</a></li>
-<li><a href="StackingAction.html">StackingAction</a></li>
-<li><a href="TrackInformation.html">TrackInformation</a></li>
-<li><p><a href="TrackingAction.html">TrackingAction</a></p>
-</li>
-<li><p><a href="Random.html">随机数设置</a></p>
-</li>
-<li><a href="ROOT.html">调用 ROOT 库</a></li>
+<li>1列: 退激能级的编号</li>
+<li>2列: 跃迁 gamma 的能量</li>
+<li>3列: gamma 相对发射强度。</li>
+<li>4列: 跃迁多极性。1，2，3，4，5，6，7 的多极数表示 E0，E1，M1，E2，M2，E3，M3 单极跃迁，100*Nx+Ny 表示多极跃迁，其中 Ny 和 Ny 取值 1，2、3，4、5、6，7 表示 E0、E1、M1、E2、M2、E3、M3。例如，M1+E2 转换将被写入 304。值为 0 表示未知的多极性。</li>
+<li>5列: 多极混合比。O 意味着是 E1、M1、E2、M2 跃迁，或者 ENSDF 中没有给出多极混合比。</li>
+<li>6列: 总内转换系数：α=Ic/Ig<ul>
+<li>总跃迁是伽马退激和内转换的总和。因此，总分支比与（1+α)*Ig 成比例</li>
+<li>给定能级的总分支比总和并不总是达到 100%。它们在内部重新归一。</li>
+<li>gamma 退激和内转换的相对概率分别为 1/(1+α) 和 α/(1+α)</li>
 </ul>
-<hr>
-<ul>
-<li><a href="SensitiveDetector.html">SensitiveDetector</a></li>
-<li><a href="EventAction.html">EventAction</a></li>
-<li><a href="PhotoEvaporation.html">PhotoEvaporation</a></li>
-</ul>
-<hr>
-<ul>
-<li><a href="homework.html">作业</a></li>
-</ul>
-<p>示例代码包 <em>geant4_step</em> <a href="https://disk.pku.edu.cn/link/AA21A5B4971D7C44718FC6BF761D5255F3">下载</a> 2024年5月1日更新   <strong>测试版本 4.10.07，4.11.1，4.12.1</strong>。</p>
-<p>示例代码包 <em>geant4_step</em> <a href="https://disk.pku.edu.cn/link/AAF12C56123D7A44E9AE9508B37DE2A4BF">下载</a> 2023年7月10日更新   <strong>测试版本 4.10.04，4.10.05，4.10.06，4.10.07，4.11.1，4.12.1</strong>。</p>
-<p><strong>运行中如出现异常，请及时在群里反馈或者与吴鸿毅(wuhongyi@qq.com)联系</strong></p>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9B%AE%E5%BD%95">&#26410;&#23436;&#25104;&#30446;&#24405;<a class="anchor-link" href="#%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9B%AE%E5%BD%95">&#182;</a></h2><ul>
-<li>闪烁体光学光子传输</li>
-<li>...</li>
-<li><p>电场、磁场</p>
 </li>
-<li><p>物理模型选择</p>
+<li>7-16列: 仅当总内转换系数 α 不为 0 时给出<ul>
+<li>K-shell</li>
+<li>L1-3 shells</li>
+<li>M1-5 shells</li>
+<li>Outer shells (shellID = 9 is used, when applicable)</li>
+</ul>
 </li>
-<li>修改衰变路径、越迁路径</li>
 </ul>
 
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<hr>
+<h2 id="%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE">&#28155;&#21152;&#29992;&#25143;&#25968;&#25454;<a class="anchor-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE">&#182;</a></h2><p>默认条件下， GEANT4 会读取文件夹 <strong>PhotoEvaporation5.x</strong> 的数据。在 gamma 谱学研究中，测量的能级信息往往是 ENSDF 中没有的，因此需要读取我们数据表。</p>
+<p><strong>main.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 在内核初始化之后添加数据</span>
+<span class="w">  </span><span class="c1">// 在这行代码之后添加</span>
 
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-c++"><pre><span></span>
+<span class="w">  </span><span class="c1">// userEvaporationData</span>
+<span class="w">  </span><span class="c1">//G4NuclearLevelData::GetInstance()-&gt;AddPrivateData(Z, A, file_name);</span>
+<span class="w">  </span><span class="n">G4NuclearLevelData</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">AddPrivateData</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;wu_z28.a60&quot;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
+<p>文件 <strong>wu_z28.a60</strong> 中，修改了能级 2505 keV 的退激 gamma 分值比。</p>
 
-     </div>
 </div>
 </div>
-</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="%E7%A4%BA%E4%BE%8B">&#31034;&#20363;<a class="anchor-link" href="#%E7%A4%BA%E4%BE%8B">&#182;</a></h2><p><em>60Ni</em> 2505 keV 能级退激在 Ge 探测器上的能谱。</p>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuPrimaryGeneratorActionAll::GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span><span class="o">*</span><span class="w"> </span><span class="n">anEvent</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleTable</span><span class="o">*</span><span class="w"> </span><span class="n">particleTable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4ParticleTable</span><span class="o">::</span><span class="n">GetParticleTable</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleDefinition</span><span class="o">*</span><span class="w"> </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 
+<span class="w">  </span><span class="c1">// -------------------------</span>
+
+<span class="w">  </span><span class="c1">//自定义带电粒子</span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">IonZ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">28</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">IonA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">IonEstar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2505.753</span><span class="o">*</span><span class="n">keV</span><span class="p">;</span><span class="w"> </span><span class="c1">//exitition energy</span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">IonQ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">particleTable</span><span class="o">-&gt;</span><span class="n">GetIonTable</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetIon</span><span class="p">(</span><span class="n">IonZ</span><span class="p">,</span><span class="w"> </span><span class="n">IonA</span><span class="p">,</span><span class="w"> </span><span class="n">IonEstar</span><span class="p">);</span><span class="c1">//4.10.01版本强制 G4IonTable.hh</span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleCharge</span><span class="p">(</span><span class="n">IonQ</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleDefinition</span><span class="p">(</span><span class="n">pp</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;##Null pp in wuPrimaryGeneratorAction::SetParticleGun()&quot;</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">//primary particle kinetic energy</span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">MeV</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// 这里省略代码</span>
+<span class="w">  </span><span class="c1">// 。。。。。。</span>
+<span class="w">  </span><span class="c1">// 粒子各向同性发射</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>典型数据输出如下:<br>
+<img src="img/exampleNi60data.png" alt="picpe2"></p>
+<p>比较默认数据库和我们修改数据库， Ge 探测器测量的能谱。其中黑色为 GEANT4 默认 ENSDF 库。</p>
+<p><img src="img/exampleNi60.png" alt="picpe3"></p>
+<p><strong>解释为何 gamma 峰存在展宽?</strong></p>
+
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14131,8 +14121,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">PhotoEvaporation</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14152,16 +14141,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2024年 05月 01日 星期三 23:34:40 CST
+<pre>2024年 05月 02日 星期四 02:32:36 CST
 
-[NbConvertApp] Converting notebook index.ipynb to html
+[NbConvertApp] Converting notebook PhotoEvaporation.ipynb to html
 
-
-[NbConvertApp] Writing 564425 bytes to index.html
-
-
-[NbConvertApp] Converting notebook index.ipynb to html
-[NbConvertApp] Writing 564425 bytes to index.html
+[NbConvertApp] Writing 567101 bytes to PhotoEvaporation.html
 
 </pre>
 </div>

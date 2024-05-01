@@ -14051,6 +14051,9 @@ a.anchor-link {
 <p>以下是我们提供示例代码中的截图</p>
 <p><img src="img/wueventactionallhh.png" alt="picevent1"></p>
 <p>在函数 <strong>EndOfEventAction(const G4Event* anEvent)</strong> 中，通过遍历灵敏探测器，获得每个灵敏探测器里面的数据。</p>
+<ul>
+<li>G4HCofThisEvent：G4Event 的一个成员对象，为一容器；多个 SD 的多个 HitCollection 对象储存在该容器中。</li>
+</ul>
 <div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuEventActionAll::EndOfEventAction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">G4Event</span><span class="o">*</span><span class="w"> </span><span class="n">anEvent</span><span class="p">)</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="c1">// // 读取该事件SD中记录的数据</span>
@@ -14101,12 +14104,12 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2024年 05月 01日 星期三 21:22:59 CST
+<pre>2024年 05月 01日 星期三 21:39:37 CST
 
 [NbConvertApp] Converting notebook EventAction.ipynb to html
 
 
-[NbConvertApp] Writing 567251 bytes to EventAction.html
+[NbConvertApp] Writing 567336 bytes to EventAction.html
 
 
 </pre>

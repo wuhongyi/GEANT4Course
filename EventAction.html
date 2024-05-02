@@ -14082,7 +14082,42 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>示例代码中，我们对两个探测器都设置为灵敏探测器。下图为典型的 steping 和 SD 同时数据输出，我们可以看到 EventID 为 14 的事件，高亮部分是灵敏探测器输出的数据。</p>
 <p><img src="img/SD_dataexample.PNG" alt="picevent3"></p>
-<p>通常情况下，我们只需要通过一种方式进行数据输出即可，文件 <strong>wuActionInitialization.cc</strong> 可</p>
+<p>通常情况下，我们只需要通过一种方式进行数据输出即可，文件 <strong>wuActionInitialization.cc</strong> 可控制数据输出方式。</p>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuActionInitialization::Build</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">//源的设置</span>
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuPrimaryGeneratorActionAll</span><span class="p">);</span><span class="w"></span>
+
+<span class="cp">#if G4VERSION_NUMBER &gt;= 1030</span>
+
+<span class="w">  </span><span class="n">G4MultiRunAction</span><span class="o">*</span><span class="w"> </span><span class="n">actsRun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MultiRunAction</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4MultiEventAction</span><span class="o">*</span><span class="w"> </span><span class="n">actsEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MultiEventAction</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4MultiTrackingAction</span><span class="o">*</span><span class="w"> </span><span class="n">actsTrack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MultiTrackingAction</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4MultiSteppingAction</span><span class="o">*</span><span class="w"> </span><span class="n">actsStep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">G4MultiSteppingAction</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">//...0123456789876543210...0123456789876543210...</span>
+
+<span class="w">  </span><span class="n">actsRun</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserRunActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuRunActionAll</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">actsEvent</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserEventActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuEventActionAll</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">actsTrack</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserTrackingActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuTrackingActionAll</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="n">actsStep</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">G4UserSteppingActionUPtr</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuSteppingActionAll</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">wuStackingActionAll</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="c1">//...0123456789876543210...0123456789876543210...</span>
+
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">actsRun</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">actsTrack</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 数据输出，根据需要开启  </span>
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">actsEvent</span><span class="p">);</span><span class="c1">// save SD data </span>
+<span class="w">  </span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">actsStep</span><span class="p">);</span><span class="c1">// save step data</span>
+
+<span class="cp">#else</span>
+<span class="w">  </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;It need G4VERSION_NUMBER &gt;= 1030&quot;</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+<span class="cp">#endif </span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14112,13 +14147,10 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2024年 05月 02日 星期四 03:02:46 CST
+<pre>2024年 05月 02日 星期四 10:09:03 CST
 
 [NbConvertApp] Converting notebook EventAction.ipynb to html
-
-
-[NbConvertApp] Writing 567428 bytes to EventAction.html
-
+[NbConvertApp] Writing 567876 bytes to EventAction.html
 
 </pre>
 </div>

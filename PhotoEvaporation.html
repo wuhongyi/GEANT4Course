@@ -14010,7 +14010,12 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="PhotoEvaporation">PhotoEvaporation<a class="anchor-link" href="#PhotoEvaporation">&#182;</a></h1><p>GEANT4 安装的数据库中，有一个文件夹 <strong>PhotoEvaporation5.x</strong>，里面文件格式 z[xx].a[xx]，每个文件对应一个核素，z 后面的数值为其质子数，a 后面的数值为核子数。</p>
+<h1 id="PhotoEvaporation">PhotoEvaporation<a class="anchor-link" href="#PhotoEvaporation">&#182;</a></h1>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>GEANT4 安装的数据库中，有一个文件夹 <strong>PhotoEvaporation5.x</strong>，里面文件格式 z[xx].a[xx]，每个文件对应一个核素，z 后面的数值为其质子数，a 后面的数值为核子数。</p>
 <p>我们以 <em>60Ni</em> 为例，</p>
 <p><img src="img/photoevaporationz28a60.png" alt="picpe1"></p>
 <p>该数据库为原子核的给定能级的退激数据，能级信号包含自旋宇称、跃迁角动量等。</p>
@@ -14064,15 +14069,16 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE">&#28155;&#21152;&#29992;&#25143;&#25968;&#25454;<a class="anchor-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE">&#182;</a></h2><p>默认条件下， GEANT4 会读取文件夹 <strong>PhotoEvaporation5.x</strong> 的数据。在 gamma 谱学研究中，测量的能级信息往往是 ENSDF 中没有的，因此需要读取我们数据表。</p>
 <p><strong>main.cc</strong></p>
-<div class="highlight"><pre><span></span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="c1">// 这里省略</span>
+<span class="w">  </span><span class="n">mtrunManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span><span class="w"></span>
 <span class="w">  </span><span class="c1">// 在内核初始化之后添加数据</span>
-<span class="w">  </span><span class="c1">// 在这行代码之后添加</span>
+<span class="w">  </span><span class="c1">// 代码里，找到以上两行代码。在这行代码之后添加</span>
 
 <span class="w">  </span><span class="c1">// userEvaporationData</span>
 <span class="w">  </span><span class="c1">//G4NuclearLevelData::GetInstance()-&gt;AddPrivateData(Z, A, file_name);</span>
 <span class="w">  </span><span class="n">G4NuclearLevelData</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">AddPrivateData</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;wu_z28.a60&quot;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
-<p>文件 <strong>wu_z28.a60</strong> 中，修改了能级 2505 keV 的退激 gamma 分值比。</p>
+<p>文件 <strong>wu_z28.a60</strong> 中，修改了能级 2505 keV 的退激 gamma 分支比。</p>
 
 </div>
 </div>
@@ -14142,11 +14148,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2024年 05月 02日 星期四 02:52:25 CST
+<pre>2024年 05月 03日 星期五 19:04:36 CST
 
 [NbConvertApp] Converting notebook PhotoEvaporation.ipynb to html
 
-[NbConvertApp] Writing 567165 bytes to PhotoEvaporation.html
+[NbConvertApp] Writing 567574 bytes to PhotoEvaporation.html
 
 </pre>
 </div>

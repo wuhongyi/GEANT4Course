@@ -14032,12 +14032,59 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE">&#28155;&#21152;&#29992;&#25143;&#25968;&#25454;<a class="anchor-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE">&#182;</a></h2>
+<h2 id="%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE">&#28155;&#21152;&#29992;&#25143;&#25968;&#25454;<a class="anchor-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE">&#182;</a></h2><p>默认情况下，会读取文件夹 <strong>RadioactiveDecay5.x</strong> 里面的数据。但是对于前沿的研究来说，数据通常是存在不足的。这里介绍一个调用自己修改数据的方式。</p>
+<p><strong>main.cc</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">// 这里省略</span>
+<span class="w">  </span><span class="n">G4VisManager</span><span class="o">*</span><span class="w"> </span><span class="n">visManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
+<span class="w">  </span><span class="n">G4UImanager</span><span class="o">*</span><span class="w"> </span><span class="n">UImanager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4UImanager</span><span class="o">::</span><span class="n">GetUIpointer</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 代码里，找到以上两行代码。在这两行代码之后添加数据</span>
+
+<span class="w">  </span><span class="c1">// userDecayData</span>
+<span class="w">  </span><span class="n">UImanager</span><span class="o">-&gt;</span><span class="n">ApplyCommand</span><span class="p">(</span><span class="s">&quot;/process/had/rdm/setRadioactiveDecayFile 27 60 wu_z27.a60&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 其中 27 为质子数， 60 为核子数， wu_z27.a60 为数据文件</span>
+</pre></div>
+<p>文件 <strong>wu_z27.a60</strong> 中，修改了基态衰变到 2158.632 和 2505.753 的分支比。</p>
+
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="%E7%A4%BA%E4%BE%8B">&#31034;&#20363;<a class="anchor-link" href="#%E7%A4%BA%E4%BE%8B">&#182;</a></h2>
+<h2 id="%E7%A4%BA%E4%BE%8B">&#31034;&#20363;<a class="anchor-link" href="#%E7%A4%BA%E4%BE%8B">&#182;</a></h2><p><em>60Co</em> 基态，衰变放出 gamma。测量 Ge 探测器上的能谱。</p>
+<div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">wuPrimaryGeneratorActionAll::GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span><span class="o">*</span><span class="w"> </span><span class="n">anEvent</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleTable</span><span class="o">*</span><span class="w"> </span><span class="n">particleTable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G4ParticleTable</span><span class="o">::</span><span class="n">GetParticleTable</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4ParticleDefinition</span><span class="o">*</span><span class="w"> </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// -------------------------</span>
+
+<span class="w">  </span><span class="c1">//自定义带电粒子</span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">IonZ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4int</span><span class="w"> </span><span class="n">IonA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">IonEstar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="o">*</span><span class="n">keV</span><span class="p">;</span><span class="w"> </span><span class="c1">//exitition energy</span>
+<span class="w">  </span><span class="n">G4double</span><span class="w"> </span><span class="n">IonQ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">pp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">particleTable</span><span class="o">-&gt;</span><span class="n">GetIonTable</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetIon</span><span class="p">(</span><span class="n">IonZ</span><span class="p">,</span><span class="w"> </span><span class="n">IonA</span><span class="p">,</span><span class="w"> </span><span class="n">IonEstar</span><span class="p">);</span><span class="c1">//4.10.01版本强制 G4IonTable.hh</span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleCharge</span><span class="p">(</span><span class="n">IonQ</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleDefinition</span><span class="p">(</span><span class="n">pp</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="n">G4cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;##Null pp in wuPrimaryGeneratorAction::SetParticleGun()&quot;</span><span class="o">&lt;&lt;</span><span class="n">G4endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">//primary particle kinetic energy</span>
+<span class="w">  </span><span class="n">particleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">(</span><span class="mf">0.0</span><span class="o">*</span><span class="n">MeV</span><span class="p">);</span><span class="w">  </span>
+
+<span class="w">  </span><span class="c1">// 这里省略代码</span>
+<span class="w">  </span><span class="c1">// 。。。。。。</span>
+<span class="w">  </span><span class="c1">// 粒子各向同性发射</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>典型数据输出如下:<br>
+<img src="img/exampleCo60data.png" alt="picrd2"></p>
+<p>能看到 beta 衰变发射的电子和中微子， 它的物理过程描述为 RadioactiveDecayBase。</p>
+<p>统计 gamma 在 Ge 上的能量沉积，需要剔除衰变的电子。</p>
+<p><img src="img/exampleCo60.png" alt="picrd3"></p>
+<p>蓝色和黑色是 GEANT4 默认数据库的结果，其中蓝色没有剔除衰变的电子(实际测量中，由于探测器存在外壳及源有封装结构，电子几乎无法到达探测器晶体）。红色为修改衰变数据的结果。</p>
+
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
@@ -14046,6 +14093,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">RadioactiveDecay</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 <span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">RadioactiveDecay</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
@@ -14066,13 +14114,15 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2024年 05月 03日 星期五 01:29:20 CST
+<pre>2024年 05月 03日 星期五 19:05:47 CST
 
 [NbConvertApp] Converting notebook RadioactiveDecay.ipynb to html
 
+[NbConvertApp] Writing 567121 bytes to RadioactiveDecay.html
 
-[NbConvertApp] Writing 560387 bytes to RadioactiveDecay.html
+[NbConvertApp] Converting notebook RadioactiveDecay.ipynb to html
 
+[NbConvertApp] Writing 567121 bytes to RadioactiveDecay.html
 
 </pre>
 </div>

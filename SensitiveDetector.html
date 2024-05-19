@@ -14015,7 +14015,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>通过 G4UserSteppingAction 中的函数 UserSteppingAction(const G4Step*) 可以获得模拟中每个 step 的信息。当时当我们的模拟阵列比较复杂，且我们感兴趣的探测器数量又比较少时，SensitiveDetector 提供一种机制，当模拟发生在我们指定的逻辑体内部时，我们才获取该 step 的信息。</p>
+<p>通过 G4UserSteppingAction 中的函数 UserSteppingAction(const G4Step*) 可以获得模拟中每个 step 的信息。但是当我们的模拟阵列比较复杂，且我们感兴趣的探测器数量又比较少时，SensitiveDetector 提供一种机制，当模拟发生在我们指定的逻辑体内部时，我们才获取该 step 的信息。</p>
 
 </div>
 </div>
@@ -14126,6 +14126,20 @@ a.anchor-link {
 </pre></div>
 
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-c++"><pre><span></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -14133,7 +14147,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-c++"><pre><span></span><span class="o">!</span><span class="n">date</span><span class="w"></span>
-<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">index</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
+<span class="o">!</span><span class="n">jupyter</span><span class="w"> </span><span class="n">nbconvert</span><span class="w"> </span><span class="n">SensitiveDetector</span><span class="p">.</span><span class="n">ipynb</span><span class="w"> </span><span class="o">--</span><span class="n">to</span><span class="w"> </span><span class="n">html</span><span class="w"></span>
 </pre></div>
 
      </div>
@@ -14153,11 +14167,13 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>2024年 05月 01日 星期三 23:26:43 CST
+<pre>2024年 05月 01日 星期三 23:28:45 CST
 
-[NbConvertApp] Converting notebook index.ipynb to html
+[NbConvertApp] Converting notebook SensitiveDetector.ipynb to html
 
-[NbConvertApp] Writing 564425 bytes to index.html
+
+[NbConvertApp] Writing 569571 bytes to SensitiveDetector.html
+
 
 </pre>
 </div>
@@ -14167,13 +14183,6 @@ a.anchor-link {
 
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>!date
-!jupyter nbconvert SensitiveDetector.ipynb --to html</p>
-
-</div>
 </div>
 </body>
 
